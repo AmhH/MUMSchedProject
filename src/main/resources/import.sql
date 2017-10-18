@@ -1,0 +1,1 @@
+INSERT INTO User(firstName, lastName,userName, password) VALUES ("Meron","Tollosa","meron","meron")
