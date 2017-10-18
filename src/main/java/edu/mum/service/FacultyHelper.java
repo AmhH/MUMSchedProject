@@ -15,6 +15,7 @@ import edu.mum.repository.CourseRepository;
 public class FacultyHelper {
 
 	private List<Course> courses;
+	@SuppressWarnings("unused")
 	private List<Faculty> faculties;
 	@Autowired
 	private CourseRepository courseDao;
@@ -74,6 +75,7 @@ public class FacultyHelper {
 		// block.getSections().get(0).setFaculty(new Faculty());
 	}
 
+	@SuppressWarnings("unused")
 	private List<Course> getCourse(long blkId, int noSection) {
 		List<Course> selected = new ArrayList<>();
 		if (blkId == 2) {

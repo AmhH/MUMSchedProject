@@ -2,7 +2,9 @@ package edu.mum.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import edu.mum.domain.UserProfile;
 
 public class EqualPasswordsValidator implements ConstraintValidator<EqualPasswords, UserProfile> {
