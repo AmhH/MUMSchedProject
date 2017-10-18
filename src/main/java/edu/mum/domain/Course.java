@@ -1,55 +1,89 @@
 package edu.mum.domain;
 
 import java.util.List;
-
+import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
-@Entity
-public class Course {
-   @Id
-   @GeneratedValue(strategy=GenerationType.AUTO)
-   private long id;
-   private String courseCode;
-   private String courseName;
-   @ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-   private List<Faculty> facultyName;
-   @OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-   Course preRequestCourse;
-   
-   public String getCourseName() { 
-	return courseName;
+
+  @Entity
+    public class Course {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	@Column(unique = true)
+	private int courseCode;
+	@NotNull
+	private String courseName;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Course> prerequisite;
+	private Boolean isPreReq;
+	@OneToMany
+	private Set<Specialization> courseArea;
+
+	public Boolean getIsPreReq() {
+		return isPreReq;
+	}
+
+	public void setIsPreReq(Boolean isPreReq) {
+		this.isPreReq = isPreReq;
+	}
+
+	public String getCourseName() {
+		return courseName;
+
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	
-   }
-  public void setCourseName(String courseName) {
-	this.courseName = courseName;
-  }
-public long getId() {
-	return id;
-}
-public void setId(long id) {
-	this.id = id;
-}
-public String getCourseCode() {
-	return courseCode;
-}
-public void setCourseCode(String courseCode) {
-	this.courseCode = courseCode;
-}
+	public int getCourseCode() {
+		return courseCode;
+	}
 
-public Course getPreRequestCourse() {
-	return preRequestCourse;
-}
-public void setPreRequestCourse(Course preRequestCourse) {
-	this.preRequestCourse = preRequestCourse;
-}
- 
+	public void setCourseCode(int courseCode) {
+		this.courseCode = courseCode;
+	}
+
+	
+
+	public Set<Specialization> getCourseArea() {
+		return courseArea;
+	}
+
+	public void setCourseArea(Set<Specialization> courseArea) {
+		this.courseArea = courseArea;
+	}
+
+	public List<Course> getPrerequisite() {
+		return prerequisite;
+	}
+
+	public void setPrerequisite(List<Course> prerequisite) {
+		this.prerequisite = prerequisite;
+	}
+
+	
+
+	
+	
+	
 
 }
