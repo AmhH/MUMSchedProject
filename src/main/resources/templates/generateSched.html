@@ -1,0 +1,28 @@
+
+	<!DOCTYPE HTML> 
+	<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<title>Mum Schedule</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+		<body>
+		<h3><a href="/schedule/list">Schedule List</a></h3><br/>
+		<h2>Schedule >><span>create</span></h2> <br/>
+				<div>
+				<form action="#" th:action="@{/schedule/create}" method="post">
+		 			Select the Entry
+		 			  <select name="entry" > 
+		 			     <option th:each="entry : ${entries}" th:value="${entry.entryMonth}" th:text="${entry.entryMonth}" >Option</option>
+		   			 </select> 
+		  			 <br/><br/>
+		  						<input type="submit" value="CreateSchedule"/>
+				</form>	
+	         </div>
+		</body>
+	</html>
+	
+	
+<!-- 	
+	INSERT INTO Entry VALUES (3,"August",50,50,100)
+INSERT INTO Entry VALUES (3,"August",50,50,100)
+INSERT INTO Entry VALUES (3,"August",50,50,100) -->

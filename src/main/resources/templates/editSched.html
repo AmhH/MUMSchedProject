@@ -1,0 +1,23 @@
+	<!DOCTYPE HTML> 
+	<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<title>Mum Schedule</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+		<body>
+		<h3><a href="/schedule/list">Schedule Edit</a></h3><br/>
+		<h2>Schedule >><span>edit</span></h2> <br/>
+				<div>
+				<form action="#" th:action="@{/schedule/edit}" th:object="${newSchedule}" method="post">
+		 		
+		 			  <select name="status">
+		 			     <option value="OK">Ok</option>
+		    			     <option value="DRAFT">Draft</option>
+		   				 
+		   			 </select> 
+		  			 <br/><br/>
+		  						<input type="submit" value="UpdateSchedule"/>
+				</form>	
+	         </div>
+		</body>
+	</html>

@@ -1,0 +1,32 @@
+
+<!DOCTYPE HTML> 
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Mum Schedule</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<table border="1" style="width:300px">
+<h3><a href="/schedule/create">CreateSchedule</a></h3><br/>
+<h2>Schedule >>List</h2> <br/>
+
+	<tr>
+   		<td>Entry</td>
+   		<td>Schedule Generated At</td>
+   		<td>Status</td>
+   		<td>Action</td>
+   
+	</tr>
+	
+	<tr th:each="smokeTest : ${message}">
+   		<td th:text="${message}">Entry</td>
+   		<td>---</td>
+   		<td>---</td>
+   		<td>----</td>
+   
+	</tr>
+
+
+</table>
+</body>
+</html>

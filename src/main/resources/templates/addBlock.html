@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<meta charset="ISO-8859-1" http-equiv="Content-Type"/>
+<title>Insert title here</title>
+
+</head>
+<body>
+	<div id="header">
+		<h1>Manage MUM Entry </h1>
+	</div>
+	<div class="updateForm">
+	<form method="post" action="/addBlock" modelAttribute="block" class="form-group">
+		
+		<label for="block_start_date">Start Date</label>
+		<input type="date" name="blockStartDate" class="form-control" />
+		<br></br>
+		<label for="block_month">Block Month</label>
+		<input type="text" name="blockMonth" class="form-control" />
+		<br></br>
+		<label for="block_end_date">End Date</label>
+		<input type="date" name="blockEndDate" class="form-control" />
+		<br></br>
+		<label for="">Number of Students</label>
+		<input type="number" name="blockEndDate" class="form-control" />
+		<br></br>
+		<label for="block_end_date">End Date</label>
+		<input type="date" name="blockEndDate" class="form-control" />
+		<br></br>
+		<br></br>
+		<button type="submit" class="btn btn-primary"> Save</button>						
+	</form> 
+	</div>
+</body>
+</html>
