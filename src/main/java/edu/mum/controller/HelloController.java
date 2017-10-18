@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.mum.domain.Course;
-import edu.mum.service.CourserService;
+import edu.mum.service.CourseService;
 
 
 @Controller
 public class HelloController {
     
 	@Autowired
-	CourserService  courserService;
+	CourseService  courserService;
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String Hello(@ModelAttribute("course")Course courseToBeSaved) {
 	
