@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +36,14 @@ public class BlockController {
 	@RequestMapping(value= {"/addBlock"},method=RequestMethod.POST)
 	public @ResponseBody RedirectView saveBlock(@ModelAttribute("block") Block newBlock){
 		blockService.saveBlock(newBlock);
+		return new RedirectView("/allEntry");
+	}
+	
+	@RequestMapping(value= {"/blockList"},method=RequestMethod.POST)
+	public @ResponseBody RedirectView blockList(@RequestParam Long id, Model model){
+		Entry entry = entryService.getEntry(id);
+		List<Block> blocks = entry.getBlocks();
+		model.addAttribute("blocks", blocks);
 		return new RedirectView("/allEntry");
 	}
 	
