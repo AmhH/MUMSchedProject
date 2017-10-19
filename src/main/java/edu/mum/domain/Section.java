@@ -2,12 +2,15 @@ package edu.mum.domain;
 
 
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -29,6 +32,9 @@ public class Section {
 	@ManyToOne(fetch = FetchType.EAGER)	
     @JoinColumn(name = "block_id")
 	private Block block;
+	
+	@ManyToMany(mappedBy="sections")
+	List<Student> students;
 	
 	public Section() {}
 	
@@ -76,4 +82,13 @@ public class Section {
 	public void setLimitCapacity(int limitCapacity) {
 		this.limitCapacity = limitCapacity;
 	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+	
 }
