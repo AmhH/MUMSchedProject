@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import edu.mum.domain.Block;
 import edu.mum.domain.Course;
+import edu.mum.domain.Entry;
 import edu.mum.domain.Section;
 import edu.mum.repository.SectionRepository;
 @Service 
@@ -20,7 +21,7 @@ public class SectionsService {
 	public void saveSection(Section section, String blockMonth) {
 		Block currentBlock = blockService.getBlock(blockMonth);
 		section.setBlock(currentBlock);
-		currentBlock.getSections().add(section);
+		currentBlock.getSections().add(section);		
 		blockService.saveBlock(currentBlock, currentBlock.getId());
 		sectionRepository.save(section);
 	}

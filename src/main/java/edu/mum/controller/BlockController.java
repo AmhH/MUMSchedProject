@@ -38,7 +38,15 @@ public class BlockController {
 		System.out.println(id);
 		model.addAttribute("entry_id", entry_id);
 		return "addBlock";
-	}	
+	}
+	@RequestMapping(value= {"/findBlock"},method=RequestMethod.POST)
+	public String findBlock(@RequestParam String id, Model model){
+		id_new = Long.valueOf(id);
+		Block blockUpdateable = blockService.getBlockById(id_new);
+		model.addAttribute("blockUpdateable", blockUpdateable);
+		return "updateEntryForm";
+	}
+	
 	@RequestMapping(value= {"/addBlock"},method=RequestMethod.POST)
 	public  String saveBlock(@RequestParam String blockMonth, @RequestParam Date blockStartDate, 
 			@RequestParam Date blockEndDate, @RequestParam int numOfStudents, @RequestParam int blockOrder,
