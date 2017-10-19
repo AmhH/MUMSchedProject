@@ -10,8 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
+import org.springframework.web.servlet.view.RedirectView;
 
 import edu.mum.domain.Block;
 import edu.mum.domain.Entry;
@@ -44,7 +43,25 @@ public class BlockController {
 		id_new = Long.valueOf(id);
 		Block blockUpdateable = blockService.getBlockById(id_new);
 		model.addAttribute("blockUpdateable", blockUpdateable);
-		return "updateEntryForm";
+		return "updateBlockForm";
+	}
+	
+	@RequestMapping(value= {"/updateBlock"},method=RequestMethod.POST)
+	public String updateEntry(@RequestParam String id, @RequestParam String blockMonth, @RequestParam Date blockStartDate, 
+			@RequestParam Date blockEndDate, @RequestParam int numOfStudents, @RequestParam int blockOrder, 
+			@RequestParam Long block_id, Model model){
+		id_new = Long.valueOf(id);
+		Block newBlock = blockService.getBlockById(block_id);
+		newBlock.setId(block_id);
+		newBlock.setBlockMonth(blockMonth); newBlock.setBlockStartDate(blockStartDate); 
+		newBlock.setBlockEndDate(blockEndDate);newBlock.setNumOfStudents(numOfStudents);
+		newBlock.setBlockOrder(blockOrder); 
+		
+		blockService.saveBlock(newBlock, id_new);
+		model.addAttribute("blocks", newBlock.getEntry().getBlocks());
+		model.addAttribute("entry", newBlock.getEntry());
+		return "blockList";
+		//return new RedirectView("/allEntry");
 	}
 	
 	@RequestMapping(value= {"/addBlock"},method=RequestMethod.POST)

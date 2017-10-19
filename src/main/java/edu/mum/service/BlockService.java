@@ -26,7 +26,6 @@ public class BlockService{
 		block.setEntry(currentEntry);
 		currentEntry.getBlocks().add(block);
 		entryService.saveEntry(currentEntry);
-		//blockRepository.save(block);
 	}
 
 	
