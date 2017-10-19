@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import edu.mum.domain.Student;
+import edu.mum.repository.ScheduleRepository;
 import edu.mum.service.RoleService;
 import edu.mum.service.ScheduleService;
 import edu.mum.service.StudentService;
@@ -37,20 +38,24 @@ public class StudentRegController {
 	RoleService roleService;
 	@Autowired
 	ScheduleService scheduleService;
+	@Autowired
+	ScheduleRepository schedulerep;
 
 	
 	 @GetMapping(value = "/student")
 	public String studentRegForm(@ModelAttribute("student") Student student, Model model) {
-		 
-		 //model.addAttribute(studentService.getStudentById(Id));;
+		 Long id = Long.valueOf(8);
+		
+				 student= studentService.getStudentById(id);
+		 model.addAttribute(student);
 		 
    	    return "studentmainpage";
     }
 	 
 	 @RequestMapping(value={"/student/viewschedule"},method=RequestMethod.GET)
 		public String studentschedule(Model model) {
-		// model.addAttribute("schedule", scheduleService.getScheduleById());
-		//	model.addAttribute("blockList", this.getBlockList(scheduleId));
+		// model.addAttribute("schedule", schedulerep.getScheduleByEntry(student.getEntry().getId()));
+	
 			
 			 
 	   	    return "studentschedule";

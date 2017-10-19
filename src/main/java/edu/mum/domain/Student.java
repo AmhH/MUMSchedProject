@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -27,8 +28,13 @@ public class Student {
 	private Set<Section> sections;
 	@OneToOne(fetch = FetchType.EAGER)
 	private Transcript transcript;
+	
+	@ManyToOne()
+	 @JoinColumn(name = "entry_id")
+	private Entry entry;
+	
 	private String idNumber;
-	private String availability;
+	
 	private String degree;
 	private String field;
 
@@ -56,14 +62,7 @@ public class Student {
 		this.transcript = transcript;
 	}
 
-	public String getAvailability() {
-		return availability;
-	}
-
-	public void setAvailability(String availability) {
-		this.availability = availability;
-	}
-
+	
 	public String getDegree() {
 		return degree;
 	}
