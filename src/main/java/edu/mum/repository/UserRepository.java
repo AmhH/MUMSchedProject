@@ -12,7 +12,7 @@ import edu.mum.domain.UserProfile;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserProfile, Long> {
-  @Query("select u from UserProfile u where u.userName=:username")
+  
    public Optional<UserProfile> getUserByUserName(@Param("username")String username);
   
   @Query("select u from UserProfile u where u.userStatus=:status")

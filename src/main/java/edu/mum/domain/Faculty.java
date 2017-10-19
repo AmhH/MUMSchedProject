@@ -68,6 +68,12 @@ public class Faculty {
 	public void setAvailability(boolean isAvailability) {
 		this.isAvailability = isAvailability;
 	}
-	
-	
+	public void addSpecalization(Specialization specialization)
+	{
+		specializations.add(specialization);
+	}
+	public void addCourse(Course course)
+	{
+		this.course.add(course);
+	}
 }

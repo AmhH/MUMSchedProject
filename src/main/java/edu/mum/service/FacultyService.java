@@ -38,9 +38,5 @@ public class FacultyService {
 	public Faculty getFacultyByName(String firstName){
 		return facultyRepository.findByUserProfileFirstName(firstName);
 	}
-	 public void LoggedInUser(){
-
-		    final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		    System.out.println(auth.getName());
-		}
+	
 }
