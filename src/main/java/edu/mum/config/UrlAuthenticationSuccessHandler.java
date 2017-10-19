@@ -3,6 +3,7 @@ package edu.mum.config;
 import java.io.IOException;
 import java.util.Collection;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,19 +20,32 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 public class UrlAuthenticationSuccessHandler
   implements AuthenticationSuccessHandler {
+
+	
   
-	protected Log logger = LogFactory.getLog(this.getClass());
+protected Log logger = LogFactory.getLog(this.getClass());
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
        System.out.println("Success");
-    	handle(request, response, authentication);
-        clearAuthenticationAttributes(request);
+    	/*handle(request, response, authentication);
+        clearAuthenticationAttributes(request);*/
+       Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+       for (GrantedAuthority grantedAuthority : authorities) {
+             if (grantedAuthority.getAuthority().equals("ROLE_Faculty")) {
+                 response.sendRedirect("/faculty/home");
+                 return;
+             } else if (grantedAuthority.getAuthority().equals("ROLE_Admin")) {
+                response.sendRedirect("/adminhome");
+                return;
+             }
+         }
     }
+}
 
-    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+   /* protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         String targetUrl = determineTargetUrl(authentication);
         System.out.println("Handler");
         if (response.isCommitted()) {
@@ -50,7 +64,7 @@ public class UrlAuthenticationSuccessHandler
         boolean isAdmin = false;
         boolean isStudent = false;
     
-        Collection<? extends GrantedAuthority> authorities
+         Collection<? extends GrantedAuthority> authorities
                 = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals("ROLE_Faculty")) {
@@ -64,6 +78,16 @@ public class UrlAuthenticationSuccessHandler
             	isStudent = true;
                 break;
             } 
+        	Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
+            for (GrantedAuthority grantedAuthority : authorities) {
+                  if (grantedAuthority.getAuthority().equals("ROLE_Faculty")) {
+                      response.sendRedirect("/faculty/home");
+                      return;
+                  } else if (grantedAuthority.getAuthority().equals("ROLE_Admin")) {
+                     response.sendRedirect("/adminhome");
+                     return;
+                  }
+              }
         }
 
         if (isFaculty) {
@@ -93,5 +117,4 @@ public class UrlAuthenticationSuccessHandler
 
     protected RedirectStrategy getRedirectStrategy() {
         return redirectStrategy;
-    }
-}
+    }*/

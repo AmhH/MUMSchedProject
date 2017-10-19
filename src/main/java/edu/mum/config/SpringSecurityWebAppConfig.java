@@ -1,5 +1,8 @@
 package edu.mum.config;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.omg.CORBA.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,14 +25,15 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
   
 	@Autowired
     CustomUserDetailsService userdetailsService;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	           	http
 	        	.csrf().disable()
 			           	     .authorizeRequests()
-			                // .antMatchers("/**").authenticated()
+			                //.antMatchers("/**").authenticated()
 			           	     .anyRequest().permitAll()
-			           	     .and().formLogin().successHandler(new UrlAuthenticationSuccessHandler()).permitAll();
+			           	     .and().formLogin().permitAll();
 	          
 	 }
 	@Autowired
