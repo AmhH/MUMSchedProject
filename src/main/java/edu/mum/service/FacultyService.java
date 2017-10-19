@@ -13,6 +13,7 @@ import edu.mum.repository.FacultyRepository;
 @Service
 public class FacultyService {
 	
+	Authentication auth;
 	@Autowired
     FacultyRepository facultyRepository;
 	public List<Faculty> getAllfaculty()
