@@ -14,8 +14,7 @@ public class ScheduleService {
 
 	@Autowired
 	private EntryService entryService;
-
-	@Autowired
+    @Autowired
 	private FacultyHelper facultyHelper;
 	@Autowired
 	private ScheduleSectionCreator sectionHelper;
