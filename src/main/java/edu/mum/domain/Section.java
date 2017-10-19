@@ -30,9 +30,15 @@ public class Section {
     @JoinColumn(name = "block_id")
 	private Block block;
 	
+	public Section() {}
 	
-	
-	
+	public Section(Block block) {
+		this.block = block;
+	}
+	public Section(Block block, Course course) {
+		this.block = block;
+		this.course = course;
+	}
 	
 	public Block getBlock() {
 		return block;

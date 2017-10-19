@@ -19,6 +19,7 @@ public class Block {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	
 	private String blockMonth;
 	private Date blockStartDate;
 	private Date blockEndDate;

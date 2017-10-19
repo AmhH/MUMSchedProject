@@ -38,11 +38,11 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value="/schedule/create", method = RequestMethod.POST)
-	public String generateSchedule(@RequestParam("entry") String entry) {
+	public String generateSchedule(@RequestParam("entry") String entry, Model model) {
 		 @SuppressWarnings("unused")
 		Schedule schedule = scheduleService.generateSched(entry);
 		 System.out.println("========>Controller MEra"+entry);
-		//model.put("entries", entryService.getAllEntry());
+		model.addAttribute("schedule", schedule);
 		return "schedules";
 	}
 	

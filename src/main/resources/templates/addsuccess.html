@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Success</title>
+</head>
+<body>
+
+	<div>
+		<h3>
+			<span th:text="${student.userprofile.firstName}">
+			</span> saved with id: <span th:text="${student.id}"></span> successfully!
+		</h3>
+	</div>
+	<div>
+	<form method="get" action="/student">
+		<button type="submit">Add Another Section</button>
+	</form>
+	</div>
+</body>
+</html>
