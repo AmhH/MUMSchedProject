@@ -6,7 +6,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -17,7 +19,8 @@ public class Student {
 	private long id;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private UserProfile userprofile;
-	@OneToMany
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name="section_student",joinColumns={@JoinColumn(name = "student_id")},inverseJoinColumns = {@JoinColumn(name = "section_id")})
 	private Section section;
 	@OneToOne(fetch = FetchType.EAGER)
 	private Transcript transcript;
