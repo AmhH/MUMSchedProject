@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.mum.domain.Block;
+import edu.mum.domain.Course;
 import edu.mum.domain.Section;
 import edu.mum.repository.SectionRepository;
 @Service 
@@ -20,13 +21,10 @@ public class SectionsService {
 		Block currentBlock = blockService.getBlock(blockMonth);
 		section.setBlock(currentBlock);
 		currentBlock.getSections().add(section);
-		blockService.saveBlock(currentBlock);
+		blockService.saveBlock(currentBlock, currentBlock.getId());
 		sectionRepository.save(section);
 	}
 
-	
-	
-	
 	public List<Section> getAllSection() {
 		return (List<Section>) sectionRepository.findAll();
 	}
@@ -44,5 +42,19 @@ public class SectionsService {
 	public void updateSection(Section section) {
 		sectionRepository.save(section);
 		
+	}
+	
+	public Section createSection(Long block_id) {
+		Section section = new Section();
+		Block block = blockService.getBlockById(block_id);
+		section.setBlock(block);
+		return section;
+	}
+	public Section createSection(Long block_id, Course course) {
+		Section section = new Section();
+		Block block = blockService.getBlockById(block_id);
+		section.setCourse(course);
+		section.setBlock(block);
+		return section;
 	}
 }

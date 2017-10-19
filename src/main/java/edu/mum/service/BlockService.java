@@ -20,8 +20,8 @@ public class BlockService{
 	private EntryService entryService;
 	
 
-	public void saveBlock(Block block) {
-		Entry currentEntry = entryService.getEntry(new Long(8));
+	public void saveBlock(Block block, Long entry_id) {
+		Entry currentEntry = entryService.getEntry(new Long(entry_id));
 		System.out.println(currentEntry.getEntryMonth());
 		block.setEntry(currentEntry);
 		currentEntry.getBlocks().add(block);

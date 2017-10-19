@@ -53,8 +53,8 @@
 				        	<input class="btn btn-danger" type="submit" value="Update Entry" />
 				        </form>
 			        </div>
-			        <div class="blockList">
-						<form action="/blockList">
+			        <div   class="blockList">
+						<form method="post" action="/blockList">
 							<input name="id"  type="hidden" th:value="${entry.id}" />
 				        	<input class="btn btn-danger" type="submit" value="List Blocks" />
 				        </form>
