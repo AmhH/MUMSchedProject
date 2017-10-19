@@ -9,20 +9,21 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
-import edu.mum.domain.Faculty;
+
+
 import edu.mum.domain.Student;
 import edu.mum.service.RoleService;
 import edu.mum.service.ScheduleService;
 import edu.mum.service.StudentService;
-import edu.mum.service.UserService;
+import edu.mum.service.UserProfileService;
+
 
 
 @Controller
@@ -31,7 +32,7 @@ public class StudentRegController {
 	@Autowired
 	StudentService studentService;
 	@Autowired
-	UserService userService;
+	UserProfileService userService;
 	@Autowired
 	RoleService roleService;
 	@Autowired
