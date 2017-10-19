@@ -1,0 +1,47 @@
+
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>edit profile Form</title>
+ <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+<!-- <div th:replace="fragments/header :: header"/> -->
+
+	<div id="global">
+	<div class="col-md-3" style="margin-top:20px">
+		<form action="/updatestudent"  method="post">
+								
+					
+					<label for="userName">ID : </label> <input id="userName" class="form-control mb-2 mb-sm-0"
+							type="text" th:value="${Newstudent.id}" />
+				                    
+			<!-- 	  	<p>
+						<label for="userName">User Name : </label> <input id="userName" class="form-control mb-2 mb-sm-0"
+							type="text" th:value="${Newstudent.userprofile.userName}" />
+					</p>
+					<p>
+						<label for="password">Password : </label> <input type="password" class="form-control mb-2 mb-sm-0"
+							id="password"  th:value="${Newstudent.userprofile.password}" />
+					</p>
+					<p>
+					<label for="confirmpassword">Confirm password : </label> <input type="password"   class="form-control mb-2 mb-sm-0"
+					 	  th:value="${Newstudent.userprofile.confirmpassword}" />
+				</p>
+				    <p>
+						<label for="email">Email : </label> <input id="email"
+							class="form-control" type="text" th:value="${Newstudent.userprofile.email}" />
+					</p>  -->
+				
+				<div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <input type="submit" class="btn btn-lg btn-primary btn-block" value="Save"/>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6"></div>
+                        </div>
+			
+			</form>
+	</div>
+	</div>
+</body>
+</html>

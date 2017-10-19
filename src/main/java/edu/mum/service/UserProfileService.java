@@ -4,15 +4,19 @@ package edu.mum.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import edu.mum.domain.UserProfile;
 import edu.mum.repository.UserRepository;
 @Service
-public class UserService  {
+public class UserProfileService  {
  
 	@Autowired 
-	 UserRepository userRepository;
+	UserRepository userRepository;
 	 
 	public UserProfile saveUser(UserProfile user)
 	{    

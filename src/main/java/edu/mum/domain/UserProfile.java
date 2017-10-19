@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,16 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import org.hibernate.validator.constraints.Email;
 
-import edu.mum.validation.EqualPasswords;
 
 
 @Entity
-@EqualPasswords(message = "Password and Conform password is not match!")
+//@EqualPasswords(message = "Password and Conform password is not match!")
 public class UserProfile {
  
 	 
@@ -32,10 +30,11 @@ public class UserProfile {
 	 @Size(min=4 ,max=50)
 	 private String lastName;
 	 @Size(min=4 ,max=50 )
+	 @Column(unique=true)
 	 private String userName;
 	 private String password;
 	 @Transient
-	 @NotNull
+	 //@NotNull
 	 private String confirmpassword;
 	 @OneToMany(fetch=FetchType.EAGER)
 	 private List<Role> roles=new ArrayList<Role>() ;

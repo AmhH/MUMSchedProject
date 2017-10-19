@@ -10,17 +10,19 @@ import edu.mum.repository.CourseRepository;
 
 @Service
 public class CourseService {
-  @Autowired
-  CourseRepository courseRepository;
-  
-  public Course save(Course course)
-  {
-	return courseRepository.save(course);
-  }
-  
-  public List<Course> getAllCourser()
-  {
-	  return  (List<Course>) courseRepository.findAll();
-  }
-  
+
+	@Autowired
+	CourseRepository courseRepository;
+
+	public Course save(Course course) {
+		return courseRepository.save(course);
+	}
+
+	public List<Course> getAllCourser() {
+		return (List<Course>) courseRepository.findAll();
+	}
+
+	public Course getCourseByName(String courseName) {
+		return courseRepository.findByCourseName(courseName);
+	}
 }

@@ -33,6 +33,15 @@ public class ScheduleSectionCreator {
 	}*/
 
 	public void createSectionForBlock(Block block) {
+		courses = (List<Course>) courseDao.findAll();
+		for (int i = 0; i < courses.size(); i++) {
+			if(courses.get(i).getCourseName() == "FPP")
+				this.FPP = courses.get(i);
+			if(courses.get(i).getCourseName() == "MPP")
+				this.MPP = courses.get(i);
+			if(courses.get(i).getCourseName() == "SCI")
+				this.SCI = courses.get(i);
+		}
 		switch (block.getBlockOrder()) {
 		case 0:  zeroBlock(block);
 		break;

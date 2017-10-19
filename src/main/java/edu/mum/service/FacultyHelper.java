@@ -41,6 +41,15 @@ public class FacultyHelper {
 	}*/
 
 	public void assignCourseAndFaculty(Block block) {
+		courses = (List<Course>) courseDao.findAll();
+		faculties = (List<Faculty>) facultyDao.findAll();
+		for (int i = 0; i < courses.size(); i++) {
+			if(courses.get(i).getCourseName() == "FPP")
+				this.FPP = courses.get(i);
+			if(courses.get(i).getCourseName() == "MPP")
+				this.MPP = courses.get(i);
+		}
+		
 		Map<Faculty, Course> facultyCourseMap = new HashMap<>();
 		if (block.getBlockOrder() > 1) {
 			List<Course> choosen = getCourse(block.getBlockOrder(), block.getSections().size());
