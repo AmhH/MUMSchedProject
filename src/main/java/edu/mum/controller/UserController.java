@@ -16,14 +16,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.mum.domain.UserProfile;
 import edu.mum.service.RoleService;
-import edu.mum.service.UserService;
+import edu.mum.service.UserProfileService;
 
 @Controller
 
 public class UserController {
 
 		@Autowired
-		UserService userService;
+		UserProfileService userService;
 		@Autowired
 		RoleService roleService;
 	   
@@ -84,10 +84,7 @@ public class UserController {
 		     return "redirect:/addUser";
 	    }
        
-	    @GetMapping(value="/") 
-	    public String getHome(){
-	    	return "manageuser";
-	    }
+	    
 	  
 
 }

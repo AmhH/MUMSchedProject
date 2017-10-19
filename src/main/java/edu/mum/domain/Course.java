@@ -2,6 +2,7 @@ package edu.mum.domain;
 
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotNull;
 	private int courseCode;
 	@NotNull
 	private String courseName;
+	private String courseDesc;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Course> prerequisite;
 	private Boolean isPreReq;
@@ -80,10 +82,13 @@ import javax.validation.constraints.NotNull;
 		this.prerequisite = prerequisite;
 	}
 
-	
+	public String getCourseDesc() {
+		return courseDesc;
+	}
 
-	
-	
-	
+	public void setCourseDesc(String courseDesc) {
+		this.courseDesc = courseDesc;
+	}
+
 
 }
