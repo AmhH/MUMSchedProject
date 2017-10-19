@@ -29,7 +29,7 @@ public class FacultyHelper {
 	private Course FPP = new Course();
 	private Course MPP = new Course();
 
-	public FacultyHelper() {
+	/*public FacultyHelper() {
 		courses = (List<Course>) courseDao.findAll();
 		faculties = (List<Faculty>) facultyDao.findAll();
 		for (int i = 0; i < courses.size(); i++) {
@@ -38,7 +38,7 @@ public class FacultyHelper {
 			if(courses.get(i).getCourseName() == "MPP")
 				this.MPP = courses.get(i);
 		}
-	}
+	}*/
 
 	public void assignCourseAndFaculty(Block block) {
 		Map<Faculty, Course> facultyCourseMap = new HashMap<>();
