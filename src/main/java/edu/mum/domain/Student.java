@@ -1,5 +1,7 @@
 package edu.mum.domain;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,8 +22,9 @@ public class Student {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private UserProfile userprofile;
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name="section_student",joinColumns={@JoinColumn(name = "student_id")},inverseJoinColumns = {@JoinColumn(name = "section_id")})
-	private Section section;
+	@JoinTable(name = "section_student", joinColumns = { @JoinColumn(name = "student_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "section_id") })
+	private Set<Section> sections;
 	@OneToOne(fetch = FetchType.EAGER)
 	private Transcript transcript;
 	private String idNumber;
@@ -77,12 +80,12 @@ public class Student {
 		this.field = field;
 	}
 
-	public Section getSection() {
-		return section;
+	public Set<Section> getSections() {
+		return sections;
 	}
 
-	public void setSection(Section section) {
-		this.section = section;
+	public void setSections(Set<Section> sections) {
+		this.sections = sections;
 	}
 
 	public String getIdNumber() {
