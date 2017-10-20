@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import edu.mum.domain.CustomUserPrincipal;
 import edu.mum.domain.Faculty;
@@ -46,11 +47,11 @@ public class FacultyController {
 	// @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping(value = "/add")
 	public String addFaculty(@ModelAttribute("newFaculty") Faculty faculty, Model model) {
-		model.addAttribute("userTypeList", roleService.getAll());
-		model.addAttribute("specializations", specializationsService.findAllspecalization());
-		model.addAttribute("courseList",courseService.getAllCourser());
-         System.out.println("userName "+userProfileService.LoggedInUser().getFirstName());
-         System.out.println("loggedUser Id: "+userProfileService.LoggedInUser().getId());
+	//	model.addAttribute("userTypeList", roleService.getAll());
+		//model.addAttribute("specializations", specializationsService.findAllspecalization());
+		//model.addAttribute("courseList",courseService.getAllCourser());
+       //  System.out.println("userName "+userProfileService.LoggedInUser().getFirstName());
+       //  System.out.println("loggedUser Id: "+userProfileService.LoggedInUser().getId());
 		return "addFaculty";
 	}
 
@@ -74,9 +75,10 @@ public class FacultyController {
 		System.out.println("id f:"+faculty.getId());
 		System.out.println("id user :"+faculty.getUserProfile().getId());
 		facultyService.saveFaculty(faculty);
-		System.out.println(faculty.getUserProfile().getFirstName());
-		return "redirect:/all";
+		
+		return "redirect:/faculty/all";
 	}
+	
 
 	@GetMapping(value = "/delete/{id}")
 	public String deleteFaculty(@PathVariable("id") Long id, Model model) {
@@ -92,8 +94,10 @@ public class FacultyController {
 	}
 
 	@GetMapping(value = "/all")
-	public String ManageStudent(Model model) {
+	public String ManageStudent(Model model,Map map) {
 		model.addAttribute("faculties", facultyService.getAllfaculty());
+		//System.out.println((facultyService.getAllfaculty().get(0).getUserProfile().getLastName()));
+		
 		
 		return "manageFaculty";
 	}
