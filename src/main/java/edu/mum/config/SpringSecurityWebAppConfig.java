@@ -1,8 +1,5 @@
 package edu.mum.config;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.omg.CORBA.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -13,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import edu.mum.repository.UserRepository;
 import edu.mum.service.CustomUserDetailsService;
 
@@ -31,7 +27,7 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
 	           	http
 	        	.csrf().disable()
 			           	     .authorizeRequests()
-			                //.antMatchers("/**").authenticated()
+			               // .antMatchers("/**").authenticated()
 			           	     .anyRequest().permitAll()
 			           	     .and().formLogin().permitAll();
 	          
