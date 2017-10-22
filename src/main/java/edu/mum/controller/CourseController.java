@@ -53,7 +53,6 @@ public class CourseController {
 		}
 		if(course.getPrerequisite()!=null){
 			course.getPrerequisite().forEach(c->c.setIsPreReq(true));
-			System.out.println("True");
 		}
 		courseService.save(course);
 		

@@ -53,7 +53,7 @@
 							th:field="*{userProfile.email}" /></td>
 					</tr>
 					<tr>
-					<td><label for="email">Specialization : </label></td>
+					<td><label for="specializations">Specialization : </label></td>
 				<td><select th:field="*{specializations}"
 							class="selectpicker" multiple="multiple">
 								<option th:each="special : ${specializations}" th:value="${special.id}"
@@ -65,7 +65,14 @@
 							type="text" th:field="*{userProfile.userName}" /></td>
 						<td><label for="password">Password : </label></td>
 						<td><input type="password" class="form-control mb-2 mb-sm-0"
-							id="password" th:field="*{userProfile.password}" /></td>
+							id="password" th:field="*{userProfile.password}" /></td>	
+				
+				<!-- 	<td><label for="course">Specialization : </label></td>
+				<td><select th:field="*{course}"
+							class="selectpicker" multiple="multiple">
+								<option th:each="special : ${specializations}" th:value="${special.id}"
+									th:text="${special.specalization}">User Role</option>
+						</select></td> -->
 					</tr>
 				</table>
 

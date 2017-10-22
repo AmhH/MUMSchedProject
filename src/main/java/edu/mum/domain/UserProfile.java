@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
@@ -40,7 +42,7 @@ public class UserProfile {
 	 @Transient
 	 //@NotNull
 	 private String confirmpassword;
-	 @OneToMany(fetch=FetchType.EAGER)
+	 @ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	 @Fetch(value=FetchMode.SUBSELECT)
 	 private List<Role> roles=new ArrayList<Role>() ;
 	 @Email
