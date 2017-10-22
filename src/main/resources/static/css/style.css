@@ -1,7 +1,14 @@
 .buttonDiv{
-	width: 20px;
+	width: 30px;
 }
 .mainContainer{
 	width:80%;
 	margin-left: 20px;
+}
+.addSectionForm{
+	width:50%;
+	margin-left:150px;
+	border-style:solid;
+	border-radius:10px;
+	padding:25px;
 }
