@@ -1,32 +1,59 @@
 
-<!DOCTYPE HTML> 
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Mum Schedule</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<table border="1" style="width:300px">
-<h3><a href="/schedule/create">CreateSchedule</a></h3><br/>
-<h2>Schedule >>List</h2> <br/>
+	<div th:replace="fragments/header :: header-css"></div>
+	<div th:replace="fragments/header :: header"></div>
+	<table class="table table-hover table-inverse">
+		<h4>
+			<a href="/schedule/create"><i class="fa fa-hand-o-up">CreateSchedule</i></a>
+		</h4>
+		<br />
+		<h4>
+			Schedule <small><i class="ace-icon fa fa-angle-double-right">List</i>
+			</small>
+		</h4	>
+		<br />
 
-	<tr>
-   		<td>Entry</td>
-   		<td>Schedule Generated At</td>
-   		<td>Status</td>
-   		<td>Action</td>
-   
-	</tr>
-	
-	<tr th:each="smokeTest : ${message}">
-   		<td th:text="${message}">Entry</td>
-   		<td th:text="${message}">Entry</td>
-   		<td th:text="${message}">Entry</td>
-   		<td th:text="${message}">Entry</td>
-   		
-	</tr>
+		<tr>
+			<td>Entry</td>
+			<td>Schedule Generated At</td>
+			<td>Status</td>
+			<td>Action</td>
+
+		</tr>
+
+		<tr th:each="schedule : ${schedule}">
+			<td th:text="${schedule.entry.entryMonth}">EntryMonth</td>
+			<td th:text="${schedule.generatedDate}">GeneratedDate</td>
+			<td th:text="${schedule.status}">Status</td>
+			<td>
+
+				<form action="#" th:action="@{/schedule/edit/${schedule.entry.id}}"
+					th:object="${newSchedule}" method="get">
+					<input type="button" name="view" th:value="ViewSchedule" /><br />
+					<input type="button" name="edit" th:value="Edit" /><br /> <input
+						type="button" name="delete" th:value="Delete" /><br />
+				</form>
+			</td>
+
+		</tr>
 
 
-</table>
+	</table>
 </body>
 </html>

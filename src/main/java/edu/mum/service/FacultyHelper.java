@@ -29,16 +29,6 @@ public class FacultyHelper {
 	private Course FPP = new Course();
 	private Course MPP = new Course();
 
-	/*public FacultyHelper() {
-		courses = (List<Course>) courseDao.findAll();
-		faculties = (List<Faculty>) facultyDao.findAll();
-		for (int i = 0; i < courses.size(); i++) {
-			if(courses.get(i).getCourseName() == "FPP")
-				this.FPP = courses.get(i);
-			if(courses.get(i).getCourseName() == "MPP")
-				this.MPP = courses.get(i);
-		}
-	}*/
 
 	public void assignCourseAndFaculty(Block block) {
 		courses = (List<Course>) courseDao.findAll();

@@ -17,26 +17,30 @@
 	<div th:replace="fragments/header :: header-css"></div>
 	<div th:replace="fragments/header :: header"></div>
 	<h4>
-		<a href="/schedule/list"><i class="fa fa-hand-o-up">Schedule
-				List</i></a>
+		<a href="/schedule/list"><i class="fa fa-hand-o-up">Schedule List</i></a>
 	</h4>
 	<br />
-	<h4>
-		Schedule >> <small><i
-			class="ace-icon fa fa-angle-double-right">Edit</i> </small>
-	</h4>
-	<br />
-	<div class="well">
-		<form action="#" th:action="@{/schedule/edit/${schedule.id}}"
-			th:object="${newSchedule}" method="post">
-			Entry: <input type="text" th:value="${schedule.entry.entryMonth}"
-				readonly> <br> Status: <select name="status">
-				<option th:value="OK" th:text="Ok">Ok</option>
-				<option th:value="DRAFT" th:text="Draft">Draft</option>
+	<table class="table table-hover table-inverse">
+		
+		<tr>
+			<td>Block</td>
+			<td>Start Date</td>
+			<td>End Date</td>
+			<td>Track</td>
+			<!-- 	<td>FPP Track</td> -->
 
-			</select> <br /> <br /> <input type="submit" name="update"
-				value="UpdateSchedule" />
-		</form>
-	</div>
+		</tr>
+
+		<tr th:each="blocks : ${blocks}">
+			<td th:text="${blocks.blockMonth}">EntryMonth</td>
+			<td th:text="${blocks.blockStartDate}">BlockStartDate</td>
+			<td th:text="${blocks.blockEndDate}">BlockEndDate</td>
+			<td th:each="section :${blocks.sections}" th:text="${section.course}">Status</td>
+
+
+		</tr>
+
+
+	</table>
 </body>
 </html>

@@ -1,27 +1,55 @@
 
-	<!DOCTYPE HTML> 
-	<html xmlns:th="http://www.thymeleaf.org">
-	<head>
-	<title>Mum Schedule</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	</head>
-		<body>
-		<h3><a href="/schedule/list">Schedule List</a></h3><br/>
-		<h2>Schedule >><span>create</span></h2> <br/>
-				<div>
-				<form action="#" th:action="@{/schedule/create}" method="post">
-		 			Select the Entry
-		 			  <select name="entry" > 
-		 			     <option th:each="entry : ${entries}" th:value="${entry.entryMonth}" th:text="${entry.entryMonth}" >Option</option>
-		   			 </select> 
-		  			 <br/><br/>
-		  						<input type="submit" value="CreateSchedule"/>
-				</form>	
-	         </div>
-		</body>
-	</html>
-	
-	
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+.entry {
+	width: 50%;
+}
+</style>
+<title>Mum Schedule</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header-css"></div>
+	<div th:replace="fragments/header :: header"></div>
+	<h4>
+		<a href="/schedule/list"><i class="fa fa-hand-o-up">Schedule
+				List</i></a>
+	</h4>
+	<br />
+	<h4>
+		Schedule <small> <i class="ace-icon fa fa-angle-double-right">Create</i>
+		</small>
+	</h4>
+	<hr />
+	<div class="well form-group">
+		<form action="#" th:action="@{/schedule/create}" method="post">
+			<div class="entry">
+				Select 	Entry  <br /> <br /><select class="form-control"
+					name="entry">
+
+					<option th:each="entry : ${entries}" th:value="${entry.entryMonth}"
+						th:text="${entry.entryMonth}">Option</option>
+
+				</select>
+			</div>
+			<br /> <br /> <input class="btn btn-primary" type="submit"
+				value="CreateSchedule" />
+		</form>
+	</div>
+</body>
+</html>
+
+
 <!-- 	
 	INSERT INTO Entry VALUES (3,"August",50,50,100)
 INSERT INTO Entry VALUES (3,"August",50,50,100)

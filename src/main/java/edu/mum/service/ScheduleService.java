@@ -41,5 +41,10 @@ public class ScheduleService {
 
 		return schedule;
 	}
+	
+	public Schedule getScheduleByEntryId(Long id) {
+		return scheduleDao.findScheduleByEntryId(id);
+	}
+	
 
 }
