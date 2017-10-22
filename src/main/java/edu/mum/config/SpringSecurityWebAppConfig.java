@@ -21,17 +21,20 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
   
 	@Autowired
     CustomUserDetailsService userdetailsService;
+	
+	@Autowired
+	UrlAuthenticationSuccessHandler successHandler;
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-	           	http
-	        	.csrf().disable()
-			           	     .authorizeRequests()
-			               // .antMatchers("/**").authenticated()
-			           	     .anyRequest().permitAll()
-			           	     .and().formLogin().permitAll();
+	 @Override
+	 protected void configure(HttpSecurity http) throws Exception {
+		/* http.authorizeRequests()
+	         .anyRequest().authenticated()
+	        .and().formLogin().loginPage("/login").successHandler(successHandler);*/
+	        
+								 	
 	          
 	 }
+	 
 	@Autowired
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth   
@@ -58,11 +61,6 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
 		};
    }
 	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	    web
-	       .ignoring()
-	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-	}
 	
+	 
 }

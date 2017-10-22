@@ -26,25 +26,26 @@
 		<label for="sectionCode">Section Code</label>
 		<input type="text" name="sectionCode" class="form-control" />
 		<br></br>
-		<label for="course">Course</label>
+		<!-- <label for="course">Course</label>
 		<input type="text" name="course" class="form-control" placeholder="course" />
 		<br></br>
 		<label for="faculty">Faculty</label>
 		<input type="text" name="faculty" class="form-control" placeholder="faculty" />
-		<br></br>
-		<!-- <label for="course">Course</label>
+		<br></br> -->
+		<label for="course">Course</label>
 		<select name="course">	   
-		    <option th:each="course : ${courses}" th:value="${course.name}"></option>
+		    <option th:each="course : ${courses}" th:text="${course.courseName}"></option>
 	    </select>
 		<br></br>
 		<label for="faculty">Faculty</label>
 		<select name="faculty">
-		    <option th:each="faculty : ${faculties}" th:value="${faculty.getUserProfile().getFirstName()}"></option>
-	    </select> -->
+		    <option th:each="faculty : ${faculties}" th:text="${faculty.getUserProfile().getFirstName()}" />
+	    </select>
+	    
 		<br></br>
 		<label for="block">Block</label>
 		<select name="blockMonth">
-		    <option th:each="block : ${blocks}" th:text="${block.getBlockMonth()}" th:value="${block.getBlockMonth()}" />
+		    <option th:each="block : ${blocks}" th:text="${block.getBlockMonth()}" />
 	    </select>
 		<br></br>
 		

@@ -18,56 +18,59 @@
 
 <meta charset="ISO-8859-1" />
 <title>view Entry</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 
 </head>
 <body>
 <div th:replace="fragments/header :: header"> </div>
 <div class="mainContainer">
-	
-		<div th:each="entry : ${listOfEntries}">
-			<div class="entryDetail">
-				<div class="entryDetailLeft">	
-			        Entry Month: <div th:text="${entry.entryMonth}">1</div>
-			        <hr />
-			        Number of FPP Students:<div th:text="${entry.numOfFpp}">Title ...</div>
-			        <hr />
-			        Number of MPP Students:<div th:text="${entry.numOfMpp}">Text ...</div>
-			        <hr />
-			         Number of FPP OPT Students:<div th:text="${entry.numOfFppOpt}">Text ...</div>
-			        <hr />
-			         Number of MPP OPT Students:<div th:text="${entry.numOfMppOpt}">Text ...</div>
-			        <hr />
-			        Number of US Students:<div th:text="${entry.numOfUSstudents}">Text ...</div>
+	<button class="btn btn-primary" onclick="location.href='/addEntry'">Add Entry</button>
+	<table class="table">
+			<tr>
+				    <th>Entry Month</th>
+				    <th>Number of FPP</th>
+				    <th>Number of MPP</th>
+				    <th>Number of FPP-OPT</th>
+				    <th>Number of FPP-OPT</th>
+				    <th>Number of US</th>
+			</tr>	    
+			<tr th:each="entry : ${listOfEntries}">	
+			        <td th:text="${entry.entryMonth}">1 </td>
+			
+			        <td th:text="${entry.numOfFpp}">Title ...</td>
+			        <td th:text="${entry.numOfMpp}">Text ...</td>
+			        <td th:text="${entry.numOfFppOpt}">Text ...</td>
+			        <td th:text="${entry.numOfMppOpt}">Text ...</td>
+			        <td th:text="${entry.numOfUSstudents}">Text ...</td>
 			        
-		        </div>
-		        <div class="entryDetailRight">
-			        <div class="entryDelete">
+		        <td>   
+		        	<div class="buttonDiv">   
 				        <form method="post" action="/deleteEntry">
 				        	<input name="id"  type="hidden" th:value="${entry.id}" />
-				        	<input class="btn btn-danger" type="submit" value="Delete Entry" />
+				        	<input class="btn btn-danger" type="submit" value="Delete" />
 				        </form>
-			        </div>
-			       	<div class="entryUpdate">
+				     </div>   
+			    </td>
+			    <td>
+			    	<div class="buttonDiv">
 				        <form method="post" action="/findEntry">
 				        	<input name="id"  type="hidden" th:value="${entry.id}" />
-				        	<input class="btn btn-danger" type="submit" value="Update Entry" />
+				        	<input class="btn btn-danger" type="submit" value="Update" />
 				        </form>
-			        </div>
-			        <div   class="blockList">
+				     </div>
+			    </td>
+			    <td>
+			    	<div class="buttonDiv">
 						<form method="post" action="/blockList">
 							<input name="id"  type="hidden" th:value="${entry.id}" />
-				        	<input class="btn btn-danger" type="submit" value="List Blocks" />
+				        	<input class="btn btn-danger" type="submit" value="Blocks" />
 				        </form>
-					</div>
-			        <!-- <div class="blockEntry">
-						<form action="/addBlock">
-				        	<input class="btn btn-danger" type="submit" value="add Block" />
-				        </form>
-					</div> -->
-		    	</div>
-		    </div>
-	  
-	 </div>
- </div>		
+				    </div>    
+				</td>
+			  
+		   </tr>
+	</table>	  
+</div>
+ 		
 </body>
 </html>

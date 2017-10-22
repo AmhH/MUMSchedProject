@@ -1,11 +1,8 @@
 package edu.mum.controller;
 
 import java.util.Map;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.view.RedirectView;
-
-import edu.mum.domain.CustomUserPrincipal;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import edu.mum.domain.Faculty;
-import edu.mum.domain.UserProfile;
 import edu.mum.service.CourseService;
 import edu.mum.service.FacultyService;
 import edu.mum.service.RoleService;
@@ -41,7 +37,6 @@ public class FacultyController {
 	@Autowired
 	UserProfileService userProfileService;
 	
-
 	// only admin can add new Faculty
 
 	// @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -90,15 +85,14 @@ public class FacultyController {
 	@GetMapping(value = "/update/{id}")
 	public String userMarkDelete(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("newFaculty", facultyService.getFacultyById(id));
-		return "addFaculty";
+		model.addAttribute("specializations", specializationsService.findAllspecalization());
+		model.addAttribute("courseList", courseService.getAllCourser());
+		return "editFaculty";
 	}
 
 	@GetMapping(value = "/all")
-	public String ManageStudent(Model model,Map map) {
+	public String ManageStudent(Model model) {
 		model.addAttribute("faculties", facultyService.getAllfaculty());
-		//System.out.println((facultyService.getAllfaculty().get(0).getUserProfile().getLastName()));
-		
-		
 		return "manageFaculty";
 	}
 	
@@ -115,4 +109,26 @@ public class FacultyController {
 		
 		return "sidebar";
 	}
+	
+	@RequestMapping(value = "{id}", method = RequestMethod.POST)
+	public Faculty updatePersonalInfro(@PathVariable Long id, @RequestBody Faculty faculty) throws Exception{
+	    Faculty f = facultyService.getFacultyById(id);
+	    if(f==null)
+	    	throw new Exception();
+	     f.getUserProfile().setEmail(faculty.getUserProfile().getEmail());
+	     f.getUserProfile().setUserName(faculty.getUserProfile().getUserName());
+	     f.getUserProfile().setPassword(faculty.getUserProfile().getPassword());
+	    return facultyService.saveFaculty(faculty);
+	     
+	}
+	
+	@PostMapping("/editPersonalInfo")
+	public @ResponseBody Faculty updatePersonaInfo(@Valid @RequestBody Faculty faculty)
+	{
+		Faculty existObject=facultyService.getFacultyById(faculty.getId());
+		existObject.getUserProfile().setUserName(faculty.getUserProfile().getUserName());
+		existObject.getUserProfile().setPassword(faculty.getUserProfile().getPassword());
+		return facultyService.saveFaculty(faculty);
+	}
+			
 }
