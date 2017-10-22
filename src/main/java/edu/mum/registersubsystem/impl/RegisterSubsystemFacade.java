@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.mum.domain.Course;
 import edu.mum.domain.Section;
@@ -15,6 +16,7 @@ import edu.mum.registersubsystem.RegisterSubsystem;
 import edu.mum.service.EntryService;
 import edu.mum.service.StudentService;
 
+@Service
 public class RegisterSubsystemFacade implements RegisterSubsystem{
 	
 	@Autowired

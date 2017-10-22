@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
-
 import edu.mum.domain.Student;
+import edu.mum.registersubsystem.impl.RegisterSubsystemFacade;
 import edu.mum.repository.ScheduleRepository;
 import edu.mum.service.RoleService;
 import edu.mum.service.ScheduleService;
@@ -40,13 +39,15 @@ public class StudentRegController {
 	ScheduleService scheduleService;
 	@Autowired
 	ScheduleRepository schedulerep;
+	@Autowired
+	RegisterSubsystemFacade regsubsystem;
 
 	
 	 @GetMapping(value = "/student")
 	public String studentRegForm(@ModelAttribute("student") Student student, Model model) {
 		 Long id = Long.valueOf(8);
 		
-				 student= studentService.getStudentById(id);
+		student= studentService.getStudentById(id);
 		 model.addAttribute(student);
 		 
    	    return "studentmainpage";
@@ -68,7 +69,9 @@ public class StudentRegController {
 		}
 	 
 	 @RequestMapping(value={"/student/register"},method=RequestMethod.GET)
-		public String registerstudent() {
+		public String registerstudent(Model model) {
+		 	
+		model.addAttribute("sections",regsubsystem.getListSection());
 			 
 	   	    return "studentregister";
 	    }
