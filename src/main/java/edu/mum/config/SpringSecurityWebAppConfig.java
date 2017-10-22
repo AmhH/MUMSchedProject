@@ -30,7 +30,7 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
 		http
 		          .csrf().disable()
 		           .authorizeRequests()
-		           .anyRequest().authenticated()
+		           .anyRequest().permitAll()
 		           .and().formLogin().successHandler(successHandler);
 	
 		
