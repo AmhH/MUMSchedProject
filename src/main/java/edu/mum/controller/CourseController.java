@@ -9,12 +9,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.mum.domain.Course;
 import edu.mum.service.CourseService;
 import edu.mum.service.SpecializationsService;
 
 @Controller
+@RequestMapping("/course")
 public class CourseController {
  
 	@Autowired
@@ -23,7 +25,7 @@ public class CourseController {
 	@Autowired
 	SpecializationsService specializationsService;
 	
-	@GetMapping("/courses")
+	@GetMapping("/all")
 	public String courseList( @ModelAttribute("newCourse") Course course,Model model)
 	{
 		model.addAttribute("courses",courseService.getAllCourser());
@@ -32,7 +34,7 @@ public class CourseController {
 		
 	}
 	
-	@GetMapping("/addcourse")
+	@GetMapping("/add")
 	public String addCourse(@ModelAttribute("newCourse") Course course,Model model)
 	{
 		model.addAttribute("courseList",courseService.getAllCourser());
@@ -41,20 +43,20 @@ public class CourseController {
 		
 	}
 	
-	@PostMapping("/addcourse")
+	@PostMapping("/add")
 	public String saveCourse(@Valid @ModelAttribute("newCourse") Course course,BindingResult result,Model model)
 	{
 		if(result.hasErrors())
 		{
 			return "addCourse";
 		}
-		if(course.getPrerequisite()==null){
-			course.setIsPreReq(true);
+		if(course.getPrerequisite()!=null){
+			course.getPrerequisite().forEach(c->c.setIsPreReq(true));
 			System.out.println("True");
 		}
 		courseService.save(course);
 		
-		return "manageCourse";
+		return "redirect:/course/all";
 		
 	}
 	

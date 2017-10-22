@@ -1,4 +1,8 @@
 
-.invisible-at-first{
-	display:none
+button:active{
+    background:olive;
+}
+
+button:focus{
+    background:olive;
 }
