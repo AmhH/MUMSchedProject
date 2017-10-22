@@ -47,11 +47,11 @@ public class FacultyController {
 	// @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping(value = "/add")
 	public String addFaculty(@ModelAttribute("newFaculty") Faculty faculty, Model model) {
-	//	model.addAttribute("userTypeList", roleService.getAll());
-		//model.addAttribute("specializations", specializationsService.findAllspecalization());
-		//model.addAttribute("courseList",courseService.getAllCourser());
-       //  System.out.println("userName "+userProfileService.LoggedInUser().getFirstName());
-       //  System.out.println("loggedUser Id: "+userProfileService.LoggedInUser().getId());
+		model.addAttribute("userTypeList", roleService.getAll());
+		model.addAttribute("specializations", specializationsService.findAllspecalization());
+		model.addAttribute("courseList", courseService.getAllCourser());
+		System.out.println("userName " + userProfileService.LoggedInUser().getFirstName());
+		System.out.println("loggedUser Id: " + userProfileService.LoggedInUser().getId());
 		return "addFaculty";
 	}
 

@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -26,15 +27,13 @@ public class Student {
 	@JoinTable(name = "section_student", joinColumns = { @JoinColumn(name = "student_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "section_id") })
 	private Set<Section> sections;
-	@OneToOne(fetch = FetchType.EAGER)
-	private Transcript transcript;
-	
+	@OneToMany(fetch = FetchType.EAGER)
+	private Set<Transcript> transcript;
 	@ManyToOne()
-	 @JoinColumn(name = "entry_id")
+	//@JoinColumn(name = "entry_id")
 	private Entry entry;
-	
 	private String idNumber;
-	
+
 	private String degree;
 	private String field;
 
@@ -54,15 +53,19 @@ public class Student {
 		this.userprofile = userprofile;
 	}
 
-	public Transcript getTranscript() {
+	
+	public Set<Transcript> getTranscript() {
 		return transcript;
 	}
 
-	public void setTranscript(Transcript transcript) {
+	public void setTranscript(Set<Transcript> transcript) {
 		this.transcript = transcript;
 	}
-
 	
+	public void addTranscript(Transcript transcript){
+		this.transcript.add(transcript);
+	}
+
 	public String getDegree() {
 		return degree;
 	}
@@ -95,4 +98,11 @@ public class Student {
 		this.idNumber = idNumber;
 	}
 
+	public Entry getEntry() {
+		return entry;
+	}
+
+	public void setEntry(Entry entry) {
+		this.entry = entry;
+	}
 }
