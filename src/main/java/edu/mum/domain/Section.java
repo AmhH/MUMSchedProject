@@ -5,6 +5,7 @@ package edu.mum.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,7 +35,7 @@ public class Section {
     @JoinColumn(name = "block_id")
 	private Block block;
 	
-	@ManyToMany(mappedBy="sections")
+	@ManyToMany(mappedBy="sections", cascade = CascadeType.ALL)
 	List<Student> students = new ArrayList<Student>() ;
 	
 	public Section() {}

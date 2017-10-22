@@ -32,9 +32,7 @@ public class BlockController {
 	@RequestMapping(value= {"/addBlockForm"},method=RequestMethod.POST)
 	public  String saveBlockForm(@RequestParam String id, Model model){
 		
-		System.out.println(id);
 		Long entry_id  = Long.parseLong(id);
-		System.out.println(id);
 		model.addAttribute("entry_id", entry_id);
 		return "addBlock";
 	}
@@ -90,6 +88,7 @@ public class BlockController {
 	public String /*@ResponseBody RedirectView*/ blockList(@RequestParam Long id, Model model){
 		Entry entry = entryService.getEntry(id);
 		List<Block> blocks = entry.getBlocks();
+		
 		model.addAttribute("blocks", blocks);
 		
 		model.addAttribute("entry", entry);
@@ -102,21 +101,18 @@ public class BlockController {
 		
 		id_new = Long.valueOf(id);
 		id_new_entry = Long.valueOf(entry_id);
-		System.out.println(id_new);
 		Entry currentEntry = entryService.getEntry(id_new_entry);
 		List<Block> blocks = currentEntry.getBlocks();
 		for(int i=0; i<blocks.size();i++) {
 			if(blocks.get(i).getId() == id_new ) {
 				blocks.remove(i);
-				break;
 			}
 		}
-		currentEntry.setBlocks(blocks);
-		entryService.saveEntry(currentEntry);
-		blockService.deleteBlock(id_new);
-		//return new RedirectView("/allEntry");
-		model.addAttribute("blocks", blocks);
 		
+		currentEntry.setBlocks(blocks);
+		blockService.deleteBlock(id_new);
+		entryService.saveEntry(currentEntry);
+		model.addAttribute("blocks", blocks);
 		model.addAttribute("entry", currentEntry);
 		return "blockList";
 	}

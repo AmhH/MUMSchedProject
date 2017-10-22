@@ -16,49 +16,55 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" th:integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" th:crossorigin="anonymous"></script>
 
 
-
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 
 <meta charset="ISO-8859-1" />
 <title>Insert title here</title>
 </head>
 <body>
 <div th:replace="fragments/header :: header"> </div>
+<div class="mainContainer">
 							<form method="post" action="/addBlockForm">
 					        	<input name="id"  type="hidden" th:value="${entry.id}" />
-					        	<input class="btn btn-danger" type="submit" value="Add Block" />
+					        	<input class="btn btn-primary" type="submit" value="Add Block" />
 					        	
 					        </form>
-			<table class="table-striped">
-		    		<thead>
+			<table class="table">
+		    		
 				      <tr>
-				        <th>Block Month</th><th></th>
+				        <th>Block Month</th>
 				        <th>Block Start Date</th>
 				        <th>Block End Date</th>
+				        <th>No of Students</th>
+				        <th>block priority</th>
 				      </tr>
-				    </thead>
+				  
 			    	<tr th:each="block: ${blocks}">
 			    		<td th:text="${block.blockMonth}"></td>
-			    		<td></td>
 			    		<td th:text="${block.blockStartDate}"></td>
 			    		<td th:text="${block.blockEndDate}"></td>
 			    		<td th:text="${block.numOfStudents}"></td>
 			    		<td th:text="${block.blockOrder}"></td>
 			    		<td>
-					        <form method="post" action="/deleteBlock">
-					        	<input name="id"  type="hidden" th:value="${block.id}" />
-					        	<input name="entry_id"  type="hidden" th:value="${entry.id}" />
-					        	<input class="btn btn-danger" type="submit" value="Delete Block" />
-					        </form>
+			    			<div class="buttonDiv">
+						        <form method="post" action="/deleteBlock">
+						        	<input name="id"  type="hidden" th:value="${block.id}" />
+						        	<input name="entry_id"  type="hidden" th:value="${entry.id}" />
+						        	<input class="btn btn-danger" type="submit" value="Delete" />
+						        </form>
+					        </div>
 					     </td>
-					       
-					       	<td>
+				       	<td>
+					        <div class="buttonDiv">
 						        <form method="post" action="/findBlock">
 						        	<input name="id"  type="hidden" th:value="${block.id}" />
 						        	<input name="entry_id"  type="hidden" th:value="${entry.id}" />
-						        	<input class="btn btn-primary" type="submit" value="Update Block" />
+						        	<input class="btn btn-primary" type="submit" value="Update" />
 						        </form>
-				       		 </td>    
+					        </div>
+			       		 </td>    
 			    	</tr>	
-		    	</table>	
+		    	</table>
+</div>		    		
 </body>
 </html>

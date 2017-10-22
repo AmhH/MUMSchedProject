@@ -19,7 +19,10 @@
 </head>
 <body>
 	<div th:replace="fragments/header :: header"> </div>
-			<div class="mc">
+	
+			<div class="addSectionForm">
+			<h1>Add Entry</h1>
+			<hr />
 						<form method="post" action="/addEntry" modelAttribute="entry">
 						<div class="form-group mainContainer1">
 							<label for="entryMonth">Entry Month</label>
