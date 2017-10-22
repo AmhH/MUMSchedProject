@@ -15,18 +15,13 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" th:integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" th:crossorigin="anonymous"></script>
 <title>Add Entry Page</title>
-
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
 	<div th:replace="fragments/header :: header"> </div>
-	<div id="content">
-		
-		
-		<div class="mainContent">
-			<div id="manage_Entry_sub">
-				<div id="add_Entry_form">
+			<div class="mc">
 						<form method="post" action="/addEntry" modelAttribute="entry">
-						<div class="form-group">
+						<div class="form-group mainContainer1">
 							<label for="entryMonth">Entry Month</label>
 							
 							<input type="text" name="entryMonth" class="form-control" placeholder="Entry Month" />
@@ -55,8 +50,5 @@
 						</div>	
 						</form> 
 				</div>		
-				</div>
-		</div>
-	</div>
 </body>
 </html>

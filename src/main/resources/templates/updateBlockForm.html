@@ -17,24 +17,21 @@
 
 
 
-<meta charset="ISO-8859-1">
+<meta charset="ISO-8859-1" />
 <title>Insert title here</title>
 </head>
-<body>
-
-
 <body>
 	<div th:replace="fragments/header :: header"> </div>
 	<div class="updateForm">	
 		<form method="post" action="/updateBlock" modelAttribute="block" class="form-group">
 			<label for="blockMonth">Block Month</label>
-			<input type="text" class="form-control" th:value="${blockUpdateable.blockMonth}" name="entryMonth" />
+			<input type="text" class="form-control" th:value="${blockUpdateable.blockMonth}" name="blockMonth" />
 			<br></br>
 			<label for="blockStartDate">Start Date</label>
-			<input class="form-control" type="number" th:value="${blockUpdateable.blockStartDate}" name="blockStartDate" />
+			<input class="form-control" type="Date" th:value="${blockUpdateable.blockStartDate}" name="blockStartDate" />
 			<br></br>
 			<label for="blockEndDate">End Date</label>
-			<input class="form-control" type="number" th:value="${blockUpdateable.blockEndDate}" name="blockEndDate" />
+			<input class="form-control" type="Date" th:value="${blockUpdateable.blockEndDate}" name="blockEndDate" />
 			<br></br>
 			<label for="numOfStudents">Number of Students</label>
 			<input class="form-control" type="number" th:value="${blockUpdateable.numOfStudents}" name="numOfStudents" />
@@ -43,8 +40,8 @@
 			<input class="form-control" type="number" th:value="${blockUpdateable.blockOrder}" name="blockOrder" />
 			<br></br>
 			
-			
-			<input name="id"  type="hidden" th:value="${updatableEntry.id}" />
+			<input name="block_id"  type="hidden" th:value="${blockUpdateable.id}" />
+			<input name="id"  type="hidden" th:value="${blockUpdateable.entry.id}" />
 			<button type="submit" class="btn btn-primary">Update</button>
 		</form> 
 	</div>	

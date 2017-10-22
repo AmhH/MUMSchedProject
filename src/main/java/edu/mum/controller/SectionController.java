@@ -21,13 +21,12 @@ import edu.mum.domain.Section;
 import edu.mum.service.BlockService;
 import edu.mum.service.CourseService;
 import edu.mum.service.FacultyService;
-import edu.mum.service.SectionsService;
+
 
 @Controller
 public class SectionController {
 
-	@Autowired
-	private SectionsService sectionService;
+
 	
 	@Autowired
 	private CourseService courseService;
@@ -37,7 +36,7 @@ public class SectionController {
 	
 	@Autowired
 	private FacultyService facultyService;
-	@RequestMapping({"/addSection"})
+	@RequestMapping({"/addSectionForm"})
 	public  String viewSection(Model model){
 		List<Course> courses = courseService.getAllCourser();
 		List<Faculty> faculties = facultyService.getAllfaculty();
@@ -45,22 +44,27 @@ public class SectionController {
 		model.addAttribute("courses", courses);
 		model.addAttribute("faculties", faculties);
 		model.addAttribute("blocks", blocks);
-		System.out.println(blocks.get(0).getBlockMonth());
 		return "addSection";
 	}	
 	@RequestMapping(value= {"/addSection"},method=RequestMethod.POST)
 	public @ResponseBody RedirectView saveSectioin(@RequestParam String sectionCode, @RequestParam String course, 
 			@RequestParam String faculty, @RequestParam String blockMonth,  @RequestParam int limitCapacity){	
+		
 		Block block = blockService.getBlock(blockMonth);
+		Faculty facultyAssigned = facultyService.getFacultyByName(faculty);
 		Course courseOffered = courseService.getCourseByName(course);
+		
 		Section newSection = new Section();
 		newSection.setBlock(block);
 		newSection.setCourse(courseOffered);
-		Faculty facultyAssigned = facultyService.getFacultyByName(faculty);
+		newSection.setFaculty(facultyAssigned);
+	
 		newSection.setSectionCode(sectionCode);
 		newSection.setLimitCapacity(limitCapacity);
-		newSection.setFaculty(facultyAssigned);
-		sectionService.saveSection(newSection, newSection.getBlock().getBlockMonth());
+		
+		block.getSections().add(newSection);		
+		blockService.saveBlock(block, block.getEntry().getId());
+			
 		return new RedirectView("/allEntry");
 	}
 }
