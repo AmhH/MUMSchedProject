@@ -17,7 +17,7 @@
 	
  
    <div class="container col-md-12" >
-   <form th:object="${newFaculty}" method="post"  class="form-horizontal">
+   <form th:action="@{/faculty/add}" th:object="${newFaculty}" method="post"  class="form-horizontal">
 			<fieldset>
 				<legend>Faculty Personal Detail</legend>
 				  <div class="alert alert-danger alert-dismissable fade in">
@@ -27,10 +27,7 @@
 						
 					</ul> 
 					</div>
-				<!-- <p>
-					<input type="hidden" th:field="*{id}" name="ID" />
-
-				</p> -->
+		
 				<table class="table">
 					<tr>
 						<td><label for="firstName">First Name : </label></td>
@@ -55,25 +52,14 @@
 						<td><input id="email" class="form-control"
 							th:field="*{userProfile.email}" /></td>
 					</tr>
-					<!-- <tr>
-						
-						<td><label for="specializations">Specializations :</label></td>
-						<td><select th:field="*{specializations}"
-							class="selectpicker" multiple="multiple">
-								<option th:each="special : ${specializations}"
-									th:value="${special.id}" th:text="${special.specalization}">specializations</option>
-						</select></td>
-					</tr> -->
-					<!-- <tr>
-						
-						<td><label for="course">Specializations :</label></td>
-						<td><select th:field="*{course}"
-							class="selectpicker" multiple="multiple">
-								<option th:each="course : ${courseList}"
-									th:value="${course.id}" th:text="${course.courseName}">specializations</option>
-						</select></td>
-					</tr> -->
 					<tr>
+					<td><label for="email">Specialization : </label></td>
+				<td><select th:field="*{specializations}"
+							class="selectpicker" multiple="multiple">
+								<option th:each="special : ${specializations}" th:value="${special.id}"
+									th:text="${special.specalization}">User Role</option>
+						</select></td>
+					
 						<td><label for="userName">User Name : </label></td>
 						<td><input id="userName" class="form-control mb-2 mb-sm-0"
 							type="text" th:field="*{userProfile.userName}" /></td>
@@ -93,7 +79,6 @@
 
 						</div>
 				
-
 			</fieldset>
 			</form>
 			</div> 
