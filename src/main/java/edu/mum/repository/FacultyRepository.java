@@ -6,4 +6,6 @@ import edu.mum.domain.Faculty;
 
 public interface FacultyRepository extends CrudRepository<Faculty, Long>{
 	public Faculty findByUserProfileFirstName(String firstName);
+	
+	public Faculty findByUserProfileId(Long id);
 }

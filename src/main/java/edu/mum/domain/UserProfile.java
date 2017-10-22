@@ -1,10 +1,9 @@
 package edu.mum.domain;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,7 +34,7 @@ public class UserProfile {
 	 @Size(min=4 ,max=50)
 	 private String lastName;
 	 @Size(min=4 ,max=50 )
-	// @Unique(service = UserProfileService.class, fieldName = "email", message = "{email.unique.violation}")
+	// @Unique(service = UserProfileService.class, fieldName = "userName", message = "{field.unique.violation}")
 	 private String userName;
 	 private String password;
 	 @Transient

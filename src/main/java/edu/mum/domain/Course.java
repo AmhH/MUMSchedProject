@@ -26,11 +26,10 @@ import javax.validation.constraints.NotNull;
 	@NotNull
 	private String courseName;
 	private String courseDesc;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="pre_reqCourse")
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Course> prerequisite;
 	private Boolean isPreReq;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Specialization> courseArea;
 
 	public Boolean getIsPreReq() {

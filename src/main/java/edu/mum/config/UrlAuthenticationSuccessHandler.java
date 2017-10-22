@@ -22,25 +22,30 @@ private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest httrequest, HttpServletResponse httpResponse, Authentication authentication)
 			throws IOException, ServletException {
-		
+		System.out.println("onAuthority : "+authentication.getAuthorities());
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		authorities.forEach(authority -> {
 			if(authority.getAuthority().equals("ROLE_Faculty")) {
 				try {
 					redirectStrategy.sendRedirect(httrequest, httpResponse, "/Faculty/home");
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			} else if(authority.getAuthority().equals("ROLE_Admin")) {
 				try {
-					redirectStrategy.sendRedirect(httrequest, httpResponse, "/Faculty/all");
+					redirectStrategy.sendRedirect(httrequest, httpResponse, "/faculty/all");
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				
 					e.printStackTrace();
 				}
 			} else {
-	            throw new IllegalStateException();
+				try {
+					redirectStrategy.sendRedirect(httrequest, httpResponse, "/guestPage");
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
 	        }
 		});
 		

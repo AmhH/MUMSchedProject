@@ -25,4 +25,8 @@ public class CourseService {
 	public Course getCourseByName(String courseName) {
 		return courseRepository.findByCourseName(courseName);
 	}
+	
+	public Course getCourseById(Long id){
+		return courseRepository.findOne(id);
+	}
 }

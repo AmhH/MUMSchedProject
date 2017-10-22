@@ -12,6 +12,7 @@ public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	// @Unique(service = RoleService.class, fieldName = "role", message = "{field.unique.violation}")
 	private String role;
 	private String description;
 	public long getId() {

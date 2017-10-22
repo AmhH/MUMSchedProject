@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import edu.mum.domain.Faculty;
+import edu.mum.domain.UserProfile;
 import edu.mum.service.CourseService;
 import edu.mum.service.FacultyService;
 import edu.mum.service.RoleService;
@@ -52,11 +53,18 @@ public class FacultyController {
 	}
 
 	@PostMapping(value ="/add")
-	public String saveFaculty(@Valid @ModelAttribute("newFaculty") Faculty faculty, BindingResult error)
+	public String saveFaculty(@Valid @ModelAttribute("newFaculty") Faculty faculty, BindingResult error,Model model)
 	{
 		if (error.hasErrors())
 
 		{
+			if (!model.containsAttribute("specializations")){
+				model.addAttribute("specializations", specializationsService.findAllspecalization());
+				}
+			if(!model.containsAttribute("userTypeList")){
+				model.addAttribute("userTypeList", roleService.getAll());
+			}
+				
 			return "addFaculty";
 		}
 
@@ -80,7 +88,7 @@ public class FacultyController {
 	public String deleteFaculty(@PathVariable("id") Long id, Model model) {
 		facultyService.deleteFaculty(id);
 
-		return "redirect:/all";
+		return "redirect:/faculty/all";
 	}
 
 	@GetMapping(value = "/update/{id}")
@@ -88,6 +96,7 @@ public class FacultyController {
 		model.addAttribute("newFaculty", facultyService.getFacultyById(id));
 		model.addAttribute("specializations", specializationsService.findAllspecalization());
 		model.addAttribute("courseList", courseService.getAllCourser());
+		model.addAttribute("userTypeList", roleService.getAll());
 		return "editFaculty";
 	}
 
@@ -111,25 +120,38 @@ public class FacultyController {
 		return "sidebar";
 	}
 	
-	@RequestMapping(value = "{id}", method = RequestMethod.POST)
-	public Faculty updatePersonalInfro(@PathVariable Long id, @RequestBody Faculty faculty) throws Exception{
-	    Faculty f = facultyService.getFacultyById(id);
-	    if(f==null)
-	    	throw new Exception();
-	     f.getUserProfile().setEmail(faculty.getUserProfile().getEmail());
-	     f.getUserProfile().setUserName(faculty.getUserProfile().getUserName());
-	     f.getUserProfile().setPassword(faculty.getUserProfile().getPassword());
-	    return facultyService.saveFaculty(faculty);
+	@RequestMapping(value ="/update", method = RequestMethod.POST)
+	public String updatePersonalInfro(@Valid @ModelAttribute("newFaculty") Faculty faculty,BindingResult error,Model model){
+	   
+	  if(error.hasErrors()){
+		  if (!model.containsAttribute("specializations")){
+				model.addAttribute("specializations", specializationsService.findAllspecalization());
+				}
+		if (!model.containsAttribute("courseList")){
+				model.addAttribute("courseList", courseService.getAllCourser());
+				}
+		  return "editFaculty";
+	  }
+	    facultyService.saveFaculty(faculty);
+	    System.out.println(faculty.getUserProfile().getRoles().get(0));
+	    return "manageFaculty";
 	     
 	}
 	
-	@PostMapping("/editPersonalInfo")
-	public @ResponseBody Faculty updatePersonaInfo(@Valid @RequestBody Faculty faculty)
+	@GetMapping("/update")
+	public String  updateFacultyProfile(Model model)
 	{
-		Faculty existObject=facultyService.getFacultyById(faculty.getId());
-		existObject.getUserProfile().setUserName(faculty.getUserProfile().getUserName());
-		existObject.getUserProfile().setPassword(faculty.getUserProfile().getPassword());
-		return facultyService.saveFaculty(faculty);
-	}
+		UserProfile user=userProfileService.LoggedInUser();
+		model.addAttribute("newFaculty",user);
+		if (!model.containsAttribute("specializations")){
+		model.addAttribute("specializations", specializationsService.findAllspecalization());
+		}
+		if (!model.containsAttribute("courseList")){
+		model.addAttribute("courseList", courseService.getAllCourser());
+		}
+		return "editFaculty";
+		
+		
+	}	
 			
 }

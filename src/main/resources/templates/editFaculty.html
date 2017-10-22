@@ -39,7 +39,7 @@
 	</nav>
 
 	<div class="container col-md-6">
-		<form th:object="${newFaculty}" method="post" class="form-horizontal"
+		<form  th:action="@{/faculty/update}"  th:object="${newFaculty}" method="post" class="form-horizontal"
 			id="editForm" action="/faculty/edit">
 			<div class="alert alert-danger alert-dismissable fade in"
 				id="personalInfo">
@@ -51,29 +51,57 @@
 					<input type="hidden" th:field="*{id}" name="ID" />
 
 				</p>
+				<div sec:authorize="hasRole('ROLE_Admin')">
+				
 				<p>
+					<label for="firstName">First Name : </label> <input id="firstName"
+						class="form-control mb-2 mb-sm-0" type="text"
+						th:field="*{userProfile.firstName}" />
+				</p>
+				<p>
+					<label for="lastName">Last Name : </label> <input id="lastName"
+						class="form-control mb-2 mb-sm-0" type="text"
+						th:field="*{userProfile.lastName}" />
+				</p>
+				<p>
+					<label for="roles">User Role :</label> <select
+						th:field="*{userProfile.roles}" class="selectpicker"
+						multiple="multiple">
+						<option th:each="role : ${userTypeList}" th:value="${role.id}"
+							th:text="${role.role}">User Role</option>
+					</select>
+				</p>
+				<p>
+					<label for="birthdate">Birth Date :</label> <input id="birthdate"
+						class="form-control mb-2 mb-sm-0" type="date"
+						th:field="*{userProfile.birthdate}" />
+				</p>
+
+              </div>
+				<p>
+
 					<label for="email">Email : </label> <input id="email"
 						class="form-control" th:field="*{userProfile.email}" />
 				</p>
 				<p>
-					<label for="userName">User Name : </label> <input id="userName"
-						class="form-control mb-2 mb-sm-0" type="text"
-						th:field="*{userProfile.userName}" />
-				</p>
-				<p>
-					<label for="password">Password : </label> <input type="password"
-						class="form-control mb-2 mb-sm-0" id="password"
-						th:field="*{userProfile.password}" />
-				</p>
-				<div class="row">
-					<div class="col-xs-6 col-sm-6 col-md-6">
-						<input type="submit" class="btn btn-lg btn-primary btn-block"
-							id="btnPersonal" value="Save"
-							onclick="personInfroSubmit('editForm')" />
-					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6"></div>
+							<label for="userName">User Name : </label> <input id="userName"
+								class="form-control mb-2 mb-sm-0" type="text"
+								th:field="*{userProfile.userName}" />
+						</p>
+						<p>
+							<label for="password">Password : </label> <input type="password"
+								class="form-control mb-2 mb-sm-0" id="password"
+								th:field="*{userProfile.password}" />
+						</p>
+						<div class="row">
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<input type="submit" class="btn btn-lg btn-primary btn-block"
+									id="btnPersonal" value="Save"
+									onclick="personInfroSubmit('editForm')" />
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6"></div>
 
-				</div>
+						</div>
 			</div>
 
 			<div class="alert alert-danger alert-dismissable fade in"
