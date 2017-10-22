@@ -127,7 +127,8 @@ public class StudentRegController {
 			return "studentregister";
 		}
 		 
-		sectionservice
+		//regsubsystem.register(section);
+		
 	//STUDENT SAVED IN PERSISTENCE
 		studentService.save(student);
 		
