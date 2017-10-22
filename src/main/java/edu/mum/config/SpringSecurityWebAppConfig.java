@@ -13,55 +13,49 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import edu.mum.repository.UserRepository;
 import edu.mum.service.CustomUserDetailsService;
 
-@EnableGlobalMethodSecurity(prePostEnabled=true)
-@EnableJpaRepositories(basePackageClasses=UserRepository.class)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableJpaRepositories(basePackageClasses = UserRepository.class)
 @EnableWebSecurity
 @Configuration
 public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
-  
+
 	@Autowired
-    CustomUserDetailsService userdetailsService;
-	
+	CustomUserDetailsService userdetailsService;
+
 	@Autowired
 	UrlAuthenticationSuccessHandler successHandler;
 
-	 @Override
-	 protected void configure(HttpSecurity http) throws Exception {
-		 http.csrf().disable();
-		/* http.authorizeRequests()
-	         .anyRequest().authenticated()
-	        .and().formLogin().loginPage("/login").successHandler(successHandler);*/
-	        
-								 	
-	          
-	 }
-	 
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable();
+		/*
+		 * http.authorizeRequests() .anyRequest().authenticated()
+		 * .and().formLogin().loginPage("/login").successHandler(successHandler)
+		 * ;
+		 */
+
+	}
+
 	@Autowired
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth   
-		    .userDetailsService(userdetailsService)
-		    .passwordEncoder(getPasswordEncoder());
-		    
+		auth.userDetailsService(userdetailsService).passwordEncoder(getPasswordEncoder());
+
 	}
-	
-	
-	private PasswordEncoder getPasswordEncoder()
-	{
+
+	private PasswordEncoder getPasswordEncoder() {
 		return new PasswordEncoder() {
-			
+
 			@Override
 			public boolean matches(CharSequence charSequence, String s) {
 				return true;
 			}
-			
+
 			@Override
 			public String encode(CharSequence charSequence) {
 				System.out.println("Security");
-			      return charSequence.toString();
+				return charSequence.toString();
 			}
 		};
-   }
-	
-	
-	 
+	}
+
 }

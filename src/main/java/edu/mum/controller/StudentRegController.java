@@ -21,6 +21,7 @@ import edu.mum.registersubsystem.impl.RegisterSubsystemFacade;
 import edu.mum.repository.ScheduleRepository;
 import edu.mum.service.RoleService;
 import edu.mum.service.ScheduleService;
+import edu.mum.service.SectionsService;
 import edu.mum.service.StudentService;
 import edu.mum.service.UserProfileService;
 
@@ -41,6 +42,8 @@ public class StudentRegController {
 	ScheduleRepository schedulerep;
 	@Autowired
 	RegisterSubsystemFacade regsubsystem;
+	@Autowired
+	SectionsService sectionservice;
 
 	
 	 @GetMapping(value = "/student")
@@ -118,13 +121,13 @@ public class StudentRegController {
 	
 	
 	@RequestMapping(value={"/student/register/addsection"}, method = RequestMethod.POST)
-    public String registerStudent(@Valid @ModelAttribute("newstudent")Student student, BindingResult bindingresult, Model model) {
+    public String registerStudent(@Valid @ModelAttribute("newstudent") Student student, BindingResult bindingresult, Model model) {
 		
 		if(bindingresult.hasErrors()){
 			return "studentregister";
 		}
 		 
-		
+		sectionservice
 	//STUDENT SAVED IN PERSISTENCE
 		studentService.save(student);
 		
