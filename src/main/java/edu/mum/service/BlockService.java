@@ -22,7 +22,6 @@ public class BlockService{
 
 	public void saveBlock(Block block, Long entry_id) {
 		Entry currentEntry = entryService.getEntry(new Long(entry_id));
-		System.out.println(currentEntry.getEntryMonth());
 		block.setEntry(currentEntry);
 		currentEntry.getBlocks().add(block);
 		entryService.saveEntry(currentEntry);

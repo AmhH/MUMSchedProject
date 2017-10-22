@@ -4,12 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import edu.mum.domain.Block;
 import edu.mum.domain.Course;
-import edu.mum.domain.Entry;
 import edu.mum.domain.Section;
 import edu.mum.repository.SectionRepository;
+
 @Service 
 public class SectionsService {
 	@Autowired
@@ -18,11 +17,7 @@ public class SectionsService {
 	@Autowired
 	private BlockService blockService;
 
-	public void saveSection(Section section, String blockMonth) {
-		Block currentBlock = blockService.getBlock(blockMonth);
-		section.setBlock(currentBlock);
-		currentBlock.getSections().add(section);		
-		blockService.saveBlock(currentBlock, currentBlock.getId());
+	public void saveSection(Section section) {	
 		sectionRepository.save(section);
 	}
 

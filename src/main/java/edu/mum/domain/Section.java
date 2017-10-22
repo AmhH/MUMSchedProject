@@ -2,6 +2,7 @@ package edu.mum.domain;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -34,7 +35,7 @@ public class Section {
 	private Block block;
 	
 	@ManyToMany(mappedBy="sections")
-	List<Student> students;
+	List<Student> students = new ArrayList<Student>() ;
 	
 	public Section() {}
 	
