@@ -117,13 +117,14 @@ public class StudentRegController {
 	 
 	
 	
-	/*@RequestMapping(value={"/student/register/addsection"}, method = RequestMethod.POST)
+	@RequestMapping(value={"/student/register/addsection"}, method = RequestMethod.POST)
     public String registerStudent(@Valid @ModelAttribute("newstudent")Student student, BindingResult bindingresult, Model model) {
 		
 		if(bindingresult.hasErrors()){
 			return "studentregister";
 		}
 		 
+		
 	//STUDENT SAVED IN PERSISTENCE
 		studentService.save(student);
 		
@@ -131,5 +132,5 @@ public class StudentRegController {
  		model.addAttribute(studentService.getStudentByEmail(student.getUserprofile().getEmail()));
           
    	return "addsuccess";
-    }*/
+    }
 }
