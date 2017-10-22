@@ -38,14 +38,14 @@ INSERT INTO block (id, block_end_date, block_month, block_start_date, entry_id, 
 INSERT INTO block (id, block_end_date, block_month, block_start_date, entry_id, block_order, num_of_students) VALUES (9,'2017-01-30','May','2017-01-01',1,8,100);
 
 
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (1,'395','FPP',NULL,NULL,'fundamental programming practices');
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (2,'401','MPP',NULL,NULL,'Modern programming practices');
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (3,'475','WAP',NULL,NULL,'Web application programming ');
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (4,'504','Algorithm',NULL,NULL,'Alogorithm');
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (5,'300','SCI',NULL,NULL,'Science of Creative Intelligence');
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (6,'572','MWA',NULL,NULL,'Modern Web Application');
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (7,'522','BIGData',NULL,NULL,'Big Data');
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (8,'544','EA',NULL,NULL,'Enterprise Architecture');
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (9,'425','SWE',NULL,NULL,'Software Engineering');
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (10,'525','ASD',NULL,NULL,'Advanced Software Development');
-INSERT INTO course (id, course_code, course_name, pre_request_course_id, is_pre_req, course_desc) VALUES (11,'545','WAA',NULL,NULL,NULL);
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (1,'395','FPP',NULL,'fundamental programming practices');
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (2,'401','MPP',NULL,'Modern programming practices');
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (3,'475','WAP',NULL,'Web application programming ');
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (4,'504','Algorithm',NULL,'Alogorithm');
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (5,'300','SCI',NULL,'Science of Creative Intelligence');
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (6,'572','MWA',NULL,'Modern Web Application');
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (7,'522','BIGData',NULL,'Big Data');
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (8,'544','EA',NULL,'Enterprise Architecture');
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (9,'425','SWE',NULL,'Software Engineering');
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (10,'525','ASD',NULL,'Advanced Software Development');
+INSERT INTO course (id, course_code, course_name,  is_pre_req, course_desc) VALUES (11,'545','WAA',NULL,NULL);
