@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -25,10 +26,11 @@ import javax.validation.constraints.NotNull;
 	private int courseCode;
 	@NotNull
 	private String courseName;
-	private String courseDesc;
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "course_preReqCourse")
 	private List<Course> prerequisite;
 	private Boolean isPreReq;
+	private String courseDesc;
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Specialization> courseArea;
 
