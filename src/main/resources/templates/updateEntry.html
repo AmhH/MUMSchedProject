@@ -21,7 +21,7 @@
 </head>
 <body>
 	<div th:replace="fragments/header :: header"> </div>
-	<div class="updateForm">	
+	<div class="addForm">	
 		<form method="post" action="/updateEntry" modelAttribute="entry" class="form-group">
 			<label for="entryMonth">Entry Month</label>
 			<input type="text" class="form-control" th:value="${updatableEntry.entryMonth}" name="entryMonth" />

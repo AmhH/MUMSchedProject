@@ -29,7 +29,7 @@ public class EntryService {
 	}
 
 	public Entry getEntryByMonth(String entryMonth) {
-		return entryRepository.findEntryByEntryMonth(entryMonth);
+		return entryRepository.findByEntryMonth(entryMonth);
 	}
 
 	public void deleteEntry(Long id) {

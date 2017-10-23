@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <style>
-.entry {
+.entrys {
 	width: 50%;
 }
 </style>
@@ -33,9 +33,9 @@
 	<hr />
 	<div class="well form-group">
 		<form action="#" th:action="@{/schedule/create}" method="post">
-			<div class="entry">
-				Select 	Entry  <br /> <br /><select class="form-control"
-					name="entry">
+			<div class="entrys">
+				Select Entry <br /> <br />
+				<select class="form-control" name="entry">
 
 					<option th:each="entry : ${entries}" th:value="${entry.entryMonth}"
 						th:text="${entry.entryMonth}">Option</option>
@@ -49,8 +49,3 @@
 </body>
 </html>
 
-
-<!-- 	
-	INSERT INTO Entry VALUES (3,"August",50,50,100)
-INSERT INTO Entry VALUES (3,"August",50,50,100)
-INSERT INTO Entry VALUES (3,"August",50,50,100) -->
