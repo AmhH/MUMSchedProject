@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import edu.mum.domain.Block;
 import edu.mum.domain.Course;
 import edu.mum.domain.Section;
+import edu.mum.domain.Student;
 import edu.mum.repository.SectionRepository;
 
 @Service 
@@ -53,4 +54,9 @@ public class SectionsService {
 		section.setBlock(block);
 		return section;
 	}
+	
+	public List<Student> getStudentBySection(Long id){
+		return (List<Student>) sectionRepository.findStudentById(id);
+	}
+	
 }

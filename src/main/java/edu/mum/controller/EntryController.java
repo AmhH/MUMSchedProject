@@ -21,6 +21,7 @@ public class EntryController {
 	@Autowired
 	private EntryService entryService;
 	
+	
 	@RequestMapping("/addEntry")
 	public String saveEntry(){
 		return "addEntry";

@@ -25,13 +25,16 @@ public class ScheduleService {
 	private Schedule schedule = new Schedule();
 	
 
-	public Schedule generateSched(String entryMon) {
+	public Schedule generateSched(String entryMonth) {
 		
-		Entry entry = (Entry) entryService.getEntryByMonth(entryMon);
+		
+		System.out.println("========>Generate schedule service called "+entryMonth);
+		Entry entry = (Entry) entryService.getEntryByMonth(entryMonth);
+		System.out.println("==== generate Sched entry "+entry.getNumOfFpp());
 
 		entry.getBlocks().forEach(sectionHelper::createSectionForBlock);
 
-		entry.getBlocks().forEach(facultyHelper::assignCourseAndFaculty);
+		//entry.getBlocks().forEach(facultyHelper::assignCourseAndFaculty);
 		
 		schedule.setEntry(entry);
 		schedule.setGeneratedDate(new Date(new java.util.Date().getTime()));

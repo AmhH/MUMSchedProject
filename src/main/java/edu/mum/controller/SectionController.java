@@ -21,12 +21,14 @@ import edu.mum.domain.Section;
 import edu.mum.service.BlockService;
 import edu.mum.service.CourseService;
 import edu.mum.service.FacultyService;
+import edu.mum.service.SectionsService;
 
 
 @Controller
 public class SectionController {
 
-
+	@Autowired
+	private SectionsService sectionService;
 	
 	@Autowired
 	private CourseService courseService;
@@ -46,6 +48,7 @@ public class SectionController {
 		model.addAttribute("blocks", blocks);
 		return "addSection";
 	}	
+	
 	@RequestMapping(value= {"/addSection"},method=RequestMethod.POST)
 	public @ResponseBody RedirectView saveSectioin(@RequestParam String sectionCode, @RequestParam String course, 
 			@RequestParam String faculty, @RequestParam String blockMonth,  @RequestParam int limitCapacity){	
@@ -62,9 +65,36 @@ public class SectionController {
 		newSection.setSectionCode(sectionCode);
 		newSection.setLimitCapacity(limitCapacity);
 		
-		block.getSections().add(newSection);		
+		block.getSections().add(newSection);
+		
 		blockService.saveBlock(block, block.getEntry().getId());
 			
 		return new RedirectView("/allEntry");
 	}
+	
+	@RequestMapping(value= {"/listSections"}, method=RequestMethod.POST)
+	public String listSectioin(@RequestParam String block_id, Model model){	
+		Block block = blockService.getBlockById(Long.parseLong(block_id));
+		List<Section> sections = block.getSections();
+		model.addAttribute("sections", sections);	
+		return "sectionList";
+	}
+	
+	@RequestMapping(value= {"/findSection"},method=RequestMethod.POST)
+	public String findBlock(@RequestParam String id, Model model){
+		
+		Section sectionUpdateable = sectionService.getSectionById(new Long(id));
+		model.addAttribute("sectionUpdateable", sectionUpdateable);
+		
+		List<Course> courses = courseService.getAllCourser();
+		List<Faculty> faculties = facultyService.getAllfaculty();
+		List<Block> blocks = blockService.getAllBlock();
+		model.addAttribute("courses", courses);
+		model.addAttribute("faculties", faculties);
+		model.addAttribute("blocks", blocks);
+		
+		return "updateSectionForm";
+	}
+	
+		
 }

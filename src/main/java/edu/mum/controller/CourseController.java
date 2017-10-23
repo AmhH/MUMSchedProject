@@ -51,6 +51,7 @@ public class CourseController {
 		{
 			return "addCourse";
 		}
+		course.setIsPreReq(false);
 		if(course.getPrerequisite()!=null){
 			course.getPrerequisite().forEach(c->c.setIsPreReq(true));
 		}

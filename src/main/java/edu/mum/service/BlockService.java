@@ -51,4 +51,10 @@ public class BlockService{
 		blockRepository.save(block);
 		
 	}
+	
+	public List<Block> getAllBlocksByEntryId(Long id){
+		return blockRepository.findByEntryId(id);
+		
+	}
+	
 }

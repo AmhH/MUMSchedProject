@@ -2,7 +2,9 @@ package edu.mum.domain;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,17 +17,17 @@ public class Schedule {
 
  	 @Id
 	 @GeneratedValue(strategy = GenerationType.AUTO)
-	  private Long Id;
- 	  @OneToOne
+	  private Long id;
+ 	  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
  	  @JoinColumn (name="entry_id")
 	  private Entry entry;
 	  private Date generatedDate;
 	  private String status;
 	public Long getId() {
-		return Id;
+		return id;
 	}
 	public void setId(Long id) {
-		Id = id;
+		id = id;
 	}
 	public Entry getEntry() {
 		return entry;

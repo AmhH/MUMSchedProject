@@ -14,8 +14,9 @@ import edu.mum.domain.Entry;
 
 
 public interface EntryRepository extends CrudRepository<Entry, Long>{
-	@Query("select e from Entry e where e.entryMonth = entryMonth")
-	public Entry findEntryByEntryMonth(@Param("entryMonth") String entryMonth);
+
+	
+	public Entry findByEntryMonth(String entry);
 	
 	@Modifying 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false) 

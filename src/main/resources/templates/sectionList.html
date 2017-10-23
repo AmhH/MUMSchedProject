@@ -15,65 +15,49 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" th:integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" th:crossorigin="anonymous"></script>
 
-
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-
 <meta charset="ISO-8859-1" />
 <title>Insert title here</title>
 </head>
 <body>
 <div th:replace="fragments/header :: header"> </div>
-<div class="mainContainer">
-							<form method="post" action="/addBlockForm">
-					        	<input name="id"  type="hidden" th:value="${entry.id}" />
-					        	<input class="btn btn-primary" type="submit" value="Add Block" />
-					        	
+		<div class="mainContainer">
+							<form action="/addSectionForm">
+					        	<input class="btn btn-primary" type="submit" value="Add Sections" />					        	
 					        </form>
 			<table class="table">
 		    		
 				      <tr>
-				        <th>Block Month</th>
-				        <th>Block Start Date</th>
-				        <th>Block End Date</th>
-				        <th>No of Students</th>
-				        <th>block priority</th>
+				        <th>Section Code</th>
+				        <th>Block</th>
+				        <th>Course</th>
+				        <th>Faculty</th>
+				        <th>Capacity</th>
 				      </tr>
 				  
-			    	<tr th:each="block: ${blocks}">
-			    		<td th:text="${block.blockMonth}"></td>
-			    		<td th:text="${block.blockStartDate}"></td>
-			    		<td th:text="${block.blockEndDate}"></td>
-			    		<td th:text="${block.numOfStudents}"></td>
-			    		<td th:text="${block.blockOrder}"></td>
+			    	<tr th:each="section: ${sections}">
+			    		<td th:text="${section.sectionCode}"></td>
+			    		<td th:text="${section.block.blockMonth}"></td>
+			    		<td th:text="${section.course.courseCode}"></td>
+			    		<td th:text="${section.faculty.userProfile.firstName}"></td>
+			    		<td th:text="${section.limitCapacity}"></td>
 			    		<td>
 			    			<div class="buttonDiv">
-						        <form method="post" action="/deleteBlock">
-						        	<input name="id"  type="hidden" th:value="${block.id}" />
-						        	<input name="entry_id"  type="hidden" th:value="${entry.id}" />
+						        <form method="post" action="/deleteSection">
 						        	<input class="btn btn-danger" type="submit" value="Delete" />
 						        </form>
 					        </div>
 					     </td>
 				       	<td>
 					        <div class="buttonDiv">
-						        <form method="post" action="/findBlock">
-						        	<input name="id"  type="hidden" th:value="${block.id}" />
-						        	<input name="entry_id"  type="hidden" th:value="${entry.id}" />
+						        <form method="post" action="/findSection">
+						        	<input name="id"  type="hidden" th:value="${section.id}" />
 						        	<input class="btn btn-primary" type="submit" value="Update" />
 						        </form>
 					        </div>
-			       		 </td>
-			       		 <td>
-					        <div class="buttonDiv">
-						        <form method="post" action="/listSections">
-						        	<input name="block_id"  type="hidden" th:value="${block.id}" />
-						        	<input name="entry_id"  type="hidden" th:value="${entry.id}" />
-						        	<input class="btn btn-primary" type="submit" value="Sections" />
-						        </form>
-					        </div>
-			       		 </td>       
+			       		 </td>    
 			    	</tr>	
 		    	</table>
-</div>		    		
+</div>	
 </body>
 </html>
