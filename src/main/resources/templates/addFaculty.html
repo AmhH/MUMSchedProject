@@ -67,12 +67,12 @@
 						<td><input type="password" class="form-control mb-2 mb-sm-0"
 							id="password" th:field="*{userProfile.password}" /></td>	
 				
-				<!-- 	<td><label for="course">Specialization : </label></td>
+					<td><label for="course">Course : </label></td>
 				<td><select th:field="*{course}"
 							class="selectpicker" multiple="multiple">
-								<option th:each="special : ${specializations}" th:value="${special.id}"
-									th:text="${special.specalization}">User Role</option>
-						</select></td> -->
+								<option th:each="course : ${courseList}" th:value="${course.id}"
+									th:text="${course.courseName}">Course Name</option>
+						</select></td> 
 					</tr>
 				</table>
 
