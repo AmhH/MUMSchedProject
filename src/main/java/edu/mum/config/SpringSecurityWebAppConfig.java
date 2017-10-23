@@ -30,6 +30,7 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
 		http
 		          .csrf().disable()
 		           .authorizeRequests()
+		           .antMatchers("/faculty/add").hasAuthority("ROLE_Admin")
 		           .anyRequest().authenticated()
 		           .and().formLogin().successHandler(successHandler);
 	

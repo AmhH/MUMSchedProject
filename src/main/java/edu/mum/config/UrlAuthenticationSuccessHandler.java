@@ -27,7 +27,7 @@ private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 		authorities.forEach(authority -> {
 			if(authority.getAuthority().equals("ROLE_Faculty")) {
 				try {
-					redirectStrategy.sendRedirect(httrequest, httpResponse, "/Faculty/home");
+					redirectStrategy.sendRedirect(httrequest, httpResponse, "/faculty/home");
 				} catch (Exception e) {
 					
 					e.printStackTrace();
