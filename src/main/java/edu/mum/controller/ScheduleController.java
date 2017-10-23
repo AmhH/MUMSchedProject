@@ -17,6 +17,7 @@ import edu.mum.service.EntryService;
 import edu.mum.service.ScheduleService;
 
 @Controller
+@RequestMapping("/admin")
 public class ScheduleController {
 
 	// inject via application.properties

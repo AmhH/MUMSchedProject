@@ -29,6 +29,7 @@
                      <li class="active" sec:authorize="hasRole('ROLE_Admin')"><a th:href="@{/addstudent}">Add Student</a></li>
                      <li class="active" sec:authorize="hasRole('ROLE_Admin')"><a th:href="@{/course/all}">Manage Course</a></li>
                      <li class="active" sec:authorize="hasRole('ROLE_Admin')"><a th:href="@{/admin/edit}">Manage Course</a></li>
+                     <li class="active" sec:authorize="hasRole('ROLE_Admin')"><a th:href="@{/admin/schedule/list}">Manage Schedule</a></li>
                       <li class="active" sec:authorize="hasRole('ROLE_Faculty')"><a th:href="@{/faculty/edit}">Edit Profile</a></li>
                        <li class="active" sec:authorize="hasRole('ROLE_Faculty')"><a th:href="@{/faculty/showsection}">Show Sections</a></li>
                        <li class="active" sec:authorize="hasRole('ROLE_Student')"><a th:href="@{/student/updatestudent}">Edit Profile</a></li>

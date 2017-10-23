@@ -20,7 +20,7 @@
 	<div th:replace="fragments/header :: header"></div>
 	<table class="table table-hover table-inverse">
 		<h4>
-			<a href="/schedule/create"><i class="fa fa-hand-o-up">CreateSchedule</i></a>
+			<a href="/admin/schedule/create"><i class="fa fa-hand-o-up">CreateSchedule</i></a>
 		</h4>
 		<br />
 		<h4>
@@ -42,9 +42,9 @@
 			<td th:text="${schedule.generatedDate}">GeneratedDate</td>
 			<td th:text="${schedule.status}">Status</td>
 			<td>
-					<a th:href="@{|/schedule/view/${schedule.id}}">ViewSchedule</a>
-					<a th:href="@{|/schedule/edit/${schedule.id}}">Edit</a>
-					<a th:href="@{|/schedule/delete/${schedule.id}}">Delete</a>
+					<a th:href="@{|/admin/schedule/view/${schedule.id}}">ViewSchedule</a>
+					<a th:href="@{|/admin/schedule/edit/${schedule.id}}">Edit</a>
+					<a th:href="@{|/admin/schedule/delete/${schedule.id}}">Delete</a>
 				
 			</td>
 
