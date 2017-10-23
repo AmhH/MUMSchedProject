@@ -45,8 +45,7 @@ public class ScheduleController {
 	@RequestMapping(value = "/schedule/create", method = RequestMethod.POST)
 	public String generateSchedule(@RequestParam("entry") String entry, Model model) {
 		System.out.println("========>Generate schedule Controller Entry  "+entry);
-		System.out.println("========>Generate schedule Controller called ");
-		
+	
 		Schedule schedule = scheduleService.generateSched(entry);
 		System.out.println("========>Controller MEra Schedule" + schedule.toString());
 		model.addAttribute("schedule", schedule);
