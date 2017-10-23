@@ -91,7 +91,7 @@ public class FacultyController {
 		model.addAttribute("specializations", specializationsService.findAllspecalization());
 		model.addAttribute("courseList", courseService.getAllCourser());
 		model.addAttribute("userTypeList", roleService.getAll());
-		return "editFaculty";
+		return "AdminEditFaculty";
 	}
 
 	@GetMapping(value = "/all")
