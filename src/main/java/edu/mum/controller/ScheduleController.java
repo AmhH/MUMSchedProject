@@ -30,7 +30,7 @@ public class ScheduleController {
 	@RequestMapping("/schedule/list")
 	public String scheduleList(Map<String, Object> model) {
 
-		// model.put("schedules", scheduleService.getAllSchedule());
+		model.put("schedule", scheduleDao.findAll());
 		return "schedules";
 	}
 
@@ -44,36 +44,39 @@ public class ScheduleController {
 
 	@RequestMapping(value = "/schedule/create", method = RequestMethod.POST)
 	public String generateSchedule(@RequestParam("entry") String entry, Model model) {
-		@SuppressWarnings("unused")
+		System.out.println("========>Generate schedule Controller Entry  "+entry);
+		System.out.println("========>Generate schedule Controller called ");
+		
 		Schedule schedule = scheduleService.generateSched(entry);
-		System.out.println("========>Controller MEra Schedule" + schedule);
+		System.out.println("========>Controller MEra Schedule" + schedule.toString());
 		model.addAttribute("schedule", schedule);
 		return "schedules";
 	}
 
-	@RequestMapping(value = "/schedule/edit/{id}", params = "edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/schedule/edit/{id}", method = RequestMethod.GET)
 	public String editSchedule(@PathVariable("id") Long id, Model model) {
 		// Schedule schedule = scheduleService.generateSched(entry)
 		model.addAttribute("schedule", scheduleDao.findOne(id));
 		return "editSched";
 	}
 
-	@RequestMapping(value = "/schedule/edit/{id}", params = "delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/schedule/delete/{id}",  method = RequestMethod.GET)
 	public String deleteSchedule(@PathVariable("id") Long id, Model model) {
 		scheduleDao.delete(id);
 		model.addAttribute("schedule", scheduleDao.findAll());
 		return "schedules";
 	}
 
-	@RequestMapping(value = "/schedule/edit/{id}", params = "view", method = RequestMethod.GET)
+	@RequestMapping(value = "/schedule/view/{id}", method = RequestMethod.GET)
 	public String viewSchedule(@PathVariable("id") Long id, Model model) {
 
 		model.addAttribute("blocks", scheduleDao.findOne(id).getEntry().getBlocks());
-		return "viewSched";
+		return "viewSchedule";
 	}
 
-	@RequestMapping(value = "/schedule/edit", params="update", method = RequestMethod.POST)
-	public String updateSchedule(@RequestParam("status") String status, @PathVariable("id") Long id, Model model) {
+	@RequestMapping(value = "/schedule/update", method = RequestMethod.POST)
+	public String updateSchedule(@RequestParam("status") String status, @RequestParam("update") Long id, Model model) {
+		System.out.println("===== update id "+id);
 		Schedule schedule = scheduleDao.findOne(id);
 		schedule.setStatus(status);
 		scheduleDao.save(schedule);

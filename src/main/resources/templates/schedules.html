@@ -42,13 +42,10 @@
 			<td th:text="${schedule.generatedDate}">GeneratedDate</td>
 			<td th:text="${schedule.status}">Status</td>
 			<td>
-
-				<form action="#" th:action="@{/schedule/edit/${schedule.entry.id}}"
-					th:object="${newSchedule}" method="get">
-					<input type="button" name="view" th:value="ViewSchedule" /><br />
-					<input type="button" name="edit" th:value="Edit" /><br /> <input
-						type="button" name="delete" th:value="Delete" /><br />
-				</form>
+					<a th:href="@{|/schedule/view/${schedule.id}}">ViewSchedule</a>
+					<a th:href="@{|/schedule/edit/${schedule.id}}">Edit</a>
+					<a th:href="@{|/schedule/delete/${schedule.id}}">Delete</a>
+				
 			</td>
 
 		</tr>

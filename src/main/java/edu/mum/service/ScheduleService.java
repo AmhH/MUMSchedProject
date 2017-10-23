@@ -27,6 +27,8 @@ public class ScheduleService {
 
 	public Schedule generateSched(String entryMon) {
 		
+		
+		System.out.println("========>Generate schedule service called ");
 		Entry entry = (Entry) entryService.getEntryByMonth(entryMon);
 
 		entry.getBlocks().forEach(sectionHelper::createSectionForBlock);

@@ -15,17 +15,17 @@ public class Schedule {
 
  	 @Id
 	 @GeneratedValue(strategy = GenerationType.AUTO)
-	  private Long Id;
+	  private Long id;
  	  @OneToOne
  	  @JoinColumn (name="entry_id")
 	  private Entry entry;
 	  private Date generatedDate;
 	  private String status;
 	public Long getId() {
-		return Id;
+		return id;
 	}
 	public void setId(Long id) {
-		Id = id;
+		id = id;
 	}
 	public Entry getEntry() {
 		return entry;
