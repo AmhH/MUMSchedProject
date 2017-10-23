@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,11 +47,11 @@ public class StudentRegController {
 
 	
 	 @GetMapping(value = "/student")
-	public String studentRegForm(@ModelAttribute("student") Student student, Model model) {
-		 Long id = Long.valueOf(8);
+	public String studentRegForm(Model model) {
+		 Long id = Long.valueOf(1);
 		
-		student= studentService.getStudentById(id);
-		 model.addAttribute(student);
+		Student student= studentService.getStudentById(id);
+		 model.addAttribute("student",student);
 		 
    	    return "studentmainpage";
     }
@@ -75,7 +75,7 @@ public class StudentRegController {
 		public String registerstudent(Model model) {
 		 	
 		model.addAttribute("sections",regsubsystem.getListSection());
-			 
+			// System.out.println(regsubsystem.getListSection().size());
 	   	    return "studentregister";
 	    }
 	 
@@ -120,21 +120,19 @@ public class StudentRegController {
 	 
 	
 	
-	@RequestMapping(value={"/student/register/addsection"}, method = RequestMethod.POST)
-    public String registerStudent(@Valid @ModelAttribute("newstudent") Student student, BindingResult bindingresult, Model model) {
+	@RequestMapping(value={"/student/register/{id}"}, method = RequestMethod.GET)
+    public String registerStudent( @PathVariable Long id,  /*BindingResult bindingresult,*/ Model model) {
 		
-		if(bindingresult.hasErrors()){
+		/*if(bindingresult.hasErrors()){
 			return "studentregister";
-		}
+		}*/
+		model.addAttribute("section",sectionservice.getSectionById(id));
+		
+		regsubsystem.register(sectionservice.getSectionById(id));
+		
 		 
-		//regsubsystem.register(section);
 		
-	//STUDENT SAVED IN PERSISTENCE
-		studentService.save(student);
-		
- 	//GET STUDENT FROM PERSISTENCE	
- 		model.addAttribute(studentService.getStudentByEmail(student.getUserprofile().getEmail()));
-          
+	          
    	return "addsuccess";
     }
 }

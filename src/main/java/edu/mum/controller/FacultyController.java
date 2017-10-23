@@ -43,6 +43,7 @@ public class FacultyController {
 	public String addFaculty(@ModelAttribute("newFaculty") Faculty faculty, Model model) {
 		model.addAttribute("userTypeList", roleService.getAll());
 		model.addAttribute("specializations", specializationsService.findAllspecalization());
+		model.addAttribute("courseList",courseService.getAllCourser());
 		return "addFaculty";
 	}
 
@@ -54,6 +55,9 @@ public class FacultyController {
 			}
 			if (!model.containsAttribute("userTypeList")) {
 				model.addAttribute("userTypeList", roleService.getAll());
+			}
+			if (!model.containsAttribute("courseList")) {
+				model.addAttribute("courseList", courseService.getAllCourser());
 			}
 
 			return "addFaculty";
@@ -119,6 +123,10 @@ public class FacultyController {
 			if (!model.containsAttribute("courseList")) {
 				model.addAttribute("courseList", courseService.getAllCourser());
 			}
+			if (!model.containsAttribute("userTypeList")) {
+				model.addAttribute("userTypeList", roleService.getAll());
+			}
+			
 			return "editFaculty";
 		}
 		facultyService.saveFaculty(faculty);

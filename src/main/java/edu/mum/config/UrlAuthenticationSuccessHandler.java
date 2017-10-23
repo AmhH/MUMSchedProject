@@ -34,12 +34,21 @@ private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 				}
 			} else if(authority.getAuthority().equals("ROLE_Admin")) {
 				try {
-					redirectStrategy.sendRedirect(httrequest, httpResponse, "/faculty/all");
+					redirectStrategy.sendRedirect(httrequest, httpResponse, "/faculty/home");
 				} catch (Exception e) {
 				
 					e.printStackTrace();
 				}
-			} else {
+			} else if(authority.getAuthority().equals("ROLE_Student")) {
+				try {
+					redirectStrategy.sendRedirect(httrequest, httpResponse, "/faculty/home");
+				} catch (Exception e) {
+				
+					e.printStackTrace();
+				}
+			}
+			
+			else {
 				try {
 					redirectStrategy.sendRedirect(httrequest, httpResponse, "/guestPage");
 				} catch (IOException e) {

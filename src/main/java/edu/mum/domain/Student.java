@@ -23,9 +23,10 @@ public class Student {
 	private long id;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private UserProfile userprofile;
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "section_student", joinColumns = { @JoinColumn(name = "student_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "section_id") })
+	@JoinColumn(name = "section_id") })
 	private Set<Section> sections;
 	@OneToMany(fetch = FetchType.EAGER)
 	private Set<Transcript> transcript;
