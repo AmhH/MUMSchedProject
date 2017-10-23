@@ -24,7 +24,7 @@ public class Section {
 	private String sectionCode;
 	private int limitCapacity;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Course course;
 	
 	@ManyToOne

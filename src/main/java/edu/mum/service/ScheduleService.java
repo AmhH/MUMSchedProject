@@ -34,7 +34,7 @@ public class ScheduleService {
 
 		entry.getBlocks().forEach(sectionHelper::createSectionForBlock);
 
-		entry.getBlocks().forEach(facultyHelper::assignCourseAndFaculty);
+		//entry.getBlocks().forEach(facultyHelper::assignCourseAndFaculty);
 		
 		schedule.setEntry(entry);
 		schedule.setGeneratedDate(new Date(new java.util.Date().getTime()));

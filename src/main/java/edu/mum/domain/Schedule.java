@@ -2,7 +2,9 @@ package edu.mum.domain;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +18,7 @@ public class Schedule {
  	 @Id
 	 @GeneratedValue(strategy = GenerationType.AUTO)
 	  private Long id;
- 	  @OneToOne
+ 	  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
  	  @JoinColumn (name="entry_id")
 	  private Entry entry;
 	  private Date generatedDate;
