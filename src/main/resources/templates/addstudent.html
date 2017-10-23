@@ -42,13 +42,17 @@
 							type="text" th:field="*{userprofile.lastName}" /></td>
 						<td><label for="idNumber">ID Number : </label></td>
 							<td><input id="idNumber" class="form-control mb-2 mb-sm-0"
-							type="text" th:field="*{student.idNumber}" /></td>
+							type="text" th:field="*{id}" /></td>
 						<td><label for="degree">Degree : </label></td>
 							<td><input id="degree" class="form-control mb-2 mb-sm-0"
-							type="text" th:field="*{student.degree}" /></td>
+							type="text" th:field="*{degree}" /></td>
+							<!-- <td><label for="transcript">Transcript: </label></td>
+							<td><input id="transcript" class="form-control mb-2 mb-sm-0"
+							type="text" th:field="*{transcript.grade}" /></td>	 -->
+							
 						<td><label for="">Field : </label></td>
 							<td><input id="field" class="form-control mb-2 mb-sm-0"
-							type="text" th:field="*{student.field}" /></td>
+							type="text" th:field="*{field}" /></td>
 									
 						<td><label for="roles">User Role :</label></td>
 						<td><select th:field="*{userprofile.roles}"

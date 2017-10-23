@@ -1,26 +1,32 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+ <html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-<title>User Registration Form</title>
-      <meta charset="utf-8" />
-      <link rel="stylesheet" type="text/css"
-              href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
- 
-        <link rel="stylesheet" th:href="@{/css/main.css}"
-              href="../../css/main.css" />
-
+      <title>User List</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div th:replace="fragments/header :: header-css"></div>
-	<div th:replace="fragments/header :: header"></div>
+
+<div th:replace="fragments/header :: header-css"></div>
+ <div th:replace="fragments/header :: header"></div>
 
 	<div class="ontainer" id="homeDiv">
 		<div class="jumbotran text-center"></div>
 		<h2>Register for a section</h2>
 	</div>
+	
+	  <div class="container col-md-12" >
 
 	<div class="container text-center" id="userDiv">
-		<h3>User List</h3>
+		
 		<div class="jumbotran text-center"></div>
 		<!-- <h1>Welcome to Manage User</h1> -->
 		<hr></hr>
@@ -30,8 +36,9 @@
 					<th>Id</th>
 					<th>Course Name</th>
 					<th>Course Code</th>
-					<th>Pre_Request_Course</th>
+					<!-- <th>Pre_Request_Course</th> -->
 				</tr>
+				
 				<tr th:each="section :${sections}">
 					<td th:text="${section.id}"></td>
 					<td th:text="${section.course.courseName}"></td>
@@ -44,15 +51,16 @@
 					
 					<span th:unless="${noPre}">No</span>
 					</td> -->
-				<!-- 	<td>
+				<!-- 	
+				<td>
 					<a	href="manageuser.html" th:href="@{|/deleteFaculty/${course.id}}"> 
-					         <span class="glyphicon glyphicon-trash"></span></a></td>
-					<td>
-					<a th:href="@{|/updateFaculty/${course.id}}"> <span
-							class="glyphicon glyphicon-pencil"></span></a></td> -->
+					         <span class="glyphicon glyphicon-trash"></span></a></td> -->
+					<td><a th:href="@{|/student/register/${section.id}}">
+					 <span class="glyphicon glyphicon-pencil"></span></a></td> 
 				</tr>
 			</table> 
 		</div>
+	</div>
 	</div>
 </body>
 </html>

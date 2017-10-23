@@ -43,7 +43,7 @@
             </tr>
             
            
-             <tr th:each="student :${student}">
+             <tr th:object="${student}">
                <td th:text="${student.idNumber}"></td>
                
                <td th:text="${student.userprofile.firstName}"></td>
