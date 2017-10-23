@@ -1,6 +1,9 @@
 package edu.mum.controller;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,10 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import edu.mum.domain.Faculty;
+import edu.mum.domain.Section;
 import edu.mum.domain.UserProfile;
 import edu.mum.service.CourseService;
+import edu.mum.service.EntryService;
 import edu.mum.service.FacultyService;
 import edu.mum.service.RoleService;
+import edu.mum.service.SectionsService;
 import edu.mum.service.SpecializationsService;
 import edu.mum.service.UserProfileService;
 
@@ -35,6 +41,8 @@ public class FacultyController {
 	CourseService courseService;
 	@Autowired
 	UserProfileService userProfileService;
+	@Autowired
+	SectionsService sectionService;
 
 	// only admin can add new Faculty
 
@@ -101,7 +109,7 @@ public class FacultyController {
 	}
 
 	@GetMapping(value = "/home")
-	public String facultyHome(Model model, Map map) {
+	public String facultyHome(Model model, @SuppressWarnings("rawtypes") Map map) {
 		model.addAttribute("loggedInUser", map.get("username"));
 		return "facultyhome";
 	}
@@ -147,6 +155,16 @@ public class FacultyController {
 		}
 		return "editFaculty";
 
+	}
+	
+	@GetMapping("/viewSchedule/{id}")
+	public String viewFacultySchedule(@PathVariable("id") Long id, Model model){
+		Faculty faculty = facultyService.getFacultyById(id);
+		List<Section> facultySection = sectionService.getAllSection().stream()
+									  .filter(s->s.getFaculty().equals(faculty))
+									  .collect(Collectors.toList());
+		model.addAttribute("sections", facultySection);
+		return "viewFacultySchedule";
 	}
 
 }
