@@ -59,7 +59,6 @@ public class BlockController {
 		model.addAttribute("blocks", newBlock.getEntry().getBlocks());
 		model.addAttribute("entry", newBlock.getEntry());
 		return "blockList";
-		//return new RedirectView("/allEntry");
 	}
 	
 	@RequestMapping(value= {"/addBlock"},method=RequestMethod.POST)

@@ -44,7 +44,8 @@
 			
 			<label for="limitCapacity">Section Capacity</label>
 			<input type="text" class="form-control" th:value="${sectionUpdateable.limitCapacity}" name="limitCapacity" />
-		<br></br>
+			<br></br>
+			<input type="hidden" name="section_id" th:value="${sectionUpdateable.id}" />
 			<button type="submit" class="btn btn-primary">Update</button>
 		</form> 
 	</div>	
