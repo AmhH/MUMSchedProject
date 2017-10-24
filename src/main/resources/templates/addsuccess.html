@@ -22,9 +22,10 @@
 
 </head>
 <body>
+<h1>Your List of registered Courses</h1>
 <div th:replace="fragments/header :: header"> </div>
 <div class="mainContainer">
-	<button class="btn btn-primary" onclick="location.href='student/register'">Register</button>
+	<!-- <button class="btn btn-primary" onclick="location.href='student/register'">Register</button> -->
 	<table class="table">
 			<tr>
 				    <th>Entry Month</th>
@@ -33,38 +34,14 @@
 				    <th>Faculty</th>
 				 
 			</tr>	    
-			<tr th:object="${section}">	
+			<tr th:each="section :${sections}">	
 			        <td th:text="${section.block.blockMonth}">1 </td>
 			
 			        <td th:text="${section.sectionCode}">Title ...</td>
 			        <td th:text="${section.course.courseName}">Text ...</td>
 			        <td th:text="${section.faculty.userProfile.firstName}">Text ...</td>
 			       
-			        
-		      <!--   <td>   
-		        	<div class="buttonDiv">   
-				        <form method="post" action="/deleteEntry">
-				        	<input name="id"  type="hidden" th:value="${entry.id}" />
-				        	<input class="btn btn-danger" type="submit" value="Delete" />
-				        </form>
-				     </div>   
-			    </td> -->
-			    <!-- <td>
-			    	<div class="buttonDiv">
-				        <form method="post" action="/findEntry">
-				        	<input name="id"  type="hidden" th:value="${entry.id}" />
-				        	<input class="btn btn-primary" type="submit" value="Update" />
-				        </form>
-				     </div>
-			    </td>
-			    <td>
-			    	<div class="buttonDiv">
-						<form method="post" action="/blockList">
-							<input name="id"  type="hidden" th:value="${entry.id}" />
-				        	<input class="btn btn-primary" type="submit" value="Blocks" />
-				        </form>
-				    </div>    
-				</td> -->
+	
 			  
 		   </tr>
 	</table>	  

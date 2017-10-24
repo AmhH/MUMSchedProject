@@ -31,8 +31,14 @@ public class Faculty {
 	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	private List<Section> sections=new ArrayList<Section>();
 	private boolean isAvailability;
-	
-	
+
+	public Faculty(String userProfile) {
+		super();
+		this.userProfile = new UserProfile(userProfile);
+	}
+	public Faculty() {
+		
+	}
 	public List<Specialization> getSpecializations() {
 		return specializations;
 	}

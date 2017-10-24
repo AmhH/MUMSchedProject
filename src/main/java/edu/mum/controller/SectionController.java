@@ -2,6 +2,7 @@ package edu.mum.controller;
 
 
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,12 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import edu.mum.domain.Block;
 import edu.mum.domain.Course;
+import edu.mum.domain.Entry;
 import edu.mum.domain.Faculty;
 import edu.mum.domain.Section;
 import edu.mum.service.BlockService;
 import edu.mum.service.CourseService;
+import edu.mum.service.EntryService;
 import edu.mum.service.FacultyService;
 import edu.mum.service.SectionsService;
 
@@ -38,6 +41,9 @@ public class SectionController {
 	
 	@Autowired
 	private FacultyService facultyService;
+	
+	
+	
 	@RequestMapping({"/addSectionForm"})
 	public  String viewSection(Model model){
 		List<Course> courses = courseService.getAllCourser();
@@ -96,5 +102,23 @@ public class SectionController {
 		return "updateSectionForm";
 	}
 	
+	@RequestMapping(value= {"/updateSection"},method=RequestMethod.POST)
+	public String updateSection(@RequestParam String sectionCode, @RequestParam String course, 
+			@RequestParam String faculty, @RequestParam String blockMonth,  @RequestParam int limitCapacity, 
+			@RequestParam String section_id){
+		Block block = blockService.getBlock(blockMonth);
+		Faculty facultyAssigned = facultyService.getFacultyByName(faculty);
+		Course courseOffered = courseService.getCourseByName(course);
 		
+		Section section = sectionService.getSectionById(new Long(section_id));
+		section.setSectionCode(sectionCode);
+		section.setLimitCapacity(limitCapacity);
+		section.setBlock(block);
+		section.setCourse(courseOffered);
+		section.setFaculty(facultyAssigned);
+		
+		sectionService.saveSection(section);
+		
+		return "/viewEntry";
+	}	
 }

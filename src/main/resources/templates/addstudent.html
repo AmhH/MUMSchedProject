@@ -18,7 +18,7 @@
  
  
    <div class="container col-md-12" >
-   <form  th:action="@{/addstudent}" th:object="${Newstudent}" method="post"  class="form-horizontal">
+   <form  th:action="@{/admin/addstudent}" th:object="${Newstudent}" method="post"  class="form-horizontal">
 			<fieldset >
 				<legend>Student Personal Detail</legend>
 				  <div class="alert alert-danger alert-dismissable fade in">
@@ -53,7 +53,14 @@
 						<td><label for="">Field : </label></td>
 							<td><input id="field" class="form-control mb-2 mb-sm-0"
 							type="text" th:field="*{field}" /></td>
-									
+						<td>
+							<label for="entry">Entry</label>
+							<select name="entry" th:field="*{entry}">	   
+							    <option th:each="entry1 : ${entries}" th:text="${entry1.entryMonth}" th:value = "${entry1.id}"></option>
+						    </select>
+						    
+							<br></br>
+						</td>
 						<td><label for="roles">User Role :</label></td>
 						<td><select th:field="*{userprofile.roles}"
 							class="selectpicker" multiple="multiple">
@@ -64,7 +71,7 @@
 					<tr>
 						<td><label for="birthdate">Birth Date :</label></td>
 						<td><input id="birthdate" class="form-control mb-2 mb-sm-0"
-							type="text" th:field="*{userprofile.birthdate}" /></td>
+							type="date" th:field="*{userprofile.birthdate}" /></td>
 
 						<td><label for="email">Email : </label></td>
 						<td><input id="email" class="form-control"

@@ -21,30 +21,32 @@
 <body>
 	<div th:replace="fragments/header :: header-css"></div>
 	<div th:replace="fragments/header :: header"></div>
-	<h4>
-		<a href="/admin/schedule/list"><i class="fa fa-hand-o-up">Schedule
-				List</i></a>
-	</h4>
-	<br />
-	<h4>
-		Schedule <small> <i class="ace-icon fa fa-angle-double-right">Create</i>
-		</small>
-	</h4>
-	<hr />
-	<div class="well form-group">
-		<form action="#" th:action="@{/admin/schedule/create}" method="post">
-			<div class="entrys">
-				Select Entry <br /> <br />
-				<select class="form-control" name="entry">
+	<div class="container">
+		<h4>
+			<a href="/admin/schedule/list"><i class="fa fa-hand-o-up">Schedule
+					List</i></a>
+		</h4>
+		<br />
+		<h4>
+			Schedule <small> <i class="ace-icon fa fa-angle-double-right">Create</i>
+			</small>
+		</h4>
+		<hr />
+		<div class="well form-group">
+			<form action="#" th:action="@{/admin/schedule/create}" method="post">
+				<div class="entrys">
+					Select Entry <br /> <br /> <select class="form-control"
+						name="entry">
 
-					<option th:each="entry : ${entries}" th:value="${entry.entryMonth}"
-						th:text="${entry.entryMonth}">Option</option>
+						<option th:each="entry : ${entries}"
+							th:value="${entry.entryMonth}" th:text="${entry.entryMonth}">Option</option>
 
-				</select>
-			</div>
-			<br /> <br /> <input class="btn btn-primary" type="submit"
-				value="CreateSchedule" />
-		</form>
+					</select>
+				</div>
+				<br /> <br /> <input class="btn btn-primary" type="submit"
+					value="CreateSchedule" />
+			</form>
+		</div>
 	</div>
 </body>
 </html>

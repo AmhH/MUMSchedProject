@@ -12,6 +12,7 @@ import edu.mum.domain.Course;
 import edu.mum.domain.Section;
 import edu.mum.domain.Student;
 import edu.mum.domain.Transcript;
+import edu.mum.domain.UserProfile;
 import edu.mum.registersubsystem.RegisterSubsystem;
 import edu.mum.service.EntryService;
 import edu.mum.service.SectionsService;
@@ -33,12 +34,14 @@ public class RegisterSubsystemFacade implements RegisterSubsystem{
 	@Override
 	public List<Section> getListSection() {
 				
-		//Long id = userProfileService.LoggedInUser().getId();
-		Long id=Long.valueOf(1);
-		
+		UserProfile userProfile= userProfileService.LoggedInUser();
+		Student student=studentService.getStudentByUserProfile(userProfile);
+		//Long id=Long.valueOf(1);
+		//System.out.println("id"+id);
 		//Student student = studentService.getStudentById(id);
 		
-		List<Section> sections = entryservice.getAllSectionsByEntryId(id /*student.getEntry().getId()*/);
+		List<Section> sections = entryservice.getAllSectionsByEntryId(student.getEntry().getId());
+		//System.out.println("entry "+student.getEntry().getId());
 		return sections;
 	}
 
@@ -47,14 +50,18 @@ public class RegisterSubsystemFacade implements RegisterSubsystem{
 		List<Course> prerequisites = section.getCourse().getPrerequisite();
 		
 		//Long id = userProfileService.LoggedInUser().getId();
-		Long id = Long.valueOf(8);
-		Student student = studentService.getStudentById(id);
+		UserProfile userProfile= userProfileService.LoggedInUser();
+		Student student=studentService.getStudentByUserProfile(userProfile);
+		//Long id = Long.valueOf(8);
+		//Student student = studentService.getStudentById(id);
 		
 		if(section.getStudents().size()==section.getLimitCapacity()){
 			return "Section is full";
-		} else if(checkTranscript(prerequisites,id).equalsIgnoreCase(checkregisteredSections(prerequisites,student.getId()))){
+		} else if(checkTranscript(prerequisites,student.getId()).equalsIgnoreCase(checkregisteredSections(prerequisites,student.getId()))){
+			student.getSections().add(section);
 			section.getStudents().add(student);
 			sectionservice.saveSection(section);
+			
 			studentService.save(student);
 			return "Success";
 		} else if(!checkTranscript(prerequisites,student.getId()).equalsIgnoreCase("Success")){
@@ -84,10 +91,10 @@ public class RegisterSubsystemFacade implements RegisterSubsystem{
 	
 	private String checkregisteredSections(List<Course> preReq, long studentId){
 		List<Course> registeredCourse = new ArrayList<>();
-		//Long id = userProfileService.LoggedInUser().getId();
-		Long id = Long.valueOf(8);
+		UserProfile userProfile = userProfileService.LoggedInUser();
+		//Long id = Long.valueOf(8);
 		
-		studentService.getStudentById(id).getSections().forEach(s->registeredCourse.add(s.getCourse()));
+		studentService.getStudentByUserProfile(userProfile).getSections().forEach(s->registeredCourse.add(s.getCourse()));
 		if(registeredCourse.containsAll(preReq))
 			return "Success";
 		return "Not Registered for PreRequisite";
