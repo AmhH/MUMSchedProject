@@ -2,14 +2,18 @@ package edu.mum.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import edu.mum.domain.Faculty;
+import edu.mum.domain.UserProfile;
 import edu.mum.repository.FacultyRepository;
 
 @Service
+@Transactional
 public class FacultyService {
 	
 	Authentication auth;
@@ -38,7 +42,7 @@ public class FacultyService {
 		return facultyRepository.findByUserProfileFirstName(firstName);
 	}
 	
-	public Faculty getFacultyByUserProfileId(Long id){
-		return facultyRepository.findByUserProfileId(id);
+	public Faculty getFacultyByUserProfile(UserProfile userProfile){
+		return facultyRepository.findByUserProfile(userProfile);
 	}
 }

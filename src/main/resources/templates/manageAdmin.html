@@ -9,12 +9,12 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body #9ad3de>
+<body>
     <div th:replace="fragments/header :: header-css"></div>
 	<div th:replace="fragments/header :: header"></div>
 		<div class="container">
 		<a th:href="@{/admin/add}">Add Admin</a>
-        <h2>Admin Manage</h2>
+        <h2>Manage Admin</h2>
 		<div class="table-responsive ">
 			<table class="table table-hover">
 				<tr>
@@ -22,15 +22,15 @@
 					<th>First Name</th>
 					<th>Last Name</th>
 				</tr>
-				<tr th:each="user :${users}">
-					<td th:text="${user.id}"></td>
-					<td th:text="${user.firstName}"></td>
-					<td th:text="${user.lastName}"></td>
+				<tr th:each="admin :${adminList}">
+					<td th:text="${admin.userProfile.id}"></td>
+					<td th:text="${admin.userProfile.firstName}"></td>
+					<td th:text="${admin.userProfile.lastName}"></td>
 					<td>
-					<a	href="manageuser.html" th:href="@{|/faculty/delete/${faculty.id}}"> 
+					<a	href="manageuser.html" th:href="@{|/admin/delete/${admin.id}}"> 
 					         <span class="glyphicon glyphicon-trash"></span></a></td>
 					<td>
-					<a th:href="@{|/faculty/update/${faculty.id}}"> <span
+					<a th:href="@{|/admin/update/${admin.id}}"> <span
 							class="glyphicon glyphicon-pencil"></span></a></td>
 				</tr>
 			</table> 

@@ -23,7 +23,7 @@ import edu.mum.service.UserProfileService;
 
 @Controller
 @RequestMapping("/admin")
-public class UserController {
+public class AdminController {
 
 		@Autowired
 		AdminService adminService;
@@ -53,9 +53,9 @@ public class UserController {
 		return "redirect:/admin/all";
 	   }
         
-	    @GetMapping(value = "/admin/all")
+	    @GetMapping(value = "/all")
 	    public String getAllUser(Model model) {
-		model.addAttribute("users", adminService.getAll());
+		model.addAttribute("adminList", adminService.getAll());
 	
 		return "manageAdmin";
 	   }

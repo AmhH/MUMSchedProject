@@ -1,7 +1,10 @@
 package edu.mum.controller;
 
+import java.util.List;
 import java.util.Map;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,10 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import edu.mum.domain.Faculty;
-import edu.mum.domain.UserProfile;
+import edu.mum.domain.Specialization;
 import edu.mum.service.CourseService;
 import edu.mum.service.FacultyService;
 import edu.mum.service.RoleService;
@@ -24,7 +30,7 @@ import edu.mum.service.UserProfileService;
 @Controller
 @RequestMapping("/faculty")
 public class FacultyController {
-
+    Specialization spe;
 	@Autowired
 	FacultyService facultyService;
 	@Autowired
@@ -91,7 +97,7 @@ public class FacultyController {
 		model.addAttribute("specializations", specializationsService.findAllspecalization());
 		model.addAttribute("courseList", courseService.getAllCourser());
 		model.addAttribute("userTypeList", roleService.getAll());
-		return "AdminEditFaculty";
+		return "adminEditFaculty";
 	}
 
 	@GetMapping(value = "/all")
@@ -112,41 +118,63 @@ public class FacultyController {
 		return "sidebar";
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String updatePersonalInfro(@Valid @ModelAttribute("newFaculty") Faculty faculty, BindingResult error,
-			Model model) {
-
-		if (error.hasErrors()) {
-			if (!model.containsAttribute("specializations")) {
-				model.addAttribute("specializations", specializationsService.findAllspecalization());
-			}
-			if (!model.containsAttribute("courseList")) {
-				model.addAttribute("courseList", courseService.getAllCourser());
-			}
-			if (!model.containsAttribute("userTypeList")) {
-				model.addAttribute("userTypeList", roleService.getAll());
-			}
-			
-			return "editFaculty";
-		}
-		facultyService.saveFaculty(faculty);
-		System.out.println(faculty.getUserProfile().getRoles().get(0));
-		return "manageFaculty";
-
-	}
-
+	
 	@GetMapping("/update")
-	public String updateFacultyProfile(Model model) {
-		UserProfile user = userProfileService.LoggedInUser();
-		model.addAttribute("newFaculty", user);
-		if (!model.containsAttribute("specializations")) {
-			model.addAttribute("specializations", specializationsService.findAllspecalization());
-		}
-		if (!model.containsAttribute("courseList")) {
-			model.addAttribute("courseList", courseService.getAllCourser());
-		}
+	public String updateFacultyProfile(@ModelAttribute("newFaculty")Faculty faculty,Model model) {
+		faculty = facultyService.getFacultyByUserProfile(userProfileService.LoggedInUser());
+		
+		model.addAttribute("newFaculty", faculty);
+        model.addAttribute("facultySpecialList",faculty.getSpecializations());
+        model.addAttribute("facultyCourseList",faculty.getCourse());
+		model.addAttribute("specializations", specializationsService.findAllspecalization());
+		model.addAttribute("courseList", courseService.getAllCourser());
+
 		return "editFaculty";
 
 	}
+	
+	@PostMapping("/updatePersonaInfo")
+	public String saveUpdateFacultyProfile(@Valid @ModelAttribute("newFaculty")Faculty editedFaculty,
+			       BindingResult error,Model model) {
+	     System.out.println("POST");
+           if (error.hasErrors()) {
+			
+	     	     return "editFaculty";
+           }
+       	 BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	     Faculty faculty=facultyService.getFacultyByUserProfile(userProfileService.LoggedInUser());
+	     faculty.getUserProfile().setUserName(editedFaculty.getUserProfile().getUserName());
+	 	 faculty.getUserProfile().setPassword(passwordEncoder.encode(editedFaculty.getUserProfile().getPassword()));
+	     faculty.getUserProfile().setEmail(editedFaculty.getUserProfile().getEmail());
+	     facultyService.saveFaculty(faculty);
+	     return "redirect:/faculty/home";
+        
+       }
+	
+	 @PostMapping("/updateSpecialization")
+	  public String updateSpecialization(@Valid @ModelAttribute("newFaculty")Faculty editedFaculty,
+		       BindingResult error,Model mode){
+	
+		   Faculty faculty = facultyService.getFacultyByUserProfile(userProfileService.LoggedInUser());
+		  faculty.addSpecalization(editedFaculty.getSpecializations().get(0));
+		   facultyService.saveFaculty(faculty);
+		   System.out.println("Saved");
+		   return "redirect:/faculty/update";
+		   
+	  }
+	 
+	 
+	 @PostMapping("/updateCourse")
+	  public String updateCourse(@Valid @ModelAttribute("newFaculty")Faculty editedFaculty,
+		       BindingResult error,Model mode){
+	
+		   Faculty faculty = facultyService.getFacultyByUserProfile(userProfileService.LoggedInUser());
+		  faculty.addCourse(editedFaculty.getCourse().get(0));
+		   facultyService.saveFaculty(faculty);
+		   System.out.println("Saved");
+		   return "redirect:/faculty/update";
+		   
+	  }
 
+	
 }

@@ -32,12 +32,12 @@
 					<tr>
 						<td><label for="firstName" >First Name : </label></td>
 						<td><input id="firstName" class="form-control mb-2 mb-sm-0"
-							type="text" th:field="*{firstName}" /></td>
+							type="text" th:field="*{userProfile.firstName}" /></td>
 						<td><label for="lastName">Last Name : </label></td>
 						<td><input id="lastName" class="form-control mb-2 mb-sm-0"
-							type="text" th:field="*{lastName}" /></td>
+							type="text" th:field="*{userProfile.lastName}" /></td>
 						<td><label for="roles">User Role :</label></td>
-						<td><select th:field="*{roles}"
+						<td><select th:field="*{userProfile.roles}"
 							class="selectpicker" multiple="multiple">
 								<option th:each="role : ${userTypeList}" th:value="${role.id}"
 									th:text="${role.role}">User Role</option>
@@ -46,20 +46,20 @@
 					<tr>
 						<td><label for="birthdate">Birth Date :</label></td>
 						<td><input id="birthdate" class="form-control mb-2 mb-sm-0"
-							type="date" th:field="*{birthdate}" /></td>
+							type="date" th:field="*{userProfile.birthdate}" /></td>
 
 						<td><label for="email">Email : </label></td>
 						<td><input id="email" class="form-control"
-							th:field="*{email}" /></td>
+							th:field="*{userProfile.email}" /></td>
 					</tr>
 					<tr>
 					
 						<td><label for="userName">User Name : </label></td>
 						<td><input id="userName" class="form-control mb-2 mb-sm-0"
-							type="text" th:field="*{userName}" /></td>
+							type="text" th:field="*{userProfile.userName}" /></td>
 						<td><label for="password">Password : </label></td>
 						<td><input type="password" class="form-control mb-2 mb-sm-0"
-							id="password" th:field="*{password}" /></td>	
+							id="password" th:field="*{userProfile.password}" /></td>	
 				
 					</tr>
 				</table>
