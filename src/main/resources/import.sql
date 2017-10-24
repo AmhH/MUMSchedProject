@@ -35,11 +35,11 @@ INSERT INTO block (id, block_end_date, block_month, block_start_date, entry_id, 
 
 -- INSERT INTO schedule (id,generated_date,status,entry_id)VALUES(1,'1999-09-09 00:00:00','OK',1);
 -- 
+INSERT   INTO course VALUES (1,555,'Science of Creative Intelligence','SCI',0);
 INSERT   INTO course VALUES (1,395,'fundamental programming practices','FPP',1);
 INSERT   INTO course VALUES (2,401,'Modern programming practices','MPP',1);
 INSERT   INTO course VALUES (3,475,'Web application programming ','WAP',1);
 INSERT   INTO course VALUES (4,504,'Alogorithm','Algorithm',1);
-INSERT   INTO course VALUES (5,300,'Science of Creative Intelligence','SCI',0);
 INSERT   INTO course VALUES (6,572,'Modern Web Application','MWA',0);
 INSERT   INTO course VALUES (7,522,'Big Data','BIGData',0);
 INSERT   INTO course VALUES (8,544,'Enterprise Architecture','EA',0);
