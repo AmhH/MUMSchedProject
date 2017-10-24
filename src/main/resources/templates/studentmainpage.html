@@ -18,7 +18,7 @@
     <a href="#" class="navbar-brand">Student Page</a>
      <div class="navbar-collapse collapse"></div>
         <ul class="nav navbar-nav">
-           <li><a href="/student/viewschedule">My Course Schedule</a></li>
+          <!--  <li><a href="/student/viewschedule">My Course Schedule</a></li> -->
            <li><a href="/student/register">Register</a></li>
              
       
@@ -50,22 +50,23 @@
                <td th:text="${student.userprofile.lastName}"></td> 
                  <td th:text="${student.degree}"></td> 
                  <td th:text="${student.field}"></td> 
-              <!--  <td th:href="@{/updatestudent(id=${student.id})}">
+                 
+               <td th:href="@{/updatestudent}">
 		               <a href="manageuser.html"
-		                 th:href="@{|/updatestudent/${student.id}}">
+		                 th:href="@{|/updatestudent}">
 		                 <span class="glyphicon glyphicon-pencil"></span></a>
-               </td>  -->
+               </td>  
              
                </tr>
       
               
        </table>
-       <div class="entryUpdate">
+    <!--    <div class="entryUpdate">
 				        <form method="post" action="student/updatestudent">
 				        	<input name="id"  type="hidden" th:value="${student.id}" />
 				        	<input class="btn btn-danger" type="submit" value="Edit Profile" />
 				        </form>
-			        </div>
+			        </div> -->
        </div>
    </div>
  

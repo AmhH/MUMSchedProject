@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 public class Student {
 
@@ -30,8 +32,9 @@ public class Student {
 	private Set<Section> sections;
 	@OneToMany(fetch = FetchType.EAGER)
 	private Set<Transcript> transcript;
+	//@NotEmpty
 	@ManyToOne()
-	//@JoinColumn(name = "entry_id")
+	@JoinColumn(name = "entry_id")
 	private Entry entry;
 	private String idNumber;
 

@@ -1,5 +1,7 @@
 package edu.mum.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.mum.domain.Entry;
 import edu.mum.domain.Student;
+import edu.mum.domain.UserProfile;
 import edu.mum.registersubsystem.impl.RegisterSubsystemFacade;
 import edu.mum.repository.ScheduleRepository;
+import edu.mum.service.EntryService;
 import edu.mum.service.RoleService;
 import edu.mum.service.ScheduleService;
 import edu.mum.service.SectionsService;
@@ -33,7 +37,7 @@ public class StudentRegController {
 	@Autowired
 	StudentService studentService;
 	@Autowired
-	UserProfileService userService;
+	UserProfileService userprofileService;
 	@Autowired
 	RoleService roleService;
 	@Autowired
@@ -44,13 +48,15 @@ public class StudentRegController {
 	RegisterSubsystemFacade regsubsystem;
 	@Autowired
 	SectionsService sectionservice;
+	@Autowired
+	EntryService entryService;
 
 	
 	 @GetMapping(value = "/student")
 	public String studentRegForm(Model model) {
-		 Long id = Long.valueOf(1);
+		 UserProfile userProfile = userprofileService.LoggedInUser();
 		
-		Student student= studentService.getStudentById(id);
+		Student student= studentService.getStudentByUserProfile(userProfile);
 		 model.addAttribute("student",student);
 		 
    	    return "studentmainpage";
@@ -58,10 +64,13 @@ public class StudentRegController {
 	 
 	 @RequestMapping(value={"/student/viewschedule"},method=RequestMethod.GET)
 		public String studentschedule(Model model) {
-		// model.addAttribute("schedule", schedulerep.getScheduleByEntry(student.getEntry().getId()));
+		 
+		 Long id = userprofileService.LoggedInUser().getId();
+		 Student student = studentService.getStudentById(id);
+				
+		model.addAttribute("schedule", scheduleService.getScheduleByEntryId(student.getEntry().getId()));
 	
 			
-			 
 	   	    return "studentschedule";
 	    }
 	 
@@ -73,9 +82,9 @@ public class StudentRegController {
 	 
 	 @RequestMapping(value={"/student/register"},method=RequestMethod.GET)
 		public String registerstudent(Model model) {
-		 	
+		 	//System.out.println("logged User:"+userprofileService.LoggedInUser().getFirstName());
 		model.addAttribute("sections",regsubsystem.getListSection());
-			// System.out.println(regsubsystem.getListSection().size());
+			System.out.println("size of section:"+regsubsystem.getListSection().size());
 	   	    return "studentregister";
 	    }
 	 
@@ -83,17 +92,29 @@ public class StudentRegController {
 		public String addstudent(@ModelAttribute("Newstudent") Student student, Model model) {
 			model.addAttribute("userTypeList", roleService.getAll());
 			
+			List<Entry> entries = entryService.getAllEntry();
+		//	for(Entry entry: entries)
+				//System.out.println(entry.getEntryMonth());
+			model.addAttribute("entries", entries);
+			
 			return "addstudent";
 		}
 
 		@PostMapping(value = "/addstudent")
-		public String savestudent(@Valid @ModelAttribute("student") Student student, BindingResult error,
+		public String savestudent(@Valid @ModelAttribute("Newstudent") Student student, BindingResult error,
 				RedirectAttributes redirect, Model model) {
+			//System.out.println(student.getEntry());
+			/*List<Entry> entries = entryService.getAllEntry();
+			for(Entry entry: entries)
+				System.out.println(entry.getEntryMonth());*/
+			
+			
 			/*if (error.hasErrors())
 
 			{
 				return "addstudent";
 			}*/
+			
 
 			System.out.println("before");
 			student.getUserprofile().setUserStatus("Active");
@@ -107,18 +128,37 @@ public class StudentRegController {
 			return "redirect:/students";
 		}
 	 
-	 @RequestMapping(value= {"student/updatestudent"},method=RequestMethod.POST)
-		public String updateStudent(@RequestParam String id,Model model){
-				Long new_id= Long.valueOf(3);
-					Student st = new Student();
-				 st = studentService.getStudentById(new_id);
-		 model.addAttribute("Newstudent", st);
+	 @RequestMapping(value= {"student/updatestudent"},method=RequestMethod.GET)
+		public String updateStudent(Model model){
+				UserProfile userProfile = userprofileService.LoggedInUser();
+				
+					Student student = studentService.getStudentByUserProfile(userProfile);
+				 
+		 model.addAttribute("Newstudent", student);
 		
 			//studentService.save(student);
 			 return "editstudent";
 		}
 	 
-	
+	 @RequestMapping(value= {"student/updatestudent"},method=RequestMethod.POST)
+		public String updatedStudent(@ModelAttribute("Newstudent") Student Newstudent,Model model){
+		 System.out.println("=======updateStudent Controller");
+				UserProfile userProfile = userprofileService.LoggedInUser();
+				
+					Student student = studentService.getStudentByUserProfile(userProfile);
+					//System.out.println("=======updateStudent Controller"+Newstudent.getUserprofile().getUserName());
+					student.getUserprofile().setUserName(Newstudent.getUserprofile().getUserName());
+					student.getUserprofile().setPassword(Newstudent.getUserprofile().getPassword());
+					student.getUserprofile().setEmail(Newstudent.getUserprofile().getEmail());
+				 
+		 //model.addAttribute("Newstudent", student);
+		
+			studentService.save(student);
+			model.addAttribute("student", student);
+			 return "studentmainpage";
+		}
+	 
+
 	
 	@RequestMapping(value={"/student/register/{id}"}, method = RequestMethod.GET)
     public String registerStudent( @PathVariable Long id,  /*BindingResult bindingresult,*/ Model model) {
@@ -126,13 +166,14 @@ public class StudentRegController {
 		/*if(bindingresult.hasErrors()){
 			return "studentregister";
 		}*/
-		model.addAttribute("section",sectionservice.getSectionById(id));
+		
+		UserProfile userProfile = userprofileService.LoggedInUser();
+		
 		
 		regsubsystem.register(sectionservice.getSectionById(id));
 		
-		 
-		
-	          
+		model.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
+		 	          
    	return "addsuccess";
     }
 }

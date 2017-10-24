@@ -3,34 +3,39 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>edit profile Form</title>
- <div th:replace="fragments/header :: header-css"/>
+<meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<!-- <div th:replace="fragments/header :: header"/> -->
+   <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header-css"></div>
 
 	<div id="global">
+	
 	<div class="col-md-3" style="margin-top:20px">
-		<form action="/updatestudent"  method="post">
+		<form action="#" th:action="@{/student/updatestudent}" method="post" th:object="${Newstudent}">
 								
 					
-					<label for="userName">ID : </label> <input id="userName" class="form-control mb-2 mb-sm-0"
-							type="text" th:value="${Newstudent.id}" />
-				                    
-			<!-- 	  	<p>
+							                    
+				  	<p>
 						<label for="userName">User Name : </label> <input id="userName" class="form-control mb-2 mb-sm-0"
-							type="text" th:value="${Newstudent.userprofile.userName}" />
+							type="text" th:field="*{userprofile.userName}"  th:value="*{userprofile.userName}" />
 					</p>
 					<p>
 						<label for="password">Password : </label> <input type="password" class="form-control mb-2 mb-sm-0"
-							id="password"  th:value="${Newstudent.userprofile.password}" />
+							id="password" th:field="*{userprofile.password}" th:value="*{userprofile.password}" />
 					</p>
 					<p>
 					<label for="confirmpassword">Confirm password : </label> <input type="password"   class="form-control mb-2 mb-sm-0"
-					 	  th:value="${Newstudent.userprofile.confirmpassword}" />
+					 	  th:field="*{userprofile.confirmpassword}"  th:value="*{userprofile.confirmpassword}" />
 				</p>
 				    <p>
 						<label for="email">Email : </label> <input id="email"
-							class="form-control" type="text" th:value="${Newstudent.userprofile.email}" />
+							class="form-control" type="text" th:field="*{userprofile.email}" th:value="*{userprofile.email}" />
 					</p>  -->
 				
 				<div class="row">
