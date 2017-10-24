@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +55,8 @@ public class StudentRegController {
 	private ScheduleRepository scheduleDao;
 
 	
-	 @GetMapping(value = "/student")
+	
+	@GetMapping(value = "/student")
 	public String studentRegForm(Model model) {
 		 UserProfile userProfile = userprofileService.LoggedInUser();
 		
@@ -79,7 +81,7 @@ public class StudentRegController {
 	   	    return "viewSchedule";
 	    }
 	
-	 
+	    @PreAuthorize("hasRole('ROLE_Admin')")
 		@GetMapping(value = "admin/students")
 		public String ManageStudent(Model model) {
 			model.addAttribute("students", studentService.getAllstudents());
@@ -94,6 +96,7 @@ public class StudentRegController {
 	   	    return "studentregister";
 	    }
 	 
+	    @PreAuthorize("hasRole('ROLE_Admin')")
 	    @GetMapping(value = "admin/addstudent")
 		public String addstudent(@ModelAttribute("Newstudent") Student student, Model model) {
 			model.addAttribute("userTypeList", roleService.getAll());
@@ -110,10 +113,10 @@ public class StudentRegController {
 		public String savestudent(@Valid @ModelAttribute("Newstudent") Student student, BindingResult error,
 				RedirectAttributes redirect, Model model) {
 			//System.out.println(student.getEntry());
-			/*List<Entry> entries = entryService.getAllEntry();
-			for(Entry entry: entries)
+			List<Entry> entries = entryService.getAllEntry();
+		/*	for(Entry entry: entries)
 				System.out.println(entry.getEntryMonth());*/
-			
+			model.addAttribute("entries", entries);
 			
 			/*if (error.hasErrors())
 
@@ -124,7 +127,7 @@ public class StudentRegController {
 
 			System.out.println("before");
 			student.getUserprofile().setUserStatus("Active");
-			System.out.println("student" + student.getUserprofile().getFirstName());
+			//System.out.println("student" + student.getUserprofile().getFirstName());
 
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			student.getUserprofile().setPassword(passwordEncoder.encode(student.getUserprofile().getPassword()));
@@ -167,16 +170,43 @@ public class StudentRegController {
 
 	
 	@RequestMapping(value={"/student/register/{id}"}, method = RequestMethod.GET)
-    public String registerStudent( @PathVariable Long id,  /*BindingResult bindingresult,*/ Model model) {
+    public String registerStudent( @PathVariable Long id,  /*BindingResult bindingresult,*/ Model model/*,RedirectAttributes redirAttrs*/) {
 		
 		/*if(bindingresult.hasErrors()){
 			return "studentregister";
 		}*/
 		UserProfile userProfile = userprofileService.LoggedInUser();
 		String str = regsubsystem.register(sectionservice.getSectionById(id));
-		model.addAttribute("reason", str);
+		model.addAttribute("message", str);
+		
+		if(!(str.equalsIgnoreCase("Success"))){
+		return "studentregister";
+	}
+		
+		//redirAttrs.addFlashAttribute("reason", str);
 		model.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
 		 	          
    	return "addsuccess";
     }
+	
+	//Admin
+	@PreAuthorize("hasRole('ROLE_Admin')")
+	@GetMapping(value = "admin/student/delete/{id}")
+	public String deleteStudent(@PathVariable("id") Long id, Model model) {
+		studentService.deleteStudent(id);
+
+		return "redirect:/admin/students";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_Admin')")
+	@GetMapping(value = "admin/student/update/{id}")
+	public String updateStudent(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("editstudent", studentService.getStudentById(id));
+		
+		List<Entry> entries = entryService.getAllEntry();
+		
+		model.addAttribute("entries", entries);
+		model.addAttribute("userTypeList", roleService.getAll());
+		return "AdminEditFaculty";
+	}
 }
