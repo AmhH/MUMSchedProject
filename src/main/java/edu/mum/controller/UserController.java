@@ -4,6 +4,7 @@ package edu.mum.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,73 +15,63 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.mum.domain.Admin;
 import edu.mum.domain.UserProfile;
+import edu.mum.service.AdminService;
 import edu.mum.service.RoleService;
 import edu.mum.service.UserProfileService;
 
 @Controller
-
+@RequestMapping("/admin")
 public class UserController {
 
 		@Autowired
-		UserProfileService userService;
+		AdminService adminService;
 		@Autowired
 		RoleService roleService;
 	   
 	  // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	   @GetMapping(value = "/addUser")
-	   public String addUser(@ModelAttribute("Newuser") UserProfile user, Model model) {
+	   @GetMapping(value = "/add")
+	   public String addUser(@ModelAttribute("newAdmin") Admin admin, Model model) {
 	   model.addAttribute("userTypeList", roleService.getAll());
-	   model.addAttribute("mode", "NEW");
-	        return "manageuser";
+	        return "addAdmin";
        }
 	  // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	   @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	   public String saveUser(@Valid @ModelAttribute("Newuser") UserProfile user, BindingResult error,
-			RedirectAttributes redirect, Model model) {
-		System.out.println("hiiiiiiiiiiiiiiiiii");
+	   @RequestMapping(value = "/add", method = RequestMethod.POST)
+	   public String saveUser(@Valid @ModelAttribute("newAdmin") Admin admin, BindingResult error,Model model){
+		
 		if (error.hasErrors()) {
-			model.addAttribute("mode", "NEW");
+			if(!model.containsAttribute("userTypeList")){
 			model.addAttribute("userTypeList",roleService.getAll());
-			return "manageuser";
+			return "addAdmin";
+			}
 		}
-		System.out.println("before");
-		user.setUserStatus("Active");
-		/*BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		user.setPassword(passwordEncoder.encode(user.getPassword()));  */
-		/*System.out.println("password string:  "+passwordEncoder.encode(user.getPassword()));
-		System.out.println("confirm password string:  "+passwordEncoder.encode(user.getConfirmpassword()));*/
-		userService.saveUser(user);
-		System.out.println("user" + user.getFirstName());
-		redirect.addFlashAttribute("mode", "USERS");
-		redirect.addFlashAttribute("userTypeList", roleService.getAll());
-		return "redirect:/users";
-	   }
-
-	   @GetMapping(value = "/userDetail")
-	   public String getDetail() {
-		    return "UserDetail";
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		admin.getUserProfile().setPassword(passwordEncoder.encode(admin.getUserProfile().getPassword())); 
+		 adminService.save(admin);
+		return "redirect:/admin/all";
 	   }
         
-	    @GetMapping(value = "/users")
-	    public String getAllUser(@ModelAttribute("Newuser") UserProfile user, Model model) {
-		model.addAttribute("users", userService.getAllActiveUser("Active"));
-		model.addAttribute("mode", "USERS");
-		return "manageuser";
+	    @GetMapping(value = "/admin/all")
+	    public String getAllUser(Model model) {
+		model.addAttribute("users", adminService.getAll());
+	
+		return "manageAdmin";
 	   }
 
 	   @GetMapping(value = "/userdelete/{id}")
 	    public String userMarkDelete(@PathVariable("id") Long id, Model model) {
-		UserProfile u = userService.getUserById(id);
-		u.setUserStatus("Deleted");
-		userService.saveUser(u);
+		Admin admin = adminService.getAdminById(id);
+		admin.getUserProfile().setUserStatus("Deleted");
+		adminService.save(admin);
 		return "redirect:/users";
 	   }
 
 	    @GetMapping(value = "/updateuser/{id}")
 	    public String updateUser(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
 		System.out.println("id" + id);
-		redirect.addFlashAttribute("Newuser", userService.getUserById(id));
+		redirect.addFlashAttribute("Newuser", adminService.getAdminById(id));
 		     return "redirect:/addUser";
 	    }
        

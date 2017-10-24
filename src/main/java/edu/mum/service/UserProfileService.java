@@ -30,10 +30,7 @@ public class UserProfileService  {
 		return (List<UserProfile>) userRepository.findAll();
 	}
 	
-	public List<UserProfile> getAllActiveUser(String status)
-	{
-		return userRepository.getActiveUser(status);
-	}
+	
 	 public UserProfile LoggedInUser(){
 
 		    final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
