@@ -50,6 +50,8 @@ public class StudentRegController {
 	SectionsService sectionservice;
 	@Autowired
 	EntryService entryService;
+	@Autowired
+	private ScheduleRepository scheduleDao;
 
 	
 	 @GetMapping(value = "/student")
@@ -65,16 +67,20 @@ public class StudentRegController {
 	 @RequestMapping(value={"/student/viewschedule"},method=RequestMethod.GET)
 		public String studentschedule(Model model) {
 		 
-		 Long id = userprofileService.LoggedInUser().getId();
-		 Student student = studentService.getStudentById(id);
+		 UserProfile userProfile = userprofileService.LoggedInUser();
+		 Student student = studentService.getStudentByUserProfile(userProfile);
+		 
+		 model.addAttribute("blocks", scheduleDao.findOne(student.getEntry().getId()).getEntry().getBlocks());
+			model.addAttribute("entry",scheduleDao.findOne(student.getEntry().getId()).getEntry());
 				
-		model.addAttribute("schedule", scheduleService.getScheduleByEntryId(student.getEntry().getId()));
+		//model.addAttribute("schedule", scheduleService.getScheduleByEntryId(student.getEntry().getId()));
 	
 			
-	   	    return "studentschedule";
+	   	    return "viewSchedule";
 	    }
+	
 	 
-		@GetMapping(value = "/students")
+		@GetMapping(value = "admin/students")
 		public String ManageStudent(Model model) {
 			model.addAttribute("students", studentService.getAllstudents());
 			return "managestudent";
@@ -88,7 +94,7 @@ public class StudentRegController {
 	   	    return "studentregister";
 	    }
 	 
-	    @GetMapping(value = "/addstudent")
+	    @GetMapping(value = "admin/addstudent")
 		public String addstudent(@ModelAttribute("Newstudent") Student student, Model model) {
 			model.addAttribute("userTypeList", roleService.getAll());
 			
@@ -100,7 +106,7 @@ public class StudentRegController {
 			return "addstudent";
 		}
 
-		@PostMapping(value = "/addstudent")
+		@PostMapping(value = "admin/addstudent")
 		public String savestudent(@Valid @ModelAttribute("Newstudent") Student student, BindingResult error,
 				RedirectAttributes redirect, Model model) {
 			//System.out.println(student.getEntry());
@@ -166,12 +172,9 @@ public class StudentRegController {
 		/*if(bindingresult.hasErrors()){
 			return "studentregister";
 		}*/
-		
 		UserProfile userProfile = userprofileService.LoggedInUser();
-		
-		
-		regsubsystem.register(sectionservice.getSectionById(id));
-		
+		String str = regsubsystem.register(sectionservice.getSectionById(id));
+		model.addAttribute("reason", str);
 		model.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
 		 	          
    	return "addsuccess";
