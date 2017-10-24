@@ -31,7 +31,10 @@ public class ScheduleService {
 		System.out.println("========>Generate schedule service called "+entryMonth);
 		Entry entry = (Entry) entryService.getEntryByMonth(entryMonth);
 		//System.out.println("==== generate Sched entry "+entry.getNumOfFpp());
-
+        if(entry.getBlocks().size()==0) {
+        	schedule.setEntry(entry);
+        	return schedule;
+        }
 		entry.getBlocks().forEach(sectionHelper::createSectionForBlock);
 		//System.out.println("==== generate Sched entry 1 ");
 		entry.getBlocks().forEach(facultyHelper::assignCourseAndFaculty);
