@@ -41,14 +41,15 @@ public class FacultyHelper {
 		}
 		
 		Map<Faculty, Course> facultyCourseMap = new HashMap<>();
+
 		if (block.getBlockOrder() > 1) {
-			List<Course> choosen = getCourse(block.getBlockOrder(), block.getSections().size());
-			facultyCourseMap = getFaculty(choosen, block.getBlockOrder());
+			List<Course> choosen = getCourse(block.getBlockOrder(), block.getSections().size(),(int) (Math.round(block.getEntry().getNumOfFpp()) / 25.0));			
 			if (block.getBlockOrder() == 2) {
-				for (int i = 0; i < Math.round(block.getEntry().getNumOfMpp()) / 25.0; i++) {
+				for (int i = 0; i < Math.round(block.getEntry().getNumOfFpp()) / 25.0; i++) {
 					choosen.add(this.MPP);
 				}
 			}
+			facultyCourseMap = getFaculty(choosen, block.getBlockOrder());
 		}else if(block.getBlockOrder()==1) {
 			facultyCourseMap = getFirstBlockFaculty((int)Math.round(block.getEntry().getNumOfFpp()/25.0), (int)Math.round(block.getEntry().getNumOfMpp()/25.0));
 			}
@@ -62,10 +63,10 @@ public class FacultyHelper {
 		
 	}
 
-	private List<Course> getCourse(long blkId, int noSection) {
+	private List<Course> getCourse(long blkId, int noSection,int numOfFpp) {
 		List<Course> selected = new ArrayList<>();
 		if (blkId == 2) {
-			selected.addAll(firstElective(noSection));
+			selected.addAll(firstElective(noSection-numOfFpp));
 
 		} else if (blkId == 3) {
 			selected.addAll(firstElective((int) Math.ceil(noSection / 2.0)));
@@ -125,7 +126,7 @@ public class FacultyHelper {
 			for (int j = 0; j < faculties.size(); j++) {
 				if (faculties.get(j).getCourse().contains(c) /* && faculties.get(j).aet check availability also */) {
 					if (!map.containsKey(faculties.get(j)) && !map.containsValue(c)
-							&& !c.getCourseName().equalsIgnoreCase("MPP"))
+							|| !map.containsKey(faculties.get(j)) && c.getCourseName().equalsIgnoreCase("MPP"))
 						map.put(faculties.get(j), c);
 				}
 			}

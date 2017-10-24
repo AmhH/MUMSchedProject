@@ -52,9 +52,10 @@ public class ScheduleSectionCreator {
 	private void secondBlock(Block block) {
 		int noFPP = block.getEntry().getNumOfFpp();
 		for(int i=0;  i< Math.round(noFPP/25.0); i++) {
+			//System.out.println("=====ScheduleSectionCreator secondBlock method"+block.getSections().get(0).getLimitCapacity());
 			block.getSections().add(new Section(block, this.MPP));
 		}
-		int noMPP = block.getEntry().getNumOfFpp();
+		int noMPP = block.getEntry().getNumOfMpp();
 		for(int i=0;  i< Math.round(noMPP/25.0); i++) {
 			block.getSections().add(new Section(block));
 		}
@@ -72,6 +73,6 @@ public class ScheduleSectionCreator {
 	}
 
 	private void zeroBlock(Block block) {
-		block.getSections().add((new Section(block,this.SCI)));
+		block.getSections().add((new Section(block,	this.SCI)));
 	}
 }
