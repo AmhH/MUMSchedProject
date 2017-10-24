@@ -1,13 +1,13 @@
 package edu.mum.service;
 
-import edu.mum.repository.StudentRepository;
-
-import edu.mum.domain.Student;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import edu.mum.domain.Student;
+import edu.mum.domain.UserProfile;
+import edu.mum.repository.StudentRepository;
 
 
 
@@ -43,6 +43,11 @@ import org.springframework.stereotype.Service;
 		public void deleteStudent(Long id)
 		{
 			studentDAO.delete(id);
+		}
+		
+		public Student getStudentByUserProfile(UserProfile userProfile)
+		{
+			return studentDAO.findByUserprofile(userProfile);
 		}
 }
  
