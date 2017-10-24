@@ -18,7 +18,7 @@ public class Schedule {
  	 @Id
 	 @GeneratedValue(strategy = GenerationType.AUTO)
 	  private Long id;
- 	  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+ 	  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
  	  @JoinColumn (name="entry_id")
 	  private Entry entry;
 	  private Date generatedDate;

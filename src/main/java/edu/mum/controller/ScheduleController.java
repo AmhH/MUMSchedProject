@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.mum.domain.Block;
 import edu.mum.domain.Schedule;
 import edu.mum.repository.ScheduleRepository;
 import edu.mum.service.EntryService;
@@ -48,7 +49,12 @@ public class ScheduleController {
 		System.out.println("========>Generate schedule Controller Entry  "+entry);
 	
 		Schedule schedule = scheduleService.generateSched(entry);
-		System.out.println("========>Controller MEra Schedule" + schedule.toString());
+		for(Block s: schedule.getEntry().getBlocks()) {
+			for (int i=0; i < s.getSections().size();i++) {
+			System.out.println("========>Controller CourseCode Schedule" + s.getSections().get(i).getCourse().getCourseName());
+			}
+		}
+		
 		model.addAttribute("schedule", schedule);
 		return "schedules";
 	}
@@ -71,6 +77,7 @@ public class ScheduleController {
 	public String viewSchedule(@PathVariable("id") Long id, Model model) {
 
 		model.addAttribute("blocks", scheduleDao.findOne(id).getEntry().getBlocks());
+		model.addAttribute("entry",scheduleDao.findOne(id).getEntry());
 		return "viewSchedule";
 	}
 

@@ -51,6 +51,10 @@ public class UserProfile {
 	 public UserProfile() {
 			
 		}
+	 public UserProfile(String staff) {
+			super();
+			this.firstName=staff;
+		}
 	 
 	 public UserProfile(UserProfile user) {
 		super();
