@@ -23,7 +23,7 @@
 <body>
 	<div th:replace="fragments/header :: header"> </div>
 	<div class="addForm">	
-		<form method="post" action="/updateBlock" modelAttribute="block" class="form-group">
+		<form method="post" action="/admin/updateBlock" modelAttribute="block" class="form-group">
 			<label for="blockMonth">Block Month</label>
 			<input type="text" class="form-control" th:value="${blockUpdateable.blockMonth}" name="blockMonth" />
 			<br></br>

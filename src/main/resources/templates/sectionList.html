@@ -22,7 +22,7 @@
 <body>
 <div th:replace="fragments/header :: header"> </div>
 		<div class="mainContainer">
-							<form action="/addSectionForm">
+							<form action="/admin/addSectionForm">
 					        	<input class="btn btn-primary" type="submit" value="Add Sections" />					        	
 					        </form>
 			<table class="table">
@@ -43,14 +43,16 @@
 			    		<td th:text="${section.limitCapacity}"></td>
 			    		<td>
 			    			<div class="buttonDiv">
-						        <form method="post" action="/deleteSection">
+						        <form method="post" action="/admin/deleteSection">
+						        <input name="block_id"  type="hidden" th:value="${block_id}" />
+						        <input name="section_id"  type="hidden" th:value="${section.id}" />
 						        	<input class="btn btn-danger" type="submit" value="Delete" />
 						        </form>
 					        </div>
 					     </td>
 				       	<td>
 					        <div class="buttonDiv">
-						        <form method="post" action="/findSection">
+						        <form method="post" action="/admin/findSection">
 						        	<input name="id"  type="hidden" th:value="${section.id}" />
 						        	<input class="btn btn-primary" type="submit" value="Update" />
 						        </form>
