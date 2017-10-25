@@ -177,12 +177,13 @@ public class StudentRegController {
 		}*/
 		UserProfile userProfile = userprofileService.LoggedInUser();
 		String str = regsubsystem.register(sectionservice.getSectionById(id));
-		model.addAttribute("message", str);
+		
 		
 		if(!(str.equalsIgnoreCase("Success"))){
+			model.addAttribute("message", str);
 		return "studentregister";
 	}
-		
+		model.addAttribute("message", str);
 		//redirAttrs.addFlashAttribute("reason", str);
 		model.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
 		 	          
