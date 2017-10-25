@@ -23,10 +23,6 @@
 		<h2>Register for a section</h2>
 	</div>
 	
-	<div class="alert alert-success fade in">
-    <a href="#" class="close" data-dismiss="alert">&times;</a>
-    <h3 class="alth:text="${message}">Text ...</h3> Your message has been sent successfully.
-</div>
 	
 	  <div class="container col-md-12" >
 
@@ -49,7 +45,7 @@
 				
 					<td th:text="${section.course.courseName}"></td>
 					<td th:text="${section.course.courseCode}"></td>
-					<td th:text="${section.faculty.userProfile.firstName}">Text ...</td>
+					  <td th:text="${section.faculty.userProfile.firstName}"></td>
 				
 					<!-- <td>
 					<span th:if="${course.prerequisite != null}"  

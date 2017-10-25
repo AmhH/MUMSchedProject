@@ -157,7 +157,10 @@ public class StudentRegController {
 					Student student = studentService.getStudentByUserProfile(userProfile);
 					//System.out.println("=======updateStudent Controller"+Newstudent.getUserprofile().getUserName());
 					student.getUserprofile().setUserName(Newstudent.getUserprofile().getUserName());
-					student.getUserprofile().setPassword(Newstudent.getUserprofile().getPassword());
+					
+					BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+					student.getUserprofile().setPassword(passwordEncoder.encode(Newstudent.getUserprofile().getPassword()));
+					
 					student.getUserprofile().setEmail(Newstudent.getUserprofile().getEmail());
 				 
 		 //model.addAttribute("Newstudent", student);
@@ -170,7 +173,7 @@ public class StudentRegController {
 
 	
 	@RequestMapping(value={"/student/register/{id}"}, method = RequestMethod.GET)
-    public String registerStudent( @PathVariable Long id,  /*BindingResult bindingresult,*/ Model model/*,RedirectAttributes redirAttrs*/) {
+    public String registerStudent( @PathVariable Long id,  /*BindingResult bindingresult,*/ Model model,RedirectAttributes redirAttrs) {
 		
 		/*if(bindingresult.hasErrors()){
 			return "studentregister";
@@ -180,14 +183,20 @@ public class StudentRegController {
 		
 		
 		if(!(str.equalsIgnoreCase("Success"))){
-			model.addAttribute("message", str);
+			redirAttrs.addFlashAttribute("message", str);
 		return "studentregister";
 	}
-		model.addAttribute("message", str);
-		//redirAttrs.addFlashAttribute("reason", str);
-		model.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
-		 	          
-   	return "addsuccess";
+		//model.addAttribute("message", str);
+		
+		
+		redirAttrs.addFlashAttribute("message", str);
+		//model.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
+		
+		redirAttrs.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
+	
+		
+		return "redirect:/student";
+   	//return "addsuccess";
     }
 	
 	//Admin

@@ -23,13 +23,7 @@
 </head>
 <body>
 <h1>Your List of registered Courses</h1>
-
-<div class="alert alert-success fade in">
-    <a href="#" class="close" data-dismiss="alert">&times;</a>
-    <h3 class="alth:text="${message}"></h3> Your registration has been sent successfully.
-</div>
-
-
+<div id="msg"><h2 th:text="${message}"></h2></div>
 <div th:replace="fragments/header :: header"> </div>
 <div class="mainContainer">
 	<!-- <button class="btn btn-primary" onclick="location.href='student/register'">Register</button> -->
@@ -53,6 +47,17 @@
 		   </tr>
 	</table>	  
 </div>
- 		
+ 	<script> 
+$(document).ready(function(){ 
+
+$("#msg").hide().html("Success").fadeIn("slow"); 
+$("#msg").fadeOut("slow",function(){ 
+/* $("#msg").html("You will now be re-directed").fadeIn("slow");  */
+$("#msg").fadeOut("slow"); 
+/* setTimeout("location.href = 'http://elp7.com/';",2500);  */
+
+}); 
+}); 
+</script> 	
 </body>
 </html>

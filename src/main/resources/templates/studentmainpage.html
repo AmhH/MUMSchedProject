@@ -74,6 +74,29 @@
 	
 			
 			</div>
+			
+			<div class="mainContainer">
+	<!-- <button class="btn btn-primary" onclick="location.href='student/register'">Register</button> -->
+	<table class="table">
+			<tr>
+				    <th>Entry Month</th>
+				    <th>Section code</th>
+				    <th>Course name</th>
+				    <th>Faculty</th>
+				 
+			</tr>	    
+			<tr th:each="section :${sections}">	
+			        <td th:text="${section.block.blockMonth}">1 </td>
+			
+			        <td th:text="${section.sectionCode}">Title ...</td>
+			        <td th:text="${section.course.courseName}">Text ...</td>
+			        <td th:text="${section.faculty.userProfile.firstName}">Text ...</td>
+			       
+	
+			  
+		   </tr>
+	</table>	  
+</div>
 
 <div th:replace="fragments/footer :: footer"></div>
 <script src="/jquery/jquery-3.2.1.min.js"></script>    
