@@ -24,4 +24,10 @@ public class SpecializationsService {
 	{
 		return (List<Specialization>) specalizationRepository.findAll();
 	}
+	public void deleteSpecialization(Long id){
+		specalizationRepository.delete(id);
+	}
+	public Specialization getSpecialization(Long id){
+		return specalizationRepository.findOne(id);
+	}
 }

@@ -202,12 +202,33 @@ public class StudentRegController {
 	@PreAuthorize("hasRole('ROLE_Admin')")
 	@GetMapping(value = "admin/student/update/{id}")
 	public String updateStudent(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("editstudent", studentService.getStudentById(id));
+		model.addAttribute("editStudent", studentService.getStudentById(id));
 		
 		List<Entry> entries = entryService.getAllEntry();
 		
 		model.addAttribute("entries", entries);
 		model.addAttribute("userTypeList", roleService.getAll());
-		return "AdminEditFaculty";
+		return "adminEditStudent";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_Admin')")
+	@PostMapping(value = "admin/student/update")
+	public String saveUpdateStudent(@Valid @ModelAttribute("editStudent")Student editedstudent,BindingResult error,Model model) {
+		
+		if(error.hasErrors()){
+			
+			if(!model.containsAttribute("entries"))
+				model.addAttribute("entries", entryService.getAllEntry());
+		    if(!model.containsAttribute("userTypeList"))
+		    		model.addAttribute("userTypeList", roleService.getAll());
+		   return "adminEditStudent";
+		}
+			
+		editedstudent.getUserprofile().setId(editedstudent.getUserprofile().getId());
+		studentService.save(editedstudent);
+		
+		return "redirect:/admin/students";
 	}
 }
+	
+

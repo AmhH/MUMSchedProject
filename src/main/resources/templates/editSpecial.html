@@ -20,28 +20,23 @@
 
 	<div id="global">
 	<div class="col-md-3" style="margin-top:20px">
-		<form  th:action="@{/admin/role/add}" th:object="${newRole}" 	method="post">
+		<form  th:action="@{/admin/specialization/update}" th:object="${editedSpecial}" method="post">
 			<fieldset>
-				<legend>Add New Entry</legend>
+				<legend>Add Specialization</legend>
 				
 					
-					<ul>
+				 	<!-- <ul>
 						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
 						
 					</ul>
-				
+				  -->
+				 <input type="hidden" th:field="*{id}" name="ID" />
 					<p>
-					<label for="role">User Role : </label> <input id="role"  class="form-control mb-2 mb-sm-0"
-						type="text" th:field="*{role}" />
+					<label for="specalization">Specialization : </label> <input id="specalization"  class="form-control mb-2 mb-sm-0"
+						type="text" th:field="*{specalization}" />
 					
 				</p>
 				 
-				<p>
-					<label for="description">Role Description  : </label> <input id="description" class="form-control mb-2 mb-sm-0"
-						type="text" th:field="*{description}"/>
-				</p>
-				
-				
 				<div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <input type="submit" class="btn btn-lg btn-primary btn-block" value="Save"/>
