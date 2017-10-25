@@ -24,7 +24,7 @@
 
 </head>
 <body>
-
+<div th:fragment="facultyheader">
 	<div th:replace="fragments/header :: header"> </div>
 	<div class="mainContainer">
 		<div class="mainHeader">
@@ -33,7 +33,7 @@
 					<tr>
 						<td><img class="pic" alt="" th:src="@{/image/malecostume-512.png}" /></td>
 						<td  class="myProfile"><div class="facultyName">Faculty</div>
-							<div th:text="${faculty.userProfile.firstName}"></div>
+							<div th:text="${newFaculty.userProfile.firstName}"></div>
 							<hr /></td>
 					</tr>
 				</table>		
@@ -41,7 +41,7 @@
 			<div class="rightHeaderMain">
 				<div class="middleHeader">
 					<div class="facultyName">University Contacts</div>
-					<div th:text="${faculty.userProfile.email}"></div>
+					<div th:text="${newFaculty.userProfile.email}"></div>
 					<hr />
 					<div class="facultyName">Sections</div>
 					<ul th:each="section: ${facultySection}">
@@ -50,25 +50,27 @@
 				</div>
 				<div class="rightHeader">
 					<div class="facultyName">Specialization</div>
-					<ul th:each="spe: ${faculty.specializations}">
+					<ul th:each="spe: ${newFaculty.specializations}">
 						<li th:text="${spe.specalization}"></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>	
-	<div class="mainBody">
+	</div>
+	<!-- <div class="mainBody">
 			<h2>Schedules</h2>
 			<table class="table table-striped table-hover">
 				<tr>
-					<th>Schedules</th>
+					<th><a>Schedules</a></th>
+					<th><a>Personal Detail</a></th>
+					<th><a>Specialization</a></th>
+					<th><a>Course</a></th>
 					<th class="action">Actions</th>
 				</tr>
-				<tr>
 				
-				</tr>
 			</table>
-		</div>	
+		</div>	 -->
  		
 </body>
 </html>

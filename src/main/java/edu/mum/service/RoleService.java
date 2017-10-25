@@ -25,5 +25,9 @@ public class RoleService {
 	{
 		return userTypeRepository.findOne(id);
 	}
+	
+	public void deleteRole(Long id){
+		userTypeRepository.delete(id);
+	}
 
 }

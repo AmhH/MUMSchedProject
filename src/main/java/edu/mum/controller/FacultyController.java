@@ -1,7 +1,6 @@
 package edu.mum.controller;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.mum.domain.Faculty;
 import edu.mum.domain.Section;
@@ -129,29 +127,27 @@ public class FacultyController {
 		return "redirect:/admin/faculty/all";
 	}
 
-	
+	@PreAuthorize("hasRole('ROLE_Admin')")
 	@GetMapping(value = "/admin/faculty/all")
 	public String ManageStudent(Model model) {
 		model.addAttribute("faculties", facultyService.getAllfaculty());
 		return "manageFaculty";
 	}
 
-	@GetMapping(value = "/home")
-	public String facultyHome(Model model, Map<?, ?> map) {
-		model.addAttribute("loggedInUser", map.get("username"));
-		return "home";
-	}
+	
 
 	@GetMapping(value = "/nav")
 	public String nav(Model model) {
 
 		return "sidebar";
 	}
-
-	@GetMapping("/update")
-	public String updateFacultyProfile(@ModelAttribute("newFaculty") Faculty faculty, Model model) {
-		faculty = facultyService.getFacultyByUserProfile(userProfileService.LoggedInUser());
-
+    
+	
+	@GetMapping("/faculty/update")
+	public String updateFacultyProfile( Model model) {
+		 System.out.println(userProfileService.LoggedInUser().getFirstName());
+		Faculty faculty = facultyService.getFacultyByUserProfile(userProfileService.LoggedInUser());
+        System.out.println(userProfileService.LoggedInUser().getFirstName());
 		model.addAttribute("newFaculty", faculty);
 		model.addAttribute("facultySpecialList", faculty.getSpecializations());
 		model.addAttribute("facultyCourseList", faculty.getCourse());
@@ -161,7 +157,8 @@ public class FacultyController {
 		return "editFaculty";
 
 	}
-
+    
+	
 	@PostMapping("/faculty/updatePersonaInfo")
 	public String saveUpdateFacultyProfile(@Valid @ModelAttribute("newFaculty") Faculty editedFaculty,
 			BindingResult error, Model model) {
@@ -179,7 +176,7 @@ public class FacultyController {
 		return "redirect:/home";
 
 	}
-
+	@PreAuthorize("hasRole('ROLE_Faculty')")
 	@PostMapping("/faculty/updateSpecialization")
 	public String updateSpecialization(@Valid @ModelAttribute("newFaculty") Faculty editedFaculty, BindingResult error,
 			Model mode) {
@@ -191,7 +188,7 @@ public class FacultyController {
 		return "redirect:/faculty/update";
 
 	}
-
+	@PreAuthorize("hasRole('ROLE_Faculty')")
 	@PostMapping("/faculty/updateCourse")
 	public String updateCourse(@Valid @ModelAttribute("newFaculty") Faculty editedFaculty, BindingResult error,
 			Model mode) {
@@ -203,13 +200,14 @@ public class FacultyController {
 		return "redirect:/faculty/update";
 
 	}
-
+	
 	@GetMapping("/faculty/viewSchedule")
 	public String viewFacultySchedule(Model model) {
 		Faculty faculty = facultyService.getFacultyByUserProfile(userProfileService.LoggedInUser());
 		List<Section> facultySection = sectionService.getAllSection().stream()
 				.filter(s -> s.getFaculty().equals(faculty)).collect(Collectors.toList());
 		model.addAttribute("sections", facultySection);
+		model.addAttribute("faculty",faculty);
 		return "viewFacultySchedule";
 	}
 

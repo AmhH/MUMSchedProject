@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,9 +32,10 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
 		           .antMatchers("/faculty/**").hasAuthority("ROLE_Faculty")
 		           .antMatchers("/admin/**").hasAuthority("ROLE_Admin")
 		           .antMatchers("/student/**").hasAuthority("ROLE_student")
-		            .antMatchers("/home").authenticated()
-		           .anyRequest().permitAll()
-		           .and().formLogin().successHandler(successHandler);
+		           .antMatchers("/home").authenticated()
+	                .anyRequest().authenticated()
+		           .and().formLogin().successHandler(successHandler).and().exceptionHandling().accessDeniedPage("/403");
+		   	     	
 	
 		
 
