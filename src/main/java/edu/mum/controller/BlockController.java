@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -21,6 +22,7 @@ import edu.mum.service.EntryService;
 
 
 @Controller
+@RequestMapping("/admin")
 public class BlockController {
 	
 	Long id_new, id_new_entry;
@@ -28,6 +30,15 @@ public class BlockController {
 	private BlockService blockService;
 	@Autowired
 	private EntryService entryService;
+	
+	
+	@RequestMapping(value= {"/loginPage"})
+	public  String login(){
+		
+		
+		return "loginPage";
+	}
+	
 	
 	@RequestMapping(value= {"/addBlockForm"},method=RequestMethod.POST)
 	public  String saveBlockForm(@RequestParam String id, Model model){
@@ -113,6 +124,7 @@ public class BlockController {
 		entryService.saveEntry(currentEntry);
 		model.addAttribute("blocks", blocks);
 		model.addAttribute("entry", currentEntry);
+		
 		return "blockList";
 	}
 }

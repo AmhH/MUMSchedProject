@@ -16,6 +16,7 @@ import edu.mum.service.EntryService;
 
 
 @Controller
+@RequestMapping("/admin")
 public class EntryController {
 	private Long id_new;
 	@Autowired
@@ -30,14 +31,14 @@ public class EntryController {
 	@RequestMapping(value= {"/addEntry"},method=RequestMethod.POST)
 	public RedirectView saveEntry(@ModelAttribute("entry") Entry newEntry){
 		entryService.saveEntry(newEntry);
-		return new RedirectView("/addEntry");
+		return new RedirectView("/admin/addEntry");
 	}
 	
 	@RequestMapping(value= {"/deleteEntry"},method=RequestMethod.POST)
 	public RedirectView deleteEntry(@RequestParam String id){
 		id_new = Long.valueOf(id);
 		entryService.deleteEntry(id_new);
-		return new RedirectView("/allEntry");
+		return new RedirectView("/admin/allEntry");
 	}
 	
 	@RequestMapping(value= {"/findEntry"},method=RequestMethod.POST)
@@ -53,10 +54,10 @@ public class EntryController {
 			@RequestParam int numOfFpp, @RequestParam int numOfUSstudents){
 		id_new = Long.valueOf(id);
 		entryService.updateEntry(entryMonth, numOfFpp, numOfMpp, numOfUSstudents, id_new);
-		return new RedirectView("/allEntry");
+		return new RedirectView("/admin/allEntry");
 	}
 	
-	@RequestMapping(path="/allEntry")
+	@RequestMapping(value="/allEntry")
 	public String getAllUsers(Model model) {
 		// This returns a JSON or XML with the users
 		List<Entry> entryList = entryService.getAllEntry();

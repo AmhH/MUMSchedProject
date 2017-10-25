@@ -22,18 +22,18 @@ public class Section {
 	private String sectionCode="TEST-A";
 	private int limitCapacity=25;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private Course course;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "faculty_id")
 	private Faculty faculty;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "block_id")
 	private Block block;
 
-	@ManyToMany(mappedBy = "sections", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "sections", cascade = CascadeType.PERSIST)
 	List<Student> students = new ArrayList<Student>();
 
 	public Section() {

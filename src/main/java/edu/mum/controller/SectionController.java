@@ -2,7 +2,7 @@ package edu.mum.controller;
 
 
 
-import java.sql.Date;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +17,16 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import edu.mum.domain.Block;
 import edu.mum.domain.Course;
-import edu.mum.domain.Entry;
 import edu.mum.domain.Faculty;
 import edu.mum.domain.Section;
 import edu.mum.service.BlockService;
 import edu.mum.service.CourseService;
-import edu.mum.service.EntryService;
 import edu.mum.service.FacultyService;
 import edu.mum.service.SectionsService;
 
 
 @Controller
+@RequestMapping("/admin")
 public class SectionController {
 
 	@Autowired
@@ -75,13 +74,14 @@ public class SectionController {
 		
 		blockService.saveBlock(block, block.getEntry().getId());
 			
-		return new RedirectView("/allEntry");
+		return new RedirectView("/admin/allEntry");
 	}
 	
 	@RequestMapping(value= {"/listSections"}, method=RequestMethod.POST)
 	public String listSectioin(@RequestParam String block_id, Model model){	
 		Block block = blockService.getBlockById(Long.parseLong(block_id));
 		List<Section> sections = block.getSections();
+		model.addAttribute("block_id", block_id);
 		model.addAttribute("sections", sections);	
 		return "sectionList";
 	}
@@ -121,4 +121,22 @@ public class SectionController {
 		
 		return "/viewEntry";
 	}	
+	
+	@RequestMapping(value= {"/deleteSection"},method=RequestMethod.POST)
+	public String deleteSection(@RequestParam String section_id, @RequestParam String block_id, Model model) {
+		Block block = blockService.getBlockById(new Long(block_id));
+		List<Section> sections = block.getSections();
+		Long newSectionId = Long.parseLong(section_id);
+		for(int i=0;i<sections.size();i++) {
+			if(sections.get(i).getId()==newSectionId) {
+				sections.remove(i);
+			}
+		}
+		block.setSections(sections);
+		sectionService.deleteSection(newSectionId);
+		blockService.saveBlock(block, block.getEntry().getId());
+		model.addAttribute("block_id", block_id);
+		model.addAttribute("sections", sections);	
+		return "sectionList";
+	}
 }

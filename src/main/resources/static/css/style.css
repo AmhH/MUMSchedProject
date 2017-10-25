@@ -12,3 +12,31 @@
 	border-radius:10px;
 	padding:25px;
 }
+body, html {
+    height: 100%;
+}
+
+.bg{ 
+    /* The image used */
+    background-image: url("./image/bg.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.loginForm{
+	width:400px;
+	height:50%;
+	border-style:solid;
+	border-color:grey;
+	border-radius:25px;
+	margin-left:200px;
+	box-shadow: 10px 10px 5px #888888;
+	padding:20px;
+	margin-top:20px;
+}
