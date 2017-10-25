@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.mum.domain.Entry;
+import edu.mum.domain.Section;
 import edu.mum.domain.Student;
 import edu.mum.domain.UserProfile;
 import edu.mum.registersubsystem.impl.RegisterSubsystemFacade;
@@ -92,7 +93,8 @@ public class StudentRegController {
 		public String registerstudent(Model model) {
 		 	//System.out.println("logged User:"+userprofileService.LoggedInUser().getFirstName());
 		model.addAttribute("sections",regsubsystem.getListSection());
-			System.out.println("size of section:"+regsubsystem.getListSection().size());
+			//System.out.println("size of section:"+regsubsystem.getListSection().size());
+		//List<Section> section=regsubsystem.getListSection();
 	   	    return "studentregister";
 	    }
 	 
