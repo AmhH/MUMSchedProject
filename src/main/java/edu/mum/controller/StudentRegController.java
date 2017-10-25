@@ -175,7 +175,7 @@ public class StudentRegController {
 
 	
 	@RequestMapping(value={"/student/register/{id}"}, method = RequestMethod.GET)
-    public String registerStudent( @PathVariable Long id,  /*BindingResult bindingresult,*/ Model model,RedirectAttributes redirAttrs) {
+    public String registerStudent( @PathVariable Long id,  /*BindingResult bindingresult,*/ Model model/*,RedirectAttributes redirAttrs*/) {
 		
 		/*if(bindingresult.hasErrors()){
 			return "studentregister";
@@ -185,20 +185,22 @@ public class StudentRegController {
 		
 		
 		if(!(str.equalsIgnoreCase("Success"))){
-			redirAttrs.addFlashAttribute("message", str);
+			//redirAttrs.addFlashAttribute("message", str);
+			model.addAttribute("message",str);
 		return "studentregister";
 	}
-		//model.addAttribute("message", str);
+		model.addAttribute("message", str);
 		
 		
-		redirAttrs.addFlashAttribute("message", str);
-		//model.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
+		//redirAttrs.addFlashAttribute("message", str);
 		
-		redirAttrs.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
+		model.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
+		
+		//redirAttrs.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
 	
 		
-		return "redirect:/student";
-   	//return "addsuccess";
+		//return "redirect:/student";
+   	return "addsuccess";
     }
 	
 	//Admin
@@ -234,8 +236,8 @@ public class StudentRegController {
 		    		model.addAttribute("userTypeList", roleService.getAll());
 		   return "adminEditStudent";
 		}
-			
-		editedstudent.getUserprofile().setId(editedstudent.getUserprofile().getId());
+		//editedstudent.setId(editedstudent.getUserprofile().getId());
+		//editedstudent.getUserprofile().setId(editedstudent.getUserprofile().getId());
 		studentService.save(editedstudent);
 		
 		return "redirect:/admin/students";
