@@ -31,9 +31,9 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
 		           .authorizeRequests()
 		           .antMatchers("/faculty/**").hasAuthority("ROLE_Faculty")
 		           .antMatchers("/admin/**").hasAuthority("ROLE_Admin")
-		           .antMatchers("/student/**").hasAuthority("ROLE_student")
+		           .antMatchers("/student/**").hasAuthority("ROLE_Student")
 		           .antMatchers("/home").authenticated()
-	                .anyRequest().authenticated()
+	               .anyRequest().authenticated()
 		           .and().formLogin().successHandler(successHandler).and().exceptionHandling().accessDeniedPage("/403");
 		   	     	
 	
