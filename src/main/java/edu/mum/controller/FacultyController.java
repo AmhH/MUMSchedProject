@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,10 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.mum.domain.Faculty;
 import edu.mum.domain.Section;
 import edu.mum.domain.Specialization;
+import edu.mum.domain.Student;
+import edu.mum.domain.Transcript;
 import edu.mum.service.CourseService;
 import edu.mum.service.FacultyService;
 import edu.mum.service.RoleService;
@@ -207,8 +211,20 @@ public class FacultyController {
 		List<Section> facultySection = sectionService.getAllSection().stream()
 				.filter(s -> s.getFaculty().equals(faculty)).collect(Collectors.toList());
 		model.addAttribute("sections", facultySection);
-		model.addAttribute("faculty",faculty);
+		model.addAttribute("newFaculty",faculty);
 		return "viewFacultySchedule";
+	}
+	
+	@GetMapping("/faculty/student/grade/{id}")
+	public String gradeStudents(@PathParam("id") long id, Model model){
+		List<Student> students = sectionService.getStudentBySection(id);
+		model.addAttribute("studentList", students);
+		return "gardeStudents";
+	}
+	
+	@PostMapping("/faculty/student/grading")
+	public String studentsGradded(@ModelAttribute("studentList") List<Student> students){
+		return "";
 	}
 
 }
