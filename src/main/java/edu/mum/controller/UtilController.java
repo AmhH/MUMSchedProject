@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.mum.domain.Role;
 import edu.mum.domain.Specialization;
@@ -16,6 +17,7 @@ import edu.mum.service.RoleService;
 import edu.mum.service.SpecializationsService;
 
 @Controller
+@RequestMapping("/admin")
 public class UtilController {
 	
 	@Autowired

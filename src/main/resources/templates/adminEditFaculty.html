@@ -19,7 +19,7 @@
 	<div th:replace="fragments/header :: header-css"></div>
 	<div th:replace="fragments/header :: header"></div>
 	<div>
-		<form th:action="@{/faculty/update}" th:object="${newFaculty}"
+		<form th:action="@{/admin/faculty/edit}" th:object="${newFaculty}"
 			method="post" class="form-horizontal" id="editForm">
 
 			<div class="alert alert-danger alert-dismissable fade in">

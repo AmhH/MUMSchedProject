@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +29,6 @@ import edu.mum.service.SpecializationsService;
 import edu.mum.service.UserProfileService;
 
 @Controller
-@RequestMapping("/faculty")
 public class FacultyController {
 	Specialization spe;
 	@Autowired
@@ -46,8 +46,8 @@ public class FacultyController {
 
 	// only admin can add new Faculty
 
-	// @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@GetMapping(value = "/add")
+	@PreAuthorize("hasAnyRole('ROLE_Admin')")
+	@GetMapping(value = "/admin/faculty/add")
 	public String addFaculty(@ModelAttribute("newFaculty") Faculty faculty, Model model) {
 		model.addAttribute("userTypeList", roleService.getAll());
 		model.addAttribute("specializations", specializationsService.findAllspecalization());
@@ -55,7 +55,8 @@ public class FacultyController {
 		return "addFaculty";
 	}
 
-	@PostMapping(value = "/add")
+	@PreAuthorize("hasAnyRole('ROLE_Admin')")
+	@PostMapping(value = "/admin/faculty/add")
 	public String saveFaculty(@Valid @ModelAttribute("newFaculty") Faculty faculty, BindingResult error, Model model) {
 		if (error.hasErrors()) {
 			if (!model.containsAttribute("specializations")) {
@@ -68,7 +69,7 @@ public class FacultyController {
 				model.addAttribute("courseList", courseService.getAllCourser());
 			}
 
-			return "addFaculty";
+			return "adminEditFaculty";
 		}
 
 		System.out.println("before");
@@ -85,15 +86,16 @@ public class FacultyController {
 
 		return "redirect:/faculty/all";
 	}
+	
 
-	@GetMapping(value = "/delete/{id}")
+	@GetMapping(value = "/admin/faculty/delete/{id}")
 	public String deleteFaculty(@PathVariable("id") Long id, Model model) {
 		facultyService.deleteFaculty(id);
 
 		return "redirect:/faculty/all";
 	}
 
-	@GetMapping(value = "/update/{id}")
+	@GetMapping(value = "/admin/faculty/update/{id}")
 	public String userMarkDelete(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("newFaculty", facultyService.getFacultyById(id));
 		model.addAttribute("specializations", specializationsService.findAllspecalization());
@@ -102,7 +104,33 @@ public class FacultyController {
 		return "adminEditFaculty";
 	}
 
-	@GetMapping(value = "/all")
+	@PostMapping(value = "/admin/faculty/edit")
+	public String editFaculty(@Valid @ModelAttribute("newFaculty") Faculty faculty, BindingResult error, Model model) {
+		if (error.hasErrors()) {
+			if (!model.containsAttribute("specializations")) {
+				model.addAttribute("specializations", specializationsService.findAllspecalization());
+			}
+			if (!model.containsAttribute("userTypeList")) {
+				model.addAttribute("userTypeList", roleService.getAll());
+			}
+			if (!model.containsAttribute("courseList")) {
+				model.addAttribute("courseList", courseService.getAllCourser());
+			}
+
+			return "adminEditFaculty";
+		}
+
+		System.out.println("before");
+
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		faculty.getUserProfile().setPassword(passwordEncoder.encode(faculty.getUserProfile().getPassword()));
+        faculty.getUserProfile().setId(faculty.getUserProfile().getId());
+		facultyService.saveFaculty(faculty);
+		return "redirect:/admin/faculty/all";
+	}
+
+	
+	@GetMapping(value = "/admin/faculty/all")
 	public String ManageStudent(Model model) {
 		model.addAttribute("faculties", facultyService.getAllfaculty());
 		return "manageFaculty";
@@ -111,7 +139,7 @@ public class FacultyController {
 	@GetMapping(value = "/home")
 	public String facultyHome(Model model, Map<?, ?> map) {
 		model.addAttribute("loggedInUser", map.get("username"));
-		return "facultyhome";
+		return "home";
 	}
 
 	@GetMapping(value = "/nav")
@@ -134,7 +162,7 @@ public class FacultyController {
 
 	}
 
-	@PostMapping("/updatePersonaInfo")
+	@PostMapping("/faculty/updatePersonaInfo")
 	public String saveUpdateFacultyProfile(@Valid @ModelAttribute("newFaculty") Faculty editedFaculty,
 			BindingResult error, Model model) {
 		System.out.println("POST");
@@ -148,11 +176,11 @@ public class FacultyController {
 		faculty.getUserProfile().setPassword(passwordEncoder.encode(editedFaculty.getUserProfile().getPassword()));
 		faculty.getUserProfile().setEmail(editedFaculty.getUserProfile().getEmail());
 		facultyService.saveFaculty(faculty);
-		return "redirect:/faculty/home";
+		return "redirect:/home";
 
 	}
 
-	@PostMapping("/updateSpecialization")
+	@PostMapping("/faculty/updateSpecialization")
 	public String updateSpecialization(@Valid @ModelAttribute("newFaculty") Faculty editedFaculty, BindingResult error,
 			Model mode) {
 
@@ -164,7 +192,7 @@ public class FacultyController {
 
 	}
 
-	@PostMapping("/updateCourse")
+	@PostMapping("/faculty/updateCourse")
 	public String updateCourse(@Valid @ModelAttribute("newFaculty") Faculty editedFaculty, BindingResult error,
 			Model mode) {
 
@@ -176,9 +204,9 @@ public class FacultyController {
 
 	}
 
-	@GetMapping("/viewSchedule/{id}")
-	public String viewFacultySchedule(@PathVariable("id") Long id, Model model) {
-		Faculty faculty = facultyService.getFacultyById(id);
+	@GetMapping("/faculty/viewSchedule")
+	public String viewFacultySchedule(Model model) {
+		Faculty faculty = facultyService.getFacultyByUserProfile(userProfileService.LoggedInUser());
 		List<Section> facultySection = sectionService.getAllSection().stream()
 				.filter(s -> s.getFaculty().equals(faculty)).collect(Collectors.toList());
 		model.addAttribute("sections", facultySection);

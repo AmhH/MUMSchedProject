@@ -134,7 +134,7 @@ public class StudentRegController {
 
 			System.out.println("password string:  " + passwordEncoder.encode(student.getUserprofile().getPassword()));
 			studentService.save(student);
-			return "redirect:/students";
+			return "redirect:/admin/students";
 		}
 	 
 	 @RequestMapping(value= {"student/updatestudent"},method=RequestMethod.GET)

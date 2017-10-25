@@ -27,21 +27,21 @@ private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 		authorities.forEach(authority -> {
 			if(authority.getAuthority().equals("ROLE_Faculty")) {
 				try {
-					redirectStrategy.sendRedirect(httrequest, httpResponse, "/faculty/home");
+					redirectStrategy.sendRedirect(httrequest, httpResponse, "/home");
 				} catch (Exception e) {
 					
 					e.printStackTrace();
 				}
 			} else if(authority.getAuthority().equals("ROLE_Admin")) {
 				try {
-					redirectStrategy.sendRedirect(httrequest, httpResponse, "/faculty/home");
+					redirectStrategy.sendRedirect(httrequest, httpResponse, "/home");
 				} catch (Exception e) {
 				
 					e.printStackTrace();
 				}
 			} else if(authority.getAuthority().equals("ROLE_Student")) {
 				try {
-					redirectStrategy.sendRedirect(httrequest, httpResponse, "/faculty/home");
+					redirectStrategy.sendRedirect(httrequest, httpResponse, "/home");
 				} catch (Exception e) {
 				
 					e.printStackTrace();

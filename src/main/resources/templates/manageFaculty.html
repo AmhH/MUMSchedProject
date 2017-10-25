@@ -14,7 +14,7 @@
 	<div th:replace="fragments/header :: header"></div>
 		<div class="container">
 		<a th:href="@{/faculty/add}">Add Faculty</a>
-        <h2>Faculty Manage</h2>
+        <h2>Manage Faculty </h2>
 		<div class="table-responsive ">
 			<table class="table table-hover">
 				<tr>
@@ -27,10 +27,10 @@
 					<td th:text="${faculty.userProfile.firstName}"></td>
 					<td th:text="${faculty.userProfile.lastName}"></td>
 					<td>
-					<a	href="manageuser.html" th:href="@{|/faculty/delete/${faculty.id}}"> 
+					<a	href="manageuser.html" th:href="@{|/admin/faculty/delete/${faculty.id}}"> 
 					         <span class="glyphicon glyphicon-trash"></span></a></td>
 					<td>
-					<a th:href="@{|/faculty/update/${faculty.id}}"> <span
+					<a th:href="@{|/admin/faculty/update/${faculty.id}}"> <span
 							class="glyphicon glyphicon-pencil"></span></a></td>
 				</tr>
 			</table> 

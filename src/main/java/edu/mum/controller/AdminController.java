@@ -22,7 +22,7 @@ import edu.mum.service.RoleService;
 import edu.mum.service.UserProfileService;
 
 @Controller
-@RequestMapping("/admin")
+
 public class AdminController {
 
 		@Autowired
@@ -31,13 +31,13 @@ public class AdminController {
 		RoleService roleService;
 	   
 	  // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	   @GetMapping(value = "/add")
+	   @GetMapping(value = "/admin/admin/add")
 	   public String addUser(@ModelAttribute("newAdmin") Admin admin, Model model) {
 	   model.addAttribute("userTypeList", roleService.getAll());
 	        return "addAdmin";
        }
 	  // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	   @RequestMapping(value = "/add", method = RequestMethod.POST)
+	   @RequestMapping(value = "/admin/admin/add", method = RequestMethod.POST)
 	   public String saveUser(@Valid @ModelAttribute("newAdmin") Admin admin, BindingResult error,Model model){
 		
 		if (error.hasErrors()) {
@@ -50,17 +50,17 @@ public class AdminController {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		admin.getUserProfile().setPassword(passwordEncoder.encode(admin.getUserProfile().getPassword())); 
 		 adminService.save(admin);
-		return "redirect:/admin/all";
+		return "redirect:/admin/admin/all";
 	   }
         
-	    @GetMapping(value = "/all")
+	    @GetMapping(value = "admin/admin/all")
 	    public String getAllUser(Model model) {
 		model.addAttribute("adminList", adminService.getAll());
 	
 		return "manageAdmin";
 	   }
 
-	   @GetMapping(value = "/userdelete/{id}")
+	   @GetMapping(value = "admin/admin/delete/{id}")
 	    public String userMarkDelete(@PathVariable("id") Long id, Model model) {
 		Admin admin = adminService.getAdminById(id);
 		admin.getUserProfile().setUserStatus("Deleted");
@@ -68,7 +68,7 @@ public class AdminController {
 		return "redirect:/users";
 	   }
 
-	    @GetMapping(value = "/updateuser/{id}")
+	    @GetMapping(value = "admin/admin/update/{id}")
 	    public String updateUser(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
 		System.out.println("id" + id);
 		redirect.addFlashAttribute("Newuser", adminService.getAdminById(id));
