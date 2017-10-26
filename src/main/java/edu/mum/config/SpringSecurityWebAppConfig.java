@@ -43,6 +43,7 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		System.out.println("password Checked");
 		auth.userDetailsService(userdetailsService).passwordEncoder(getPasswordEncoder());
 
 	}
@@ -62,5 +63,6 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
 			}
 		};
 	}
-
+	
+	
 }

@@ -3,8 +3,10 @@ package edu.mum.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -49,7 +51,7 @@ public class FacultyHelper {
 					choosen.add(this.MPP);
 				}
 			}
-			facultyCourseMap = getFaculty(choosen, block.getBlockOrder());
+			facultyCourseMap = getFaculty(choosen, block.getBlockOrder(), block.getSections().size());
 		} else if (block.getBlockOrder() == 1) {
 			facultyCourseMap = getFirstBlockFaculty((int) Math.floor(block.getEntry().getNumOfFpp() / 25),
 					(int) Math.floor(block.getEntry().getNumOfMpp() / 25));
@@ -60,6 +62,8 @@ public class FacultyHelper {
 			block.getSections().get(cnt).setCourse(facultyCourseMap.get(key));
 			block.getSections().get(cnt).setFaculty(key);
 			cnt++;
+			if (block.getSections().size() == cnt)
+				break;
 
 		}
 		for (Faculty key : facultyCourseMap.keySet()) {
@@ -77,16 +81,16 @@ public class FacultyHelper {
 		List<Course> selected = new ArrayList<>();
 		if (blkId == 2) {
 			selected.addAll(firstElective(noSection - numOfFpp));
-			for(Course c:selected) {
-			System.out.println("=======> mpp course check"+c.getCourseName());
+			for (Course c : selected) {
+				System.out.println("=======> mpp course check" + c.getCourseName());
 			}
 
 		} else if (blkId == 3) {
-			selected.addAll(firstElective((int)Math.round(noSection / 2)));
-			selected.addAll(get500Courses(noSection - (int)Math.round(noSection / 2)));
+			selected.addAll(firstElective((int) Math.round(noSection / 2)));
+			selected.addAll(get500Courses(noSection - (int) Math.round(noSection / 2)));
 		} else if (blkId > 3) {
-			selected.addAll(get500Courses((int)Math.round(noSection / 1.5)));
-			selected.addAll(get400Courses(noSection - (int)Math.round(noSection / 1.5)));
+			selected.addAll(get500Courses((int) Math.round(noSection / 1.5)));
+			selected.addAll(get400Courses(noSection - (int) Math.round(noSection / 1.5)));
 		}
 
 		return selected;
@@ -95,7 +99,12 @@ public class FacultyHelper {
 	private List<Course> firstElective(int noSection) {
 		List<Course> selected = new ArrayList<>();
 		courses.stream().filter(c -> c.getIsPreReq()).filter(c -> (c.getCourseCode() > 400 && c.getCourseCode() < 500))
-				.filter(c -> !c.getCourseName().equalsIgnoreCase("MPP")).forEach(selected::add);
+				.filter(c -> {
+					if (c.getCourseName().equalsIgnoreCase("MPP"))
+						return false;
+					else
+						return true;
+				}).forEach(selected::add);
 		if (selected.size() > noSection) {
 			for (int i = 0; i < (selected.size() - noSection); i++) {
 				selected.remove(i);
@@ -103,13 +112,14 @@ public class FacultyHelper {
 		} else {
 			for (int i = 0, j = 0; i < courses.size() && j < (noSection - selected.size()); i++) {
 				if (courses.get(i).getCourseCode() > 400 && courses.get(i).getCourseCode() < 500
-						&& !courses.get(i).getCourseName().equalsIgnoreCase("MPP")
+						&& (!(courses.get(i).getCourseName().equalsIgnoreCase("MPP")))
 						&& !selected.contains(courses.get(i))) {
 					selected.add(courses.get(i));
 					j++;
 				}
 			}
 		}
+
 		return selected;
 	}
 
@@ -117,11 +127,11 @@ public class FacultyHelper {
 		List<Course> course500 = courses.stream().filter(c -> c.getCourseCode() > 500).collect(Collectors.toList());
 		HashSet<Course> choosen = new HashSet<>();
 		Random rand = new Random();
-		//int j = 0;
+		// int j = 0;
 		for (; choosen.size() < number;) {
 			choosen.add(course500.get(rand.nextInt(course500.size())));
-			//choosen.add(course500.get(j));
-			//j++;
+			// choosen.add(course500.get(j));
+			// j++;
 		}
 		return choosen;
 	}
@@ -131,16 +141,16 @@ public class FacultyHelper {
 				.filter(c -> !c.getCourseName().equalsIgnoreCase("MPP")).collect(Collectors.toList());
 		HashSet<Course> choosen = new HashSet<>();
 		Random rand = new Random();
-		//int i = 0;
+		// int i = 0;
 		for (; choosen.size() < number;) {
-			 choosen.add(course400.get(rand.nextInt(course400.size())));
-			//choosen.add(course400.get(i));
-			//i++;
+			choosen.add(course400.get(rand.nextInt(course400.size())));
+			// choosen.add(course400.get(i));
+			// i++;
 		}
 		return choosen;
 	}
 
-	private Map<Faculty, Course> getFaculty(List<Course> selected, int blkId) {
+	private Map<Faculty, Course> getFaculty(List<Course> selected, int blkId, int noFpp) {
 		Map<Faculty, Course> map = new HashMap<>();
 		selected.forEach(c -> {
 			for (int j = 0; j < faculties.size(); j++) {
@@ -148,9 +158,23 @@ public class FacultyHelper {
 					if (!map.containsKey(faculties.get(j)) && !map.containsValue(c)
 							|| !map.containsKey(faculties.get(j)) && c.getCourseName().equalsIgnoreCase("MPP"))
 						map.put(faculties.get(j), c);
+
 				}
 			}
+
 		});
+		int k = map.size();
+		Map<Faculty, Course> mapR = new HashMap<>();
+		for (Faculty key : map.keySet()) {
+			if (map.get(key).getCourseName().equalsIgnoreCase("MPP")&& k>noFpp) {
+				k--;
+				mapR.put(key, map.get(key));
+				System.out.println("=====>Mpp checked"+k);
+			}
+		}
+		mapR.keySet().forEach(c->map.remove(c, mapR.get(c)));
+
+		
 
 		return map;
 	}
@@ -158,6 +182,7 @@ public class FacultyHelper {
 	private Map<Faculty, Course> getFirstBlockFaculty(int fppNo, int mppNo) {
 		System.out.println("====== facultyHelper " + this.MPP.getCourseName());
 		Map<Faculty, Course> map = new HashMap<>();
+
 		List<Faculty> mppFaculty = faculties.stream().filter(f -> {
 			for (int i = 0; i < f.getCourse().size(); i++) {
 				if (f.getCourse().get(i).getCourseName().equalsIgnoreCase("MPP")) {
@@ -178,16 +203,16 @@ public class FacultyHelper {
 		Random rand = new Random();
 		// System.out.println("====== facultyHelper1 "+this.MPP.getCourseName());
 		for (int i = 0; i < mppNo; i++) {
-			if (map.size() <= mppNo) {
+			if (map.size() < mppNo) {
 				map.put(mppFaculty.get(rand.nextInt(mppFaculty.size())), this.MPP);
-				//System.out.println("====== facultyHelper1 " + this.MPP.getCourseName());
+				// System.out.println("====== facultyHelper1 " + this.MPP.getCourseName());
 			}
 
 		}
 		for (int i = 0; i < fppNo; i++) {
-			if (map.size() <= (mppNo + fppNo)) {
+			if (map.size() < (mppNo + fppNo)) {
 				map.put(fppFaculty.get(rand.nextInt(fppFaculty.size())), this.FPP);
-				//System.out.println("====== facultyHelper1 " + this.FPP.getCourseName());
+				// System.out.println("====== facultyHelper1 " + this.FPP.getCourseName());
 			}
 
 		}
