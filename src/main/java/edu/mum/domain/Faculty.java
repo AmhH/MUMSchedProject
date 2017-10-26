@@ -28,7 +28,7 @@ public class Faculty {
 	@OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	@Valid
 	private UserProfile userProfile;
-	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL, mappedBy="faculty")
 	private List<Section> sections=new ArrayList<Section>();
 	private boolean isAvailability;
 

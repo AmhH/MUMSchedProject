@@ -59,4 +59,7 @@ public class SectionsService {
 		return (List<Student>) sectionRepository.findStudentById(id);
 	}
 	
+	public List<Section> getSectionsForFaculty(long facultyId){
+		return sectionRepository.findByFacultyId(facultyId);
+	}
 }
