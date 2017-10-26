@@ -1,5 +1,6 @@
 package edu.mum.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import edu.mum.domain.Block;
 import edu.mum.domain.Entry;
 import edu.mum.service.EntryService;
 
@@ -30,6 +32,7 @@ public class EntryController {
 	
 	@RequestMapping(value= {"/addEntry"},method=RequestMethod.POST)
 	public RedirectView saveEntry(@ModelAttribute("entry") Entry newEntry){
+		
 		entryService.saveEntry(newEntry);
 		return new RedirectView("/admin/addEntry");
 	}
