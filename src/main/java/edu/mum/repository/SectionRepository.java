@@ -10,4 +10,5 @@ import edu.mum.domain.Student;
 public interface SectionRepository extends CrudRepository<Section, Long>{
 
 		public List<Student> findStudentById(Long id);
+		public List<Section> findByFacultyId(long id);
 }

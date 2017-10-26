@@ -160,8 +160,9 @@ public class FacultyController {
 		model.addAttribute("facultyCourseList", faculty.getCourse());
 		model.addAttribute("specializations", specializationsService.findAllspecalization());
 		model.addAttribute("courseList", courseService.getAllCourser());
-		List<Section> facultySection = sectionService.getAllSection().stream()
-				.filter(s -> s.getFaculty().equals(faculty)).collect(Collectors.toList());
+		/*List<Section> facultySection = sectionService.getAllSection().stream()
+				.filter(s -> s.getFaculty().equals(faculty)).collect(Collectors.toList());*/
+		List<Section> facultySection = sectionService.getSectionsForFaculty(faculty.getId());
 		model.addAttribute("sections", facultySection);
 		System.out.println(facultySection.get(0).getSectionCode());
 

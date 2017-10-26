@@ -26,7 +26,7 @@ public class Section {
 	private Course course;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "faculty_id")
+	//@JoinColumn(name = "faculty_id")
 	private Faculty faculty;
 
 	@ManyToOne(fetch = FetchType.EAGER)
