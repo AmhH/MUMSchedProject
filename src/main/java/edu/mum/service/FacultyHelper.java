@@ -166,15 +166,13 @@ public class FacultyHelper {
 		int k = map.size();
 		Map<Faculty, Course> mapR = new HashMap<>();
 		for (Faculty key : map.keySet()) {
-			if (map.get(key).getCourseName().equalsIgnoreCase("MPP")&& k>noFpp) {
+			if (map.get(key).getCourseName().equalsIgnoreCase("MPP") && k > noFpp) {
 				k--;
 				mapR.put(key, map.get(key));
-				System.out.println("=====>Mpp checked"+k);
+				System.out.println("=====>Mpp checked" + k);
 			}
 		}
-		mapR.keySet().forEach(c->map.remove(c, mapR.get(c)));
-
-		
+		mapR.keySet().forEach(c -> map.remove(c, mapR.get(c)));
 
 		return map;
 	}
@@ -205,16 +203,23 @@ public class FacultyHelper {
 		for (int i = 0; i < mppNo; i++) {
 			if (map.size() < mppNo) {
 				map.put(mppFaculty.get(rand.nextInt(mppFaculty.size())), this.MPP);
-				// System.out.println("====== facultyHelper1 " + this.MPP.getCourseName());
+				System.out.println("====== facultyHelper1 " + this.MPP.getCourseName());
 			}
 
 		}
+		for (Faculty c : map.keySet()) {
+			System.out.println("==== mapp  " + c.getUserProfile().getFirstName() + " " + map.get(c).getCourseName());
+		}
 		for (int i = 0; i < fppNo; i++) {
-			if (map.size() < (mppNo + fppNo)) {
-				map.put(fppFaculty.get(rand.nextInt(fppFaculty.size())), this.FPP);
-				// System.out.println("====== facultyHelper1 " + this.FPP.getCourseName());
+			Faculty f = fppFaculty.get(rand.nextInt(fppFaculty.size()));
+			if (!map.containsKey(f) && map.size()<(mppNo + fppNo)) {
+				map.put((f), this.FPP);
+				// System.out.println("====== facultyHelper2 " + this.FPP.getCourseName());
+				
 			}
-
+		}
+		for (Faculty c : map.keySet()) {
+			System.out.println("====  fpp " + c.getUserProfile().getFirstName() + " " + map.get(c).getCourseName());
 		}
 		return map;
 	}
