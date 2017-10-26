@@ -1,9 +1,11 @@
 package edu.mum.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,10 +17,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.mum.domain.Faculty;
 import edu.mum.domain.Section;
 import edu.mum.domain.Specialization;
+import edu.mum.domain.Student;
+import edu.mum.domain.Transcript;
 import edu.mum.service.CourseService;
 import edu.mum.service.FacultyService;
 import edu.mum.service.RoleService;
@@ -56,6 +61,7 @@ public class FacultyController {
 	@PreAuthorize("hasAnyRole('ROLE_Admin')")
 	@PostMapping(value = "/admin/faculty/add")
 	public String saveFaculty(@Valid @ModelAttribute("newFaculty") Faculty faculty, BindingResult error, Model model) {
+		System.out.println("admin add");
 		if (error.hasErrors()) {
 			if (!model.containsAttribute("specializations")) {
 				model.addAttribute("specializations", specializationsService.findAllspecalization());
@@ -73,16 +79,17 @@ public class FacultyController {
 		System.out.println("before");
 		faculty.getUserProfile().setUserStatus("Active");
 		System.out.println("faculty" + faculty.getUserProfile().getFirstName());
-
+		
+		System.out.println(faculty.getCourse().get(1));
+		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		faculty.getUserProfile().setPassword(passwordEncoder.encode(faculty.getUserProfile().getPassword()));
 
 		System.out.println("password string:  " + passwordEncoder.encode(faculty.getUserProfile().getPassword()));
-		System.out.println("id f:" + faculty.getId());
-		System.out.println("id user :" + faculty.getUserProfile().getId());
+		
 		facultyService.saveFaculty(faculty);
 
-		return "redirect:/faculty/all";
+		return "redirect:/admin/faculty/all";
 	}
 	
 
@@ -90,7 +97,7 @@ public class FacultyController {
 	public String deleteFaculty(@PathVariable("id") Long id, Model model) {
 		facultyService.deleteFaculty(id);
 
-		return "redirect:/faculty/all";
+		return "redirect:/admin/faculty/all";
 	}
 
 	@GetMapping(value = "/admin/faculty/update/{id}")
@@ -153,6 +160,11 @@ public class FacultyController {
 		model.addAttribute("facultyCourseList", faculty.getCourse());
 		model.addAttribute("specializations", specializationsService.findAllspecalization());
 		model.addAttribute("courseList", courseService.getAllCourser());
+		/*List<Section> facultySection = sectionService.getAllSection().stream()
+				.filter(s -> s.getFaculty().equals(faculty)).collect(Collectors.toList());*/
+		List<Section> facultySection = sectionService.getSectionsForFaculty(faculty.getId());
+		model.addAttribute("sections", facultySection);
+		System.out.println(facultySection.get(0).getSectionCode());
 
 		return "editFaculty";
 
@@ -207,8 +219,20 @@ public class FacultyController {
 		List<Section> facultySection = sectionService.getAllSection().stream()
 				.filter(s -> s.getFaculty().equals(faculty)).collect(Collectors.toList());
 		model.addAttribute("sections", facultySection);
-		model.addAttribute("faculty",faculty);
+		model.addAttribute("newFaculty",faculty);
 		return "viewFacultySchedule";
+	}
+	
+	@GetMapping("/faculty/student/grade/{id}")
+	public String gradeStudents(@PathParam("id") long id, Model model){
+		List<Student> students = sectionService.getStudentBySection(id);
+		model.addAttribute("studentList", students);
+		return "gardeStudents";
+	}
+	
+	@PostMapping("/faculty/student/grading")
+	public String studentsGradded(@ModelAttribute("studentList") List<Student> students){
+		return "";
 	}
 
 }

@@ -55,8 +55,8 @@ public class SectionController {
 	}	
 	
 	@RequestMapping(value= {"/addSection"},method=RequestMethod.POST)
-	public @ResponseBody RedirectView saveSectioin(@RequestParam String sectionCode, @RequestParam String course, 
-			@RequestParam String faculty, @RequestParam String blockMonth,  @RequestParam int limitCapacity){	
+	public String saveSectioin(@RequestParam String sectionCode, @RequestParam String course, 
+			@RequestParam String faculty, @RequestParam String blockMonth,  @RequestParam int limitCapacity, Model model){	
 		
 		Block block = blockService.getBlock(blockMonth);
 		Faculty facultyAssigned = facultyService.getFacultyByName(faculty);
@@ -73,8 +73,10 @@ public class SectionController {
 		block.getSections().add(newSection);
 		
 		blockService.saveBlock(block, block.getEntry().getId());
+		model.addAttribute("block_id", block.getId());
+		model.addAttribute("sections", block.getSections());
 			
-		return new RedirectView("/admin/allEntry");
+		return "sectionList";
 	}
 	
 	@RequestMapping(value= {"/listSections"}, method=RequestMethod.POST)

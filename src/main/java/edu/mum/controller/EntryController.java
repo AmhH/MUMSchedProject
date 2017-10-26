@@ -38,7 +38,7 @@ public class EntryController {
 	public RedirectView deleteEntry(@RequestParam String id){
 		id_new = Long.valueOf(id);
 		entryService.deleteEntry(id_new);
-		return new RedirectView("/admin/allEntry");
+		return new RedirectView("/allEntry");
 	}
 	
 	@RequestMapping(value= {"/findEntry"},method=RequestMethod.POST)

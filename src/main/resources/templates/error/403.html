@@ -11,24 +11,22 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link th:href="@{css/main.min.css}" rel="stylesheet" />
-
 </head>
-<div th:replace="fragments/header :: header"> </div>
 <body style="background: url('/image/access-denied-.jpg')">
-
+ <div th:replace="fragments/header :: header-css"></div>
+<div th:replace="fragments/header :: header"></div>
 
 <div class="container">
 
     <div class="starter-template">
-        
-        <div th:inline="text">Sorry ! '[[${#httpServletRequest.remoteUser}]]',
+        <div th:inline="text">Hello '[[${#httpServletRequest.remoteUser}]]',
                 you do not have permission to access this page.</div>
     </div>
 
 </div>
 <!-- /.container -->
 
-<div th:replace="fragments/footer :: footer"/>
+<div th:replace="fragments/footer :: footer"></div>
 
 </body>
 </html>
