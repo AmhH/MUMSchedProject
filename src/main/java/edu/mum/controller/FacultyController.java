@@ -1,11 +1,9 @@
 package edu.mum.controller;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,13 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.mum.domain.Faculty;
 import edu.mum.domain.Section;
 import edu.mum.domain.Specialization;
-import edu.mum.domain.Student;
-import edu.mum.domain.Transcript;
 import edu.mum.service.CourseService;
 import edu.mum.service.FacultyService;
 import edu.mum.service.RoleService;
@@ -101,7 +96,7 @@ public class FacultyController {
 	}
 
 	@GetMapping(value = "/admin/faculty/update/{id}")
-	public String userMarkDelete(@PathVariable("id") Long id, Model model) {
+	public String userMarkDelete(@PathVariable("id") long id, Model model) {
 		model.addAttribute("newFaculty", facultyService.getFacultyById(id));
 		model.addAttribute("specializations", specializationsService.findAllspecalization());
 		model.addAttribute("courseList", courseService.getAllCourser());
@@ -125,11 +120,10 @@ public class FacultyController {
 			return "adminEditFaculty";
 		}
 
-		System.out.println("before");
 
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		faculty.getUserProfile().setPassword(passwordEncoder.encode(faculty.getUserProfile().getPassword()));
-        faculty.getUserProfile().setId(faculty.getUserProfile().getId());
+        faculty.setUserProfile(faculty.getUserProfile());
 		facultyService.saveFaculty(faculty);
 		return "redirect:/admin/faculty/all";
 	}
@@ -162,9 +156,10 @@ public class FacultyController {
 		model.addAttribute("courseList", courseService.getAllCourser());
 		/*List<Section> facultySection = sectionService.getAllSection().stream()
 				.filter(s -> s.getFaculty().equals(faculty)).collect(Collectors.toList());*/
+		if(!faculty.getSections().isEmpty()){
 		List<Section> facultySection = sectionService.getSectionsForFaculty(faculty.getId());
-		model.addAttribute("sections", facultySection);
-		System.out.println(facultySection.get(0).getSectionCode());
+		model.addAttribute("sections", facultySection);}
+		
 
 		return "editFaculty";
 
@@ -223,16 +218,18 @@ public class FacultyController {
 		return "viewFacultySchedule";
 	}
 	
-	@GetMapping("/faculty/student/grade/{id}")
-	public String gradeStudents(@PathParam("id") long id, Model model){
-		List<Student> students = sectionService.getStudentBySection(id);
-		model.addAttribute("studentList", students);
-		return "gardeStudents";
+	@PreAuthorize("hasRole('ROLE_Faculty')")
+	@GetMapping("/faculty/section/grading/{id}")
+	public String gradeStudents(@PathVariable("id") long id, Model model){
+		System.out.println(id);
+		model.addAttribute("studentList", sectionService.getSectionById(id).getStudents());
+		model.addAttribute("course", sectionService.getSectionById(id).getCourse());
+		return "gradeStudents";
 	}
 	
-	@PostMapping("/faculty/student/grading")
+	/*@PostMapping("/faculty/section/grading")
 	public String studentsGradded(@ModelAttribute("studentList") List<Student> students){
 		return "";
-	}
+	}*/
 
 }
