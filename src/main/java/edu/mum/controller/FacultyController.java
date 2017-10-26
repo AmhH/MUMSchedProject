@@ -120,11 +120,10 @@ public class FacultyController {
 			return "adminEditFaculty";
 		}
 
-		System.out.println("before");
 
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		faculty.getUserProfile().setPassword(passwordEncoder.encode(faculty.getUserProfile().getPassword()));
-        faculty.getUserProfile().setId(faculty.getUserProfile().getId());
+        faculty.setUserProfile(faculty.getUserProfile());
 		facultyService.saveFaculty(faculty);
 		return "redirect:/admin/faculty/all";
 	}

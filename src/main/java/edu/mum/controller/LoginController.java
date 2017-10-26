@@ -26,6 +26,13 @@ import org.springframework.web.bind.annotation.GetMapping;
   		
   		return "error/403";
   	}
-
-  }
+     
+    @GetMapping(value = "/login")
+   	public String loginPage() {
+   		
+   		return "loginPage";
+   	}
+       
+     
+}
 

@@ -32,6 +32,7 @@
        <div class="container col-md-6">
 			<p>
 				<input type="hidden" th:field="*{id}" name="ID" />
+				<input type="hidden" th:field="*{userProfile.id}" name="ID" />
 
 			</p>
 			<div sec:authorize="hasRole('ROLE_Admin')">
