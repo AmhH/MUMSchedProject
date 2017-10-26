@@ -1,6 +1,5 @@
 package edu.mum.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.mum.domain.Entry;
-import edu.mum.domain.Schedule;
 import edu.mum.domain.Section;
 import edu.mum.domain.Student;
 import edu.mum.domain.UserProfile;
