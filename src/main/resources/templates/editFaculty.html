@@ -194,12 +194,11 @@
 
 				</tr>
 
-				<tr th:each="section : ${sections}">
-					<td>([[${section.block.blockMonth}]])</td>
-					<td>[[${section.course.courseDesc}]]</td>
+				<tr  th:each="section : ${sections}">
+					<td th:text="${section.block.blockMonth}"></td>
+					<td th:text="${section.course.courseDesc}"></td>
 					<td>
-				    	<a th:href="@{|/faculty/section/grading/${section.id}}"> 
-				</a></td>
+				    	<a th:href="@{|/faculty/section/grading/${section.id}}"> Grade</a></td>
 				</tr>
 
 
