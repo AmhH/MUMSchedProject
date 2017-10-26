@@ -32,7 +32,7 @@
 				    <th>Entry Month</th>
 				    <th>Section code</th>
 				    <th>Course name</th>
-				    <th>Faculty</th>
+				    <!-- <th>Faculty</th> -->
 				 
 			</tr>	    
 			<tr th:each="section :${sections}">	
@@ -40,7 +40,7 @@
 			
 			        <td th:text="${section.sectionCode}">Title ...</td>
 			        <td th:text="${section.course.courseName}">Text ...</td>
-			        <td th:text="${section.faculty.userProfile.firstName}">Text ...</td>
+			        <!-- <td th:text="${section.faculty.userProfile.firstName}">Text ...</td> -->
 			       
 	
 			  

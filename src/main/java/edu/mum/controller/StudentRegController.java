@@ -1,6 +1,8 @@
 package edu.mum.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.mum.domain.Entry;
+import edu.mum.domain.Schedule;
 import edu.mum.domain.Section;
 import edu.mum.domain.Student;
 import edu.mum.domain.UserProfile;
@@ -72,11 +75,14 @@ public class StudentRegController {
 		 
 		 UserProfile userProfile = userprofileService.LoggedInUser();
 		 Student student = studentService.getStudentByUserProfile(userProfile);
+		// Schedule schedule = scheduleService.getScheduleByEntryId(student.getEntry().getId());
+		// System.out.println("=======> schduel id "+schedule.getId());
 		 
 		 model.addAttribute("blocks", scheduleDao.findOne(student.getEntry().getId()).getEntry().getBlocks());
 			model.addAttribute("entry",scheduleDao.findOne(student.getEntry().getId()).getEntry());
 				
-		//model.addAttribute("schedule", scheduleService.getScheduleByEntryId(student.getEntry().getId()));
+	//	model.addAttribute("blocks", schedule.getEntry().getBlocks());
+		//model.addAttribute("entry",schedule.getEntry());
 	
 			
 	   	    return "viewSchedule";
@@ -91,10 +97,17 @@ public class StudentRegController {
 	 
 	 @RequestMapping(value={"/student/register"},method=RequestMethod.GET)
 		public String registerstudent(Model model) {
+		 Student student = studentService.getStudentByUserProfile(userprofileService.LoggedInUser());
 		 	//System.out.println("logged User:"+userprofileService.LoggedInUser().getFirstName());
-		model.addAttribute("sections",regsubsystem.getListSection());
-			//System.out.println("size of section:"+regsubsystem.getListSection().size());
-		//List<Section> section=regsubsystem.getListSection();
+	    List<Section> sections = regsubsystem.getListSection();
+	    List<Long> ids = student.getSections().stream().map(s->s.getId()).collect(Collectors.toList());
+	    
+	    List<Section> regsections = sections.stream().filter(s-> !(ids.contains(s.getId()))).collect(Collectors.toList());
+	    
+	    model.addAttribute("blocks", scheduleDao.findOne(student.getEntry().getId()).getEntry().getBlocks());
+	    
+		model.addAttribute("sections",regsections );
+		
 	   	    return "studentregister";
 	    }
 	 
@@ -175,7 +188,7 @@ public class StudentRegController {
 
 	
 	@RequestMapping(value={"/student/register/{id}"}, method = RequestMethod.GET)
-    public String registerStudent( @PathVariable Long id,  /*BindingResult bindingresult,*/ Model model,RedirectAttributes redirAttrs) {
+    public String registerStudent( @PathVariable Long id,  /*BindingResult bindingresult,*/ Model model/*,RedirectAttributes redirAttrs*/) {
 		
 		/*if(bindingresult.hasErrors()){
 			return "studentregister";
@@ -185,20 +198,22 @@ public class StudentRegController {
 		
 		
 		if(!(str.equalsIgnoreCase("Success"))){
-			redirAttrs.addFlashAttribute("message", str);
-		return "studentregister";
+			//redirAttrs.addFlashAttribute("message", str);
+			model.addAttribute("message",str);
+		return "errorregister";
 	}
-		//model.addAttribute("message", str);
+		model.addAttribute("message", str);
 		
 		
-		redirAttrs.addFlashAttribute("message", str);
-		//model.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
+		//redirAttrs.addFlashAttribute("message", str);
 		
-		redirAttrs.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
+		model.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
+		
+		//redirAttrs.addAttribute("sections",studentService.getStudentByUserProfile(userProfile).getSections());
 	
 		
-		return "redirect:/student";
-   	//return "addsuccess";
+		//return "redirect:/student";
+   	return "addsuccess";
     }
 	
 	//Admin
@@ -234,8 +249,8 @@ public class StudentRegController {
 		    		model.addAttribute("userTypeList", roleService.getAll());
 		   return "adminEditStudent";
 		}
-			
-		editedstudent.getUserprofile().setId(editedstudent.getUserprofile().getId());
+		//editedstudent.setId(editedstudent.getUserprofile().getId());
+		//editedstudent.getUserprofile().setId(editedstudent.getUserprofile().getId());
 		studentService.save(editedstudent);
 		
 		return "redirect:/admin/students";
