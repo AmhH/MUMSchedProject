@@ -20,9 +20,9 @@ public class Faculty {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	@ManyToMany
+	@ManyToMany(cascade=CascadeType.ALL)
 	private List<Specialization> specializations=new ArrayList<>();
-	@OneToMany
+	@ManyToMany(cascade=CascadeType.ALL)
 	@Valid
 	private List<Course> course=new ArrayList<>();
 	@OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
