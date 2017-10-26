@@ -60,6 +60,8 @@ public class FacultyHelper {
 			block.getSections().get(cnt).setCourse(facultyCourseMap.get(key));
 			block.getSections().get(cnt).setFaculty(key);
 			cnt++;
+			if(block.getSections().size()==cnt)
+				break;
 
 		}
 		for (Faculty key : facultyCourseMap.keySet()) {
