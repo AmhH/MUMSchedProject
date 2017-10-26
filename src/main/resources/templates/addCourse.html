@@ -20,7 +20,7 @@
  
  
    <div class="container col-md-12" >
-   <form  th:action="@{/course/add}" th:object="${newCourse}" method="post"  class="form-horizontal">
+   <form  th:object="${newCourse}" method="post"  class="form-horizontal">
 		<a th:href="@{/admin/course/add}">Add Course</a>
 			<fieldset >
 				<legend>Course Detail</legend>
