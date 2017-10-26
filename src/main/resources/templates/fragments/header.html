@@ -31,7 +31,8 @@
                      <li class="active" sec:authorize="hasAuthority('ROLE_Admin')"><a th:href="@{/admin/course/all}">Course</a></li>
                      <li class="active" sec:authorize="hasAuthority('ROLE_Admin')"><a th:href="@{/admin/schedule/list}">Schedule</a></li>
                       <li class="active" sec:authorize="hasAuthority('ROLE_Admin')"><a th:href="@{/admin/allEntry}">Block</a></li>
-                      <li class="active" sec:authorize="hasAuthority('ROLE_Faculty')"><a th:href="@{/faculty/update}">Edit Profile</a></li>
+                      <li class="active" sec:authorize="hasAuthority('ROLE_Faculty')"><a th:href="@{/faculty/update}">Profile</a></li>
+                          <li class="active" sec:authorize="hasAuthority('ROLE_Student')"><a th:href="@{/student}">View Profile</a></li>
                        <li class="active" sec:authorize="hasAuthority('ROLE_Faculty')"><a th:href="@{/faculty/viewSchedule}">Show Sections</a></li>
                      <li class="active" sec:authorize="hasAuthority('ROLE_Student')"><a th:href="@{/student/updatestudent}">Edit Profile</a></li>
                          <li class="active" sec:authorize="hasAuthority('ROLE_Student')"><a th:href="@{/student/register}">Register</a></li>
