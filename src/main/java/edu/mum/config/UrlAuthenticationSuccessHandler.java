@@ -22,7 +22,7 @@ private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest httrequest, HttpServletResponse httpResponse, Authentication authentication)
 			throws IOException, ServletException {
-		System.out.println("onAuthority : "+authentication.getAuthorities());
+		System.out.println("onAuthority : "+authentication.getAuthorities());	
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		authorities.forEach(authority -> {
 			if(authority.getAuthority().equals("ROLE_Faculty")) {
