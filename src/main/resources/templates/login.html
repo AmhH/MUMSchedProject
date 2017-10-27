@@ -1,20 +1,74 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>Spring Security Example </title>
-    </head>
-    <body>
-        <div th:if="${param.error}">
-            Invalid username and password.
-        </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
-        <form th:action="@{/login}" method="post">
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<script src="https://code.jquery.com/jquery-3.2.1.js"
+	th:integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+	th:crossorigin="anonymous"></script>
+
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	th:crossorigin="anonymous" />
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	th:integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	th:crossorigin="anonymous" />
+<link rel="stylesheet" href="style.css" />
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	th:integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	th:crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<meta charset="ISO-8859-1" http-equiv="Content-Type" />
+<title>Insert title here</title>
+<style>
+body, html {
+	height: 100%;
+	margin: 0;
+}
+
+.bg {
+	margin: 0;
+	/* The image used */
+	background-image: url("/image/bg1.png");
+	/* Full height */
+	height: 100%;
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+</style>
+</head>
+<body>
+	<div class="bg">
+		<h6>.</h6>
+		<div class=" loginForm">
+			<div class="formHeader"></div>
+			
+				<fieldset>
+					<legend>Please Login</legend>
+					<div th:if="${param.error}" class="alert alert-error">
+						Invalid username and password.</div>
+					 <form th:action="@{/login}" method="post">
             <div><label> User Name : <input type="text" name="username"/> </label></div>
             <div><label> Password: <input type="password" name="password"/> </label></div>
             <div><input type="submit" value="Sign In"/></div>
         </form>
-    </body>
-</html>>
+
+				</fieldset>
+			
+
+		</div>
+
+	</div>
+	
+</body>
+</html>

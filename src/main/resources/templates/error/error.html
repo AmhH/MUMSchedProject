@@ -19,8 +19,8 @@
 <div class="container">
 
     <div class="starter-template">
-        <div th:inline="text">Sorry! '[[${#httpServletRequest.remoteUser}]]',
-        <a th:href="/home">Click me To back home page</a>
+        <div th:inline="text"><h2 style="color:red">Sorry! '[[${#httpServletRequest.remoteUser}]]',</h2>
+        <a th:href="@{/home}">Click me To back home page</a>
               </div>
     </div>
 

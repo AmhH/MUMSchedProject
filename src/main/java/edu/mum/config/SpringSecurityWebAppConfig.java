@@ -123,7 +123,9 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 		        .antMatchers("/admin/**").hasAuthority("ROLE_Admin")
 		        .antMatchers("/student/**").hasAuthority("ROLE_Student")
 		        .anyRequest().authenticated()
-		        .and().formLogin().successHandler(successHandler).and().exceptionHandling().accessDeniedPage("/403");
+		        .and().formLogin().loginPage("/login").permitAll().failureUrl("/login?error=true")
+		        .successHandler(successHandler).and().exceptionHandling().accessDeniedPage("/403");
+          
 			  
     }
 
