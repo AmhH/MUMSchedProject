@@ -45,7 +45,7 @@ public class CourseController {
 		return "addCourse";
 		
 	}
-	@PreAuthorize("hasRole('ROLE_Admin')")
+	
 	@PostMapping("/add")
 	public String saveCourse(@Valid @ModelAttribute("newCourse") Course course,BindingResult result,Model model)
 	{
