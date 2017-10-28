@@ -12,17 +12,19 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css"/>
 </head>
 <body>
 <div th:replace="fragments/header :: header-css"></div>
 <div th:replace="fragments/header :: header"> </div>
  
  
-   <div class="container col-md-12" >
+   <div class="container col-md-12"  style="border:thin" >
    <form  th:action="@{/admin/addstudent}" th:object="${Newstudent}" method="post"  class="form-horizontal">
 			<fieldset >
 				<legend>Student Personal Detail</legend>
-				  <div class="alert alert-danger alert-dismissable fade in">
+				  <div class="alert alert-danger alert-dismissable fade in" >
 					 
 					<ul>
 						<li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
@@ -44,16 +46,8 @@
 						<td><label for="idNumber">ID Number : </label></td>
 							<td><input id="idNumber" class="form-control mb-2 mb-sm-0"
 							type="text" th:field="*{idNumber}" /></td>
-						<td><label for="degree">Degree : </label></td>
-							<td><input id="degree" class="form-control mb-2 mb-sm-0"
-							type="text" th:field="*{degree}" /></td>
-							<!-- <td><label for="transcript">Transcript: </label></td>
-							<td><input id="transcript" class="form-control mb-2 mb-sm-0"
-							type="text" th:field="*{transcript.grade}" /></td>	 -->
-							
-						<td><label for="">Field : </label></td>
-							<td><input id="field" class="form-control mb-2 mb-sm-0"
-							type="text" th:field="*{field}" /></td>
+									
+						
 						<td>
 							<label for="entry">Entry</label>
 							<select name="entry" th:field="*{entry}">	   
@@ -62,12 +56,6 @@
 						    
 							<br></br>
 						</td>
-						<td><label for="roles">User Role :</label></td>
-						<td><select th:field="*{userprofile.roles}"
-							class="selectpicker" multiple="multiple">
-								<option th:each="role : ${userTypeList}" th:value="${role.id}"
-									th:text="${role.role}">User Role</option>
-						</select></td>
 					</tr>
 					<tr>
 						<td><label for="birthdate">Birth Date :</label></td>
@@ -77,6 +65,22 @@
 						<td><label for="email">Email : </label></td>
 						<td><input id="email" class="form-control"
 							th:field="*{userprofile.email}" /></td>
+							<td><label for="degree">Degree : </label></td>
+							<!-- <td><input id="degree" class="form-control mb-2 mb-sm-0"
+							type="text" th:field="*{degree}" /></td> -->
+							<td>
+							<select name="degree" th:field="*{degree}">	   
+							    <option th:value="Bsc.">MSc.</option>
+							    <option th:value="phd.">Ph.D</option>
+							    <option th:value="Bsc.">BSc.</option>
+						    </select>
+						    </td>
+						    <td><label for="roles">User Role :</label></td>
+						<td><select th:field="*{userprofile.roles}" multiple="multiple"  id="multiple-checkboxes">
+								<option th:each="role : ${userTypeList}" th:value="${role.id}"
+									th:text="${role.role}">User Role</option>
+						</select></td>
+							
 					</tr>
 					
 					<tr>
@@ -86,6 +90,16 @@
 						<td><label for="password">Password : </label></td>
 						<td><input type="password" class="form-control mb-2 mb-sm-0"
 							id="password" th:field="*{userprofile.password}" /></td>
+							<td><label for="">Field : </label></td>
+							<!-- <td><input id="field" class="form-control mb-2 mb-sm-0"
+							type="text" th:field="*{field}" /></td> -->
+							<td>
+							<select name="degree" th:field="*{field}">	   
+							    <option th:value="ComputerScience">Computer Science</option>
+							    <option th:value="ComputerEng.">Computer Eng.</option>
+							    <option th:value="Other">Others</option>
+						    </select>
+						    </td>
 					</tr>
 				</table>
 
@@ -103,7 +117,11 @@
 			</fieldset>
 			</form>
 			</div> 
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#multiple-checkboxes').multiselect();
+    });
+</script>
 <div th:replace="fragments/footer :: footer"></div>
 <script src="/jquery/jquery-3.2.1.min.js"></script>    
 <script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
