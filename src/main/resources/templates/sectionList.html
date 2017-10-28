@@ -31,7 +31,6 @@
 				        <th>Section Code</th>
 				        <th>Block</th>
 				        <th>Course</th>
-				        <th>Faculty</th>
 				        <th>Capacity</th>
 				      </tr>
 				  
@@ -39,7 +38,7 @@
 			    		<td th:text="${section.sectionCode}"></td>
 			    		<td th:text="${section.block.blockMonth}"></td>
 			    		<td th:text="${section.course.courseCode}"></td>
-			    		<td th:text="${section.faculty.userProfile.firstName}"></td>
+			    		
 			    		<td th:text="${section.limitCapacity}"></td>
 			    		<td>
 			    			<div class="buttonDiv">

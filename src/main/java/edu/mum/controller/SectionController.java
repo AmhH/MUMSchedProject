@@ -12,8 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.view.RedirectView;
 
 import edu.mum.domain.Block;
 import edu.mum.domain.Course;
@@ -107,7 +105,7 @@ public class SectionController {
 	@RequestMapping(value= {"/updateSection"},method=RequestMethod.POST)
 	public String updateSection(@RequestParam String sectionCode, @RequestParam String course, 
 			@RequestParam String faculty, @RequestParam String blockMonth,  @RequestParam int limitCapacity, 
-			@RequestParam String section_id){
+			@RequestParam String section_id, Model model){
 		Block block = blockService.getBlock(blockMonth);
 		Faculty facultyAssigned = facultyService.getFacultyByName(faculty);
 		Course courseOffered = courseService.getCourseByName(course);
@@ -121,7 +119,10 @@ public class SectionController {
 		
 		sectionService.saveSection(section);
 		
-		return "/viewEntry";
+		model.addAttribute("block_id", block.getId());
+		model.addAttribute("sections", block.getSections());
+		
+		return "sectionList";
 	}	
 	
 	@RequestMapping(value= {"/deleteSection"},method=RequestMethod.POST)
